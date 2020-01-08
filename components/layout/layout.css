@@ -686,7 +686,7 @@ pre tt:after {
   border: 2px solid lightgray; border-radius: 24px; background-color: inherit;
   color: #123abc; caret-color: #123abc;
   font-family: inherit; font-size: inherit;
-  transition: border-color 0.3s linear;
+  transition: border-color 0.3s linear, max-width 0.3s linear;
 }
 #searchPanel > input#searchText::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: rgba(66, 104, 178, 0.5);

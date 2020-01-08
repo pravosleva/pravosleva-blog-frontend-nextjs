@@ -100,6 +100,7 @@
 .banner-user,
 .banner-anim {
   height: 360px;
+  border-radius: 6px;
 }
 .banner-anim-elem.banner-user-elem {
   color: #fff;

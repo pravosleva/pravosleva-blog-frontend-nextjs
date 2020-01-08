@@ -71,8 +71,8 @@ const IndexPage = ({ initialArtiles }) => {
     }
   };
 
-  const debouncedSetQueryText = useDebounce(queryText, 500);
-  const debouncedSearchBy = useDebounce(searchBy, 500);
+  const debouncedSetQueryText = useDebounce(queryText, 1000);
+  const debouncedSearchBy = useDebounce(searchBy, 1000);
 
   // Here's where the API call happens
   // We use useEffect since this is an asynchronous action
@@ -108,7 +108,6 @@ const IndexPage = ({ initialArtiles }) => {
         <title>Pravosleva | Home</title>
       </Head>
       <Layout>
-        <h1>What's new...</h1>
         <div id='searchPanel'>
           <span id='bodySearchToggler' className='unselectable' onClick={() => {
             setSearchBy(getNextSearchTarget({ current: searchBy }));
@@ -131,8 +130,15 @@ const IndexPage = ({ initialArtiles }) => {
             onChange={e => setQueryText(e.target.value)}
             placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
             className='unselectable'
+            style={{
+              maxWidth: queryText ? '100%' : '250px'
+            }}
           />
-          <span id='clearSearchText' className='unselectable' onClick={() => setQueryText('')}><i className='fas fa-times'></i></span>
+          {
+            queryText
+            ? <span id='clearSearchText' className='unselectable' onClick={() => setQueryText('')}><i className='fas fa-times'></i></span>
+            : null
+          }
         </div>
         {
           isLoading
