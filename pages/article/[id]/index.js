@@ -21,7 +21,6 @@ const dev = process.env.NODE_ENV === 'development';
 const baseURL = dev
   ? 'http://localhost:1337'
   : 'http://80.87.194.181/api';
-const dev = process.env.NODE_ENV === 'development';
 const api = axios.create({ baseURL });
 // to best see the results, click the popout button in the preview browser
 // and resize your browser
