@@ -14,7 +14,9 @@ import useDebounce from '../hooks/use-debounce';
 
 
 const dev = process.env.NODE_ENV === 'development';
-const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
+const baseURL = dev
+  ? 'http://localhost:1337'
+  : 'http://80.87.194.181/api';
 const api = axios.create({ baseURL });
 const Banner = dynamic(() => import('../components/banner'), {
   ssr: false,
