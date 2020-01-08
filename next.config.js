@@ -1,5 +1,6 @@
 const withCSS = require('@zeit/next-css');
 const { parsed: localEnv } = require('dotenv').config();
+const webpack = require('webpack');
 
 
 const nextConfig = {
