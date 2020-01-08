@@ -268,7 +268,7 @@ async function fetchArticles ({ queryText = '', targetField = 'body' }) {
   if (Array.isArray(result)) {
     return Promise.resolve(result)
   } else {
-    return Promise.reject([]);
+    return Promise.resolve([]);
   };
 }
 
