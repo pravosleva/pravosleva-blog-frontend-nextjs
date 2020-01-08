@@ -104,9 +104,6 @@ const IndexPage = ({ initialArtiles }) => {
 
   return (
     <>
-      <Head>
-        <title>Pravosleva | Home</title>
-      </Head>
       <Layout>
         <div id='searchPanel'>
           <span id='bodySearchToggler' className='unselectable' onClick={() => {
