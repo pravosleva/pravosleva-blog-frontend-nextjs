@@ -17,6 +17,7 @@ const Gallery = dynamic(() => import('react-photo-gallery'), {
 });
 
 // const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
+const dev = process.env.NODE_ENV === 'development';
 const baseURL = dev
   ? 'http://localhost:1337'
   : 'http://80.87.194.181/api';
