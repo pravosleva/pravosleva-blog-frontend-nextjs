@@ -4,7 +4,6 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 
 
-const dev = process.env.NODE_ENV === 'development';
 const { Element } = BannerAnim;
 const BgElement = Element.BgElement;
 
