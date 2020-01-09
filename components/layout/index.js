@@ -9,6 +9,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { useStaticQuery, graphql } from 'gatsby';
 
+// import { useSelector, useDispatch } from 'react-redux';
+// import { counterActions } from '../store/counter';
+
 import Header from './header';
 import './layout.css';
 import './rc-banner-anim.css';
@@ -17,6 +20,9 @@ import './react-image-lightbox.css';
 
 
 const Layout = ({ children }) => {
+  // const count = useSelector(state => state.counter.count);
+  // const currentLang = useSelector(state => state.lang.current);
+  // const dispatch = useDispatch();
 
   return (
     <>
