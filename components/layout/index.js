@@ -16,7 +16,7 @@ import './block-quotes.css';
 import './react-image-lightbox.css';
 
 
-const Layout = ({ children, siteTitle = 'Pavosleva' }) => {
+const Layout = ({ children }) => {
 
   return (
     <>
@@ -25,17 +25,19 @@ const Layout = ({ children, siteTitle = 'Pavosleva' }) => {
         style={{
           margin: `0 auto`,
           maxWidth: 960,
-          padding: `0px 1.0875rem 1.45rem`,
+          padding: `0px 20px 20px`,
           paddingTop: 0,
         }}
       >
-        <main style={{ marginBottom: '20px' }}>{children}</main>
-        <footer>
+        <main style={{ paddingTop: '20px', minHeight: 'calc(100vh - 80px)' }}>{children}</main>
+      </div>
+      <footer>
+        <div style={{ margin: `0 auto`, maxWidth: 960, padding: '0px 1.0875rem 1.45rem' }}>
           © {new Date().getFullYear()}{/* , Built with
           {` `}
           <a href="https://www.gatsbyjs.org">Gatsby</a> */}
-        </footer>
-      </div>
+        </div>
+      </footer>
     </>
   )
 }

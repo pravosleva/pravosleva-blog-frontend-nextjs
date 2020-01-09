@@ -142,7 +142,7 @@ const Article = ({ initArticleData: article }) => {
         }
         <div
           key={id}
-          style={{ padding: '10px 0 20px 0', marginBottom: '10px', width: '100%' }}
+          style={{ padding: '10px 0 10px 0', marginBottom: '20px', width: '100%' }}
           className='special-link-wrapper fade-in-effect unselectable'
         >
           <Link href="/"><a className='special-link'>Go back to the homepage</a></Link>

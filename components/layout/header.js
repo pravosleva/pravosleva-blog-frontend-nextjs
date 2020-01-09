@@ -8,17 +8,18 @@ const Header = ({ siteTitle }) => (
     style={{
       // background: `#123abc`,
       backgroundImage: 'linear-gradient(-90deg, rgb(0, 123, 255), #123abc)',
-      marginBottom: `1.45rem`,
+      // marginBottom: `1.45rem`,
+      lineHeight: '80px',
     }}
   >
     <div
       style={{
         margin: `0 auto`,
         maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
+        lineHeight: 'inherit',
       }}
     >
-      <h1 style={{ margin: 0 }}>
+      <h1 style={{ margin: 0, lineHeight: 'inherit', padding: '0px 1.0875rem' }}>
         <Link href="/">
           <a
             style={{

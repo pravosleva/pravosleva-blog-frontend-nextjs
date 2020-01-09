@@ -675,7 +675,7 @@ pre tt:after {
 /* SEARCH TEXT */
 #searchPanel {
   font-family: Montserrat;
-  margin: 20px 0 20px 0;
+  margin: 10px 0 20px 0;
   position: relative;
 }
 #searchPanel > input#searchText {

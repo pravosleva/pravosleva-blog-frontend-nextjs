@@ -133,7 +133,7 @@ const IndexPage = ({ initialArtiles }) => {
           />
           {
             queryText
-            ? <span id='clearSearchText' className='unselectable' onClick={() => setQueryText('')}><i className='fas fa-times'></i></span>
+            ? <span id='clearSearchText' className='unselectable fade-in-effect' onClick={() => setQueryText('')}><i className='fas fa-times'></i></span>
             : null
           }
         </div>
@@ -166,7 +166,7 @@ const IndexPage = ({ initialArtiles }) => {
         {
           !isLoading && articles.length > 0
           ? (
-            <div style={{ marginBottom: '0' }}>
+            <div style={{ marginBottom: '20px' }}>
               {
                 articles.map(({ id, title, createdAt, tags = [] }) => (
                   <div
@@ -216,7 +216,7 @@ const IndexPage = ({ initialArtiles }) => {
                 ))
               }
             </div>
-          ) : <div style={{ margin: '30px 0 30px 0' }}><em style={{ padding: '10px 0 10px 0', opacity: '0.5' }}>No results...</em></div>
+          ) : <div style={{ margin: '30px 0 30px 0' }}><em style={{ padding: '10px 0 10px 0', opacity: '0.4' }}>No results...</em></div>
         }
       </Layout>
     </>
