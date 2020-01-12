@@ -53,7 +53,7 @@ const Article = ({ initArticleData: article }) => {
   let imagesPacks = [];
 
   if (article && article.gallery && article.gallery.length > 0) {
-    article.gallery.forEach(({ name = null, description, images = [], id }) => {
+    article.gallery.forEach(({ name, description, images = [], id }) => {
       imagesPacks.unshift({
         id,
         name,
@@ -137,7 +137,7 @@ const Article = ({ initArticleData: article }) => {
                             viewerIsOpen && currentPackIndex === i && images[currentImageIndex]
                             ? (
                               <Lightbox
-                                imageTitle={`${currentImageIndex} / ${images.length}`} // ${name ? `${name}: ` : ''}
+                                imageTitle={`${name ? `${name}: ` : ''}${currentImageIndex} / ${images.length}`}
                                 // imageCaption={`${formatDateByMS(createdAtMS)} (${photos.length} ${getFilesInRussian(photos.length)}${photos.length !== images.length ? `, из них ${images.length} ${getImagesInRussian(images.length)}` : ''})`}
                                 // imageCaption={images[photoIndex]}
                                 imagePadding={0}
