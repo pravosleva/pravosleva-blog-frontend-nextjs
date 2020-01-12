@@ -53,7 +53,7 @@ const Article = ({ initArticleData: article }) => {
   let imagesPacks = [];
 
   if (article && article.gallery && article.gallery.length > 0) {
-    article.gallery.forEach(({ name, description, images = [], id }) => {
+    article.gallery.forEach(({ name = null, description, images = [], id }) => {
       imagesPacks.unshift({
         id,
         name,
