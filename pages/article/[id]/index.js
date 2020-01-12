@@ -102,7 +102,7 @@ const Article = ({ initArticleData: article }) => {
                           }}
                           onClick={() => setCurrentPackIndex(i)}
                         >
-                          <h2>{name}</h2>
+                          { name && <h2>{name}</h2> }
                           { description && <p>{description}</p> }
                           <Gallery
                             photos={
