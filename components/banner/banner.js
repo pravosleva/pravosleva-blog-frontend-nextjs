@@ -11,7 +11,7 @@ const BgElement = Element.BgElement;
 const dev = process.env.NODE_ENV === 'development';
 const baseURL = dev
   ? 'http://localhost:1337'
-  : 'http://80.87.194.181/api';
+  : 'http://www.pravosleva.ru/api'; // 'http://80.87.194.181/api';
 
 const Banner = ({ articles }) => (
   <div className='fade-in-effect' >
@@ -23,10 +23,10 @@ const Banner = ({ articles }) => (
       style={{ margin: '30px 0 20px 0' }}
     >
       {
-        articles.map(({ id, photos, title, brief = 'No brief' }, i) => {
-          const bgSrc = photos && Array.isArray(photos) && photos.length > 0
+        articles.map(({ id, briefBackground, title, brief = 'No brief' }, i) => {
+          const bgSrc = briefBackground && briefBackground.url
             ?
-              dev ? `http://80.87.194.181/api${photos[0].url}` : `${baseURL}${photos[0].url}`
+              dev ? `http://80.87.194.181/api${briefBackground.url}` : `${baseURL}${briefBackground.url}`
             : '/text-1.jpeg';
           return (
             <Element
