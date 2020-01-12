@@ -137,7 +137,7 @@ const Article = ({ initArticleData: article }) => {
                             viewerIsOpen && currentPackIndex === i && images[currentImageIndex]
                             ? (
                               <Lightbox
-                                imageTitle={`${name ? `${name}: ` : ''}${currentImageIndex} / ${images.length}`}
+                                imageTitle={`${name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
                                 // imageCaption={`${formatDateByMS(createdAtMS)} (${photos.length} ${getFilesInRussian(photos.length)}${photos.length !== images.length ? `, из них ${images.length} ${getImagesInRussian(images.length)}` : ''})`}
                                 // imageCaption={images[photoIndex]}
                                 imagePadding={0}
