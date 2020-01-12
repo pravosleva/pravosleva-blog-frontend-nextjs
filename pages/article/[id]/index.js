@@ -20,7 +20,7 @@ const Gallery = dynamic(() => import('react-photo-gallery'), {
 const dev = process.env.NODE_ENV === 'development';
 const baseURL = dev
   ? 'http://localhost:1337'
-  : 'http://www.pravosleva.ru/api'; // 'http://80.87.194.181/api';
+  : 'http://80.87.194.181/api';
 const api = axios.create({ baseURL });
 // to best see the results, click the popout button in the preview browser
 // and resize your browser
