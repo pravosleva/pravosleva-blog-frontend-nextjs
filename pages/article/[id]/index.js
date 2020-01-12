@@ -108,7 +108,7 @@ const Article = ({ initArticleData: article }) => {
                             photos={
                               images
                                 .map(({ src }) => ({
-                                  src: dev ? `http://80.87.194.181/api${src}` : `${baseURL}${src}`,
+                                  src,
                                   width: 16,
                                   height: 9,
                                 }))
