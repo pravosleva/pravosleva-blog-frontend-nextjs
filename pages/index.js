@@ -166,7 +166,9 @@ const IndexPage = ({ initialArtiles }) => {
         {
           !isLoading && articles.length > 0
           ? (
-            <div style={{ marginBottom: '20px' }}>
+            <div
+              // style={{ marginBottom: '20px' }}
+            >
               {
                 articles.map(({ id, title, createdAt, tags = [] }) => (
                   <div
@@ -181,7 +183,7 @@ const IndexPage = ({ initialArtiles }) => {
                   >
                     <Link
                       href={`/article/${id}`}
-                    ><a className='special-link unselectable'>{title}</a></Link>
+                    ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
                     <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
                     {
                       tags.length > 0
@@ -241,6 +243,7 @@ async function _getQueryString({
     limit = 100,
     start = 0,
   } = options;
+
   if (limit) queryString += '&_limit=' + limit;
   if (start) queryString += '&_start=' + start;
   switch (targetField) {
@@ -254,7 +257,8 @@ async function _getQueryString({
       break;
     default: break;
   }
-  queryString += '&_sort=createdAt:DESC';
+  queryString += '&_sort=createdAt:DESC&isPublished_eq=true';
+
   return queryString.slice(1);
 }
 async function fetchArticles ({ queryText = '', targetField = 'body' }) {
@@ -266,7 +270,7 @@ async function fetchArticles ({ queryText = '', targetField = 'body' }) {
   });
   const route = queryText
     ? `/articles?${query}`
-    : '/articles?_sort=createdAt:DESC';
+    : '/articles?_sort=createdAt:DESC&isPublished_eq=true';
   const result = await api.get(route)
     .then(res => res.data)
     .catch(err => err);

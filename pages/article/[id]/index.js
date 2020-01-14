@@ -84,7 +84,10 @@ const Article = ({ initArticleData: article }) => {
                 ? <blockquote style={{ marginBottom: '30px' }} className='brooks fade-in-effect'>{article.brief}</blockquote>
                 : null
               }
-              <div className='article-body fade-in-effect'>{
+              <div
+                className='article-body fade-in-effect'
+                style={{ marginBottom: '40px' }}
+              >{
                 article.body
                 ? <ReactMarkdown source={article.body} />
                 : 'No body'
@@ -98,7 +101,7 @@ const Article = ({ initArticleData: article }) => {
                         <div
                           key={id}
                           style={{
-                            marginBottom: '30px'
+                            marginBottom: '40px'
                           }}
                           onClick={() => setCurrentPackIndex(i)}
                         >
@@ -171,7 +174,11 @@ const Article = ({ initArticleData: article }) => {
         }
         <div
           key={id}
-          style={{ padding: '10px 0 10px 0', marginBottom: '20px', width: '100%' }}
+          style={{
+            padding: '10px 0 10px 0',
+            // marginBottom: '20px',
+            width: '100%',
+          }}
           className='special-link-wrapper fade-in-effect unselectable'
         >
           <Link href="/"><a className='special-link'>Go back to the homepage</a></Link>
