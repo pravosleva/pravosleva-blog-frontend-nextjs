@@ -38,24 +38,35 @@ const Article = ({ initArticleData: article }) => {
   const router = useRouter();
   const { id } = router.query;
   // GALLERY:
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentPackIndex, setCurrentPackIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const openLightbox = useCallback((event, { photo, index }) => {
-    setCurrentImage(index);
+    setCurrentImageIndex(index);
     setViewerIsOpen(true);
   }, []);
   const closeLightbox = () => {
-    setCurrentImage(0);
+    setCurrentPackIndex(0);
+    setCurrentImageIndex(0);
     setViewerIsOpen(false);
   };
-  let images = [];
+  let imagesPacks = [];
 
-  if (article && article.photos && article.photos.length > 0) {
-    images = article.photos.map(({ url }) => ({
-      src: dev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
-      caption: article.title
-    }));
+  if (article && article.gallery && article.gallery.length > 0) {
+    article.gallery.forEach(({ name, description, images = [], id }) => {
+      imagesPacks.unshift({
+        id,
+        name,
+        description,
+        images: images.map(({ url }) => ({
+          src: dev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
+          caption: `${article.title}: ${description}.`,
+        }))
+      })
+    })
   }
+
+  console.log(imagesPacks);
 
   return (
     <>
@@ -73,65 +84,86 @@ const Article = ({ initArticleData: article }) => {
                 ? <blockquote style={{ marginBottom: '30px' }} className='brooks fade-in-effect'>{article.brief}</blockquote>
                 : null
               }
-              <div className='article-body fade-in-effect'>{
+              <div
+                className='article-body fade-in-effect'
+                style={{ marginBottom: '40px' }}
+              >{
                 article.body
                 ? <ReactMarkdown source={article.body} />
                 : 'No body'
               }</div>
               {
-                article.photos && article.photos.length > 0
+                article.gallery && imagesPacks.length > 0
                 ? (
-                  <div style={{
-                    marginBottom: '30px'
-                  }}>
-                    <Gallery
-                      photos={
-                        article.photos
-                          .map(({ url }) => ({
-                            src: dev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
-                            width: 16,
-                            height: 9,
-                          }))
-                      }
-                      onClick={openLightbox}
-                      direction='column'
-                      columns={columns}
-                    />
-                    {/* WAY 1: react-images
-                    <ModalGateway>
-                      {viewerIsOpen ? (
-                        <Modal onClose={closeLightbox}>
-                          <Carousel
-                            currentIndex={currentImage}
-                            views={article.photos.map(({ url }) => ({
-                              src: `${baseURL}${url}`,
-                              caption: article.title
-                            }))}
-                          />
-                        </Modal>
-                      ) : null}
-                    </ModalGateway>
-                    */}
-                    {/* WAY 2:  */}
+                  <>
                     {
-                      viewerIsOpen
-                      ? (
-                        <Lightbox
-                          imageTitle={`${currentImage + 1} / ${images.length}`}
-                          // imageCaption={`${formatDateByMS(createdAtMS)} (${photos.length} ${getFilesInRussian(photos.length)}${photos.length !== images.length ? `, из них ${images.length} ${getImagesInRussian(images.length)}` : ''})`}
-                          // imageCaption={images[photoIndex]}
-                          imagePadding={0}
-                          clickOutsideToClose={false}
-                          mainSrc={images[currentImage].src}
-                          nextSrc={images[(currentImage + 1) % images.length].src}
-                          prevSrc={images[(currentImage + images.length - 1) % images.length].src}
-                          onCloseRequest={closeLightbox}
-                          onMovePrevRequest={() => setCurrentImage((currentImage + images.length - 1) % images.length)}
-                          onMoveNextRequest={() => setCurrentImage((currentImage + 1) % images.length)}
-                        />
-                      ) : null
+                      imagesPacks.map(({ id, name, description, images }, i) => (
+                        <div
+                          key={id}
+                          style={{
+                            marginBottom: '40px'
+                          }}
+                          onClick={() => setCurrentPackIndex(i)}
+                        >
+                          { name && <h2>{name}</h2> }
+                          { description && <p>{description}</p> }
+                          <Gallery
+                            photos={
+                              images
+                                .map(({ src }) => ({
+                                  src,
+                                  width: 16,
+                                  height: 9,
+                                }))
+                            }
+                            onClick={openLightbox}
+                            direction='column'
+                            columns={columns}
+                          />
+                          {/* WAY 1: react-images
+                          <ModalGateway>
+                            {viewerIsOpen ? (
+                              <Modal onClose={closeLightbox}>
+                                <Carousel
+                                  currentIndex={currentPackIndex}
+                                  views={article.photos.map(({ url }) => ({
+                                    src: `${baseURL}${url}`,
+                                    caption: article.title
+                                  }))}
+                                />
+                              </Modal>
+                            ) : null}
+                          </ModalGateway>
+                          */}
+                          {/* WAY 2: react-image-lightbox */}
+                          {
+                            viewerIsOpen && currentPackIndex === i && images[currentImageIndex]
+                            ? (
+                              <Lightbox
+                                imageTitle={`${name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
+                                // imageCaption={`${formatDateByMS(createdAtMS)} (${photos.length} ${getFilesInRussian(photos.length)}${photos.length !== images.length ? `, из них ${images.length} ${getImagesInRussian(images.length)}` : ''})`}
+                                // imageCaption={images[photoIndex]}
+                                imagePadding={0}
+                                clickOutsideToClose={false}
+                                mainSrc={images[currentImageIndex].src}
+                                nextSrc={images[(currentImageIndex + 1) % images.length].src}
+                                prevSrc={images[(currentImageIndex + images.length - 1) % images.length].src}
+                                onCloseRequest={closeLightbox}
+                                onMovePrevRequest={() => {
+                                  // setCurrentPackIndex((currentImageIndex + images.length - 1) % images.length);
+                                  setCurrentImageIndex((currentImageIndex + images.length - 1) % images.length);
+                                }}
+                                onMoveNextRequest={() => {
+                                  // setCurrentPackIndex((currentImageIndex + 1) % images.length);
+                                  setCurrentImageIndex((currentImageIndex + 1) % images.length);
+                                }}
+                              />
+                            ) : null
+                          }
+                        </div>
+                      ))
                     }
-                  </div>
+                  </>
                 ) : null
               }
             </>
@@ -142,7 +174,11 @@ const Article = ({ initArticleData: article }) => {
         }
         <div
           key={id}
-          style={{ padding: '10px 0 10px 0', marginBottom: '20px', width: '100%' }}
+          style={{
+            padding: '10px 0 10px 0',
+            // marginBottom: '20px',
+            width: '100%',
+          }}
           className='special-link-wrapper fade-in-effect unselectable'
         >
           <Link href="/"><a className='special-link'>Go back to the homepage</a></Link>
