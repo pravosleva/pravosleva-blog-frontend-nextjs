@@ -40,9 +40,11 @@ template {
   display: none;
 }
 a {
-  font-family: Montserrat;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
+}
+a.special-link {
+  font-family: Montserrat;
 }
 a:active,
 a:hover {
