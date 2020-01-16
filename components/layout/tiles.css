@@ -1,0 +1,19 @@
+.tiles-wrapper {
+  font-family: Montserrat;
+  margin-bottom: 40px;
+
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.tiles-item {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: overlay,normal;
+
+  /* backgroundImage: `url(${bgSrc})`, */
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+
+  height: 300px;
+}

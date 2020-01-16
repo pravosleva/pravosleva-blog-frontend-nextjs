@@ -14,7 +14,8 @@ import PropTypes from 'prop-types';
 
 import Header from './header';
 import './layout.css';
-import './rc-banner-anim.css';
+// import './rc-banner-anim.css';
+import './tiles.css';
 import './block-quotes.css';
 import './react-image-lightbox.css';
 
