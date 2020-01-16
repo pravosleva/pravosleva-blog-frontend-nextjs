@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 
 import Layout from '../components/layout';
 import useDebounce from '../hooks/use-debounce';
-// import Banner from '../components/banner';
+import { Tiles } from '../components/Tiles';
 
 
 const dev = process.env.NODE_ENV === 'development';
@@ -39,10 +39,11 @@ const Loader = () => (
     />
   </div>
 );
-const Banner = dynamic(() => import('../components/Banner'), {
-  ssr: false,
-  loading: () => <Loader />,
-});
+// const Banner = dynamic(() => import('../components/Banner'), {
+//   ssr: false,
+//   loading: () => <Loader />,
+// });
+
 // const delay = (ms = 3000) => new Promise(res => setTimeout(res, ms));
 
 const IndexPage = ({ initialArtiles }) => {
@@ -138,19 +139,22 @@ const IndexPage = ({ initialArtiles }) => {
             : null
           }
         </div>
-        {
+        {/*
           isLoading
           ? <Loader />
           : articles.length > 0
             ? <Banner articles={articles} />
             : null
+        */}
+        {
+          isLoading
+          ? <Loader />
+          : <Tiles articles={articles} />
         }
         {
           !isLoading && articles.length > 0
           ? (
-            <div
-              // style={{ marginBottom: '20px' }}
-            >
+            <div>
               {
                 articles.map(({ id, title, createdAt, tags = [] }) => (
                   <div
@@ -200,7 +204,7 @@ const IndexPage = ({ initialArtiles }) => {
                 ))
               }
             </div>
-          ) : <div style={{ margin: '30px 0 30px 0' }}><em style={{ padding: '10px 0 10px 0', opacity: '0.4' }}>No results...</em></div>
+          ) : <div><em style={{ opacity: '0.4' }}>No results...</em></div>
         }
       </Layout>
     </>
