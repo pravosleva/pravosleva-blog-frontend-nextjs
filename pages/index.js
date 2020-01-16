@@ -18,29 +18,30 @@ const baseURL = dev
   ? 'http://localhost:1337'
   : 'http://80.87.194.181/api';
 const api = axios.create({ baseURL });
-const Banner = dynamic(() => import('../components/banner'), {
+const Loader = () => (
+  <div
+    className='fade-in-effect'
+    style={{
+      margin: '30px 0px 20px',
+      minHeight: '360px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}
+  >
+    <PulseLoader
+      // css={override}
+      size={15}
+      margin={5}
+      //size={"150px"} this also works
+      color='rgb(18, 58, 188)'
+      loading={true}
+    />
+  </div>
+);
+const Banner = dynamic(() => import('../components/Banner'), {
   ssr: false,
-  loading: () => (
-    <div
-      className='fade-in-effect'
-      style={{
-        margin: '30px 0px 20px',
-        minHeight: '360px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <PulseLoader
-        // css={override}
-        size={15}
-        margin={5}
-        //size={"150px"} this also works
-        color='rgb(18, 58, 188)'
-        loading={true}
-      />
-    </div>
-  ),
+  loading: () => <Loader />,
 });
 // const delay = (ms = 3000) => new Promise(res => setTimeout(res, ms));
 
@@ -139,29 +140,10 @@ const IndexPage = ({ initialArtiles }) => {
         </div>
         {
           isLoading
-          ? (
-            <div
-              className='fade-in-effect'
-              style={{
-                margin: '30px 0px 20px',
-                minHeight: '360px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <PulseLoader
-                // css={override}
-                size={15}
-                margin={5}
-                //size={"150px"} this also works
-                color='rgb(18, 58, 188)'
-                loading={true}
-              />
-            </div>
-          ) : articles.length > 0
-          ? <Banner articles={articles} />
-          : null
+          ? <Loader />
+          : articles.length > 0
+            ? <Banner articles={articles} />
+            : null
         }
         {
           !isLoading && articles.length > 0
