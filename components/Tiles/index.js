@@ -13,7 +13,7 @@ export const Tiles = ({
     {
       articles.length > 0
       ? (
-        <div className='tiles-wrapper'>
+        <div className='tiles-grid-wrapper'>
           {
             articles.map(({ id, briefBackground, title, brief = 'No brief' }, i) => {
               const bgSrc = briefBackground && briefBackground.url
@@ -23,7 +23,7 @@ export const Tiles = ({
 
               return (
                 <div
-                  className='tiles-item white'
+                  className='tiles-grid-item white'
                   key={id}
                   style={{
                     backgroundImage: `url(${bgSrc})`,
