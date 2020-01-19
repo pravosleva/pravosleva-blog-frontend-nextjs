@@ -18,13 +18,14 @@
     grid-auto-flow: dense;
   }
 
-  .tiles-grid-item:nth-of-type(5n) {
+  .tiles-grid-item:nth-of-type(5n),
+  .tiles-grid-item:nth-of-type(6n) {
     grid-column: span 2;
   }
-  .tiles-grid-item:nth-of-type(6n) {
-    /* grid-column: span 2; */
+  /*
+  .tiles-grid-item:nth-of-type(5n) {
     grid-row: span 2;
-  }
+  } */
 }
 .tiles-grid-item:nth-child(1) { border-top-left-radius: 20px; }
 .tiles-grid-item:last-child { border-bottom-right-radius: 20px; }

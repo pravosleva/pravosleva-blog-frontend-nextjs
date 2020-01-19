@@ -22,6 +22,7 @@ const Header = ({ siteTitle }) => (
       <h1 style={{ margin: 0, lineHeight: 'inherit', padding: '0px 1.0875rem' }}>
         <Link href="/">
           <a
+            // className='text-shadow-7'
             style={{
               color: `white`,
               textDecoration: `none`,

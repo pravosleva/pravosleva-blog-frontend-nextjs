@@ -787,3 +787,17 @@ div.article-body > blockquote {
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+
+/* HEADER */
+.text-shadow-7 {
+  color: white;
+  text-shadow: 2px 2px rgb(0, 123, 255), 4px 4px white, 6px 6px rgb(0, 123, 255);
+}
+.text-shadow-8 {
+  color: white;
+  text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white, 0 0 20px crimson, 0 0 35px crimson, 0 0 40px crimson, 0 0 50px crimson, 0 0 75px crimson;
+}
+.text-shadow-10 {
+  letter-spacing: 2px;
+  text-shadow: 1px 1px rgb(0, 123, 255), -1px -1px rgb(0, 123, 255);
+}
