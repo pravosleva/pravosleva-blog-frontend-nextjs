@@ -1,0 +1,17 @@
+{
+  "HOME": "Главная",
+  "LOGIN": "Логин",
+  "PROFILE": "Профиль",
+  "ADMIN": "Админ",
+  "SIMPLE": "Простое предложение",
+  "HELLO": "Привет, {name}. Добро пожаловать в {where}!",
+  "YOURE_WELCOME": "Добро пожаловать в {where}!",
+  "TIP": "Это <span style='color:red'>HTML</span>",
+  "TIP_VAR": "Это <span style='color:red'>{message}</span>",
+  "SALE_START": "Продажи начались {start, date}",
+  "SALE_END": "Продажи завершились {end, date, long}",
+  "COUPON": "Срок действия купона истекает в {expires, time, medium}",
+  "SALE_PRICE": "Цена {price, number, USD}",
+  "PHOTO": "Вы имеете {photoNum, plural, =0 {ни одного фото.} =1 {одно фото.} other {# фотки.}}",
+  "MESSAGE_NOT_IN_COMPONENT": "react-intl-universal способен интернационализировать сообщение вне React.Component"
+}

@@ -16,9 +16,14 @@ import './layout.css';
 import './tiles.css';
 import './block-quotes.css';
 import './react-image-lightbox.css';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { counterActions } from '../store/counter';
 
 
 const Layout = ({ children }) => {
+  // const count = useSelector(state => state.counter.count);
+  // const currentLang = useSelector(state => state.lang.current);
+  // const dispatch = useDispatch();
 
   return (
     <>

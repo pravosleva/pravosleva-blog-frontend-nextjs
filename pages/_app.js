@@ -1,9 +1,9 @@
 import App from 'next/app';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import Head from 'next/head';
-import url from 'url';
+// import url from 'url';
 
-// import withReduxStore from '../lib/with-redux-store';
+import withReduxStore from '../hocs/with-redux-store';
 
 
 // let gaTrackingId = process.env.GA_TRACKING_ID || '';
@@ -26,56 +26,55 @@ class MyApp extends App {
     const {
       Component,
       pageProps,
-      // reduxStore,
+      reduxStore,
     } = this.props;
 
     return (
       <>
-        {/* <Provider store={reduxStore}> */}
-          <Head>
-            {/* meta tags in progress... */}
-            <link rel="icon" href="/favicon.ico" />
-            <title>Pravosleva</title>
+        <Head>
+          {/* meta tags in progress... */}
+          <link rel="icon" href="/favicon.ico" />
+          <title>Pravosleva</title>
 
-            {/* ADDITIONAL */}
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            />
-            <link href='https://fonts.googleapis.com/css?family=Montserrat:400,500' rel='stylesheet' />
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossOrigin="anonymous" />
+          {/* ADDITIONAL */}
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <link href='https://fonts.googleapis.com/css?family=Montserrat:400,500' rel='stylesheet' />
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossOrigin="anonymous" />
 
-            {/* Global Site Tag (gtag.js) - Google Analytics
-              isProduction && (
-                <>
-                  <script dangerouslySetInnerHTML={{
-                    __html: `
+          {/* Global Site Tag (gtag.js) - Google Analytics
+            isProduction && (
+              <>
+                <script dangerouslySetInnerHTML={{
+                  __html: `
 (function (w, d, s, l, i) {
-  w[l] = w[l] || []
-  w[l].push({
-    'gtm.start':
-      new Date().getTime(), event: 'gtm.js'
-  })
-  var f = d.getElementsByTagName(s)[0],
-    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''
-  j.async = true
-  j.src =
-    'https://www.googletagmanager.com/gtm.js?id=' + i + dl
-  f.parentNode.insertBefore(j, f)
+w[l] = w[l] || []
+w[l].push({
+'gtm.start':
+  new Date().getTime(), event: 'gtm.js'
+})
+var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''
+j.async = true
+j.src =
+'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+f.parentNode.insertBefore(j, f)
 })(window, document, 'script', 'dataLayer', '${gaTrackingId}')
-                    `
-                  }} />
+                  `
+                }} />
 
-                </>
-              )
-            */}
-          </Head>
+              </>
+            )
+          */}
+        </Head>
+        <Provider store={reduxStore}>
           <Component {...pageProps} />
-        {/* </Provider> */}
+        </Provider>
       </>
     );
   }
 }
 
-// export default withReduxStore(MyApp);
-export default MyApp;
+export default withReduxStore(MyApp);
