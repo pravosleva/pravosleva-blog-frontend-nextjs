@@ -9,7 +9,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { useStaticQuery, graphql } from 'gatsby';
 
-import Header from './header';
+import Header from './Header/Desktop';
+import MobileHeader from './Header/Mobile';
 import './layout.css';
 // import './rc-banner-anim.css';
 import './tiles.css';
@@ -22,6 +23,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
+      <MobileHeader />
       <div
         style={{
           margin: `0 auto`,
