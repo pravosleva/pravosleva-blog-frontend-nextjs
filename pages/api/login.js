@@ -1,27 +1,51 @@
-import fetch from 'isomorphic-unfetch';
+// import fetch from 'isomorphic-unfetch';
+import axios from 'axios';
 
+
+const dev = process.env.NODE_ENV === 'development';
+const baseURL = dev
+  ? 'http://localhost:1337'
+  : 'http://80.87.194.181/api';
+const api = axios.create({ baseURL });
 
 export default async (req, res) => {
-  const { username } = await req.body;
+  const { username, password } = await req.body;
+
+  if (!username || !password) return res.status(500).json({ message: '(!username || !password) is true!' });
+
   console.log('username', username);
-  const url = `https://api.github.com/users/${username}`;
+  console.log('password', password);
+
+  const route = '/auth/local';
+  let status = 500;
 
   try {
-    const response = await fetch(url);
+    const response = await api.post(route,
+      { identifier: username, password },
+      { validateStatus: status => status >= 200 && status < 500 },
+    ) // { headers: { 'Authorization': `Bearer ${jwt}` } }
+      .then(res => {
+        status = res.status;
 
-    if (response.ok) {
-      const { id } = await response.json();
-      return res.status(200).json({ token: id });
+        return res.data;
+      })
+      .catch(err => err);
+
+    if (response.jwt) {
+      const { jwt } = await response;
+
+      return res.status(200).json({ jwt });
     } else {
-      // https://github.com/developit/unfetch#caveats
-      const error = new Error(response.statusText);
+      const error = new Error(response.status);
+
       error.response = response;
       throw error;
     }
   } catch (error) {
     const { response } = error;
+
     return response
-      ? res.status(response.status).json({ message: response.statusText })
+      ? res.status(status).json({ message: response.status })
       : res.status(400).json({ message: error.message });
   }
 };

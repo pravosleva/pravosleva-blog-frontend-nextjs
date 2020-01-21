@@ -1,33 +1,35 @@
 import React, { useState } from 'react';
 import fetch from 'isomorphic-unfetch';
 import Layout from '../components/layout';
-import { login } from '../hocs/auth';
+import { login } from '../helpers/auth';
 
 
 const Login = () => {
-  const [userData, setUserData] = useState({ username: '', error: '' });
+  const [userData, setUserData] = useState({ username: '', password: '', error: '' });
 
   const handleSubmit = async event => {
     event.preventDefault();
     setUserData(Object.assign({}, userData, { error: '' }));
 
     const username = userData.username;
+    const password = userData.password;
     const url = '/api/login';
 
     try {
       const response = await fetch(url, {
         method: 'POST',
-
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ username, password }),
       });
       if (response.status === 200) {
-        const { token } = await response.json();
-        await login({ token });
+        const { jwt } = await response.json();
+
+        await login({ jwt });
       } else {
         console.log('Login failed.')
         // https://github.com/developit/unfetch#caveats
         let error = new Error(response.statusText);
+
         error.response = response;
         throw error;
       }
@@ -38,6 +40,7 @@ const Login = () => {
       )
 
       const { response } = error;
+
       setUserData(
         Object.assign({}, userData, {
           error: response ? response.statusText : error.message,
@@ -50,7 +53,7 @@ const Login = () => {
     <Layout>
       <div className="login">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="username">GitHub username</label>
+          <label htmlFor="username">Username</label>
 
           <input
             type="text"
@@ -60,6 +63,20 @@ const Login = () => {
             onChange={event =>
               setUserData(
                 Object.assign({}, userData, { username: event.target.value })
+              )
+            }
+          />
+
+          <label htmlFor="password">Password</label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={userData.password}
+            onChange={event =>
+              setUserData(
+                Object.assign({}, userData, { password: event.target.value })
               )
             }
           />

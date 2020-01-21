@@ -3,16 +3,18 @@ import Router from 'next/router';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 
-export const login = ({ token }) => {
-  cookie.set('token', token, { expires: 1 });
-  Router.push('/profile');
+export const login = ({ jwt }) => {
+  if (jwt) {
+    cookie.set('jwt', jwt, { expires: 1 });
+    Router.push('/profile');
+  }
 }
 
 export const auth = ctx => {
-  const { token } = nextCookie(ctx);
+  const { jwt } = nextCookie(ctx);
 
-  // If there's no token, it means the user is not logged in.
-  if (!token) {
+  // If there's no jwt, it means the user is not logged in.
+  if (!jwt) {
     if (typeof window === 'undefined') {
       ctx.res.writeHead(302, { Location: '/login' });
       ctx.res.end();
@@ -21,11 +23,11 @@ export const auth = ctx => {
     }
   }
 
-  return token
+  return jwt
 }
 
 export const logout = () => {
-  cookie.remove('token');
+  cookie.remove('jwt');
   // to support logging out from all windows
   window.localStorage.setItem('logout', Date.now());
   Router.push('/login');
@@ -53,13 +55,13 @@ export const withAuthSync = WrappedComponent => {
   }
 
   Wrapper.getInitialProps = async ctx => {
-    const token = auth(ctx)
+    const jwt = auth(ctx)
 
     const componentProps =
       WrappedComponent.getInitialProps &&
       (await WrappedComponent.getInitialProps(ctx))
 
-    return { ...componentProps, token }
+    return { ...componentProps, jwt }
   }
 
   return Wrapper

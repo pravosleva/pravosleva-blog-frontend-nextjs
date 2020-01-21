@@ -3,19 +3,29 @@ import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import Layout from '../components/layout';
-import { withAuthSync } from '../hocs/auth';
-import getHost from '../hocs/auth/get-host';
+import { withAuthSync } from '../helpers/auth';
+import getHost from '../helpers/auth/get-host';
 
 
 const Profile = props => {
-  const { name, login, bio, avatarUrl } = props.data;
+  // const { name, login, bio, avatarUrl } = props.data;
 
   return (
     <Layout>
+      {/*
       <img src={avatarUrl} alt="Avatar" />
       <h1>{name}</h1>
       <p className="lead">{login}</p>
       <p>{bio}</p>
+      */}
+
+      <h1>User</h1>
+      <div
+        className='article-body'
+        style={{ marginBottom: '40px', marginTop: '30px' }}
+      >
+        <pre>{JSON.stringify(props, null, 2)}</pre>
+      </div>
 
       <style jsx>{`
         img {
@@ -40,7 +50,7 @@ const Profile = props => {
 }
 
 Profile.getInitialProps = async ctx => {
-  const { token } = nextCookie(ctx);
+  const { jwt } = nextCookie(ctx);
   const apiUrl = getHost(ctx.req) + '/api/profile';
 
   const redirectOnError = () =>
@@ -51,15 +61,15 @@ Profile.getInitialProps = async ctx => {
   try {
     const response = await fetch(apiUrl, {
       credentials: 'include',
-      headers: {
-        Authorization: JSON.stringify({ token }),
-      },
+      headers: { Authorization: `Bearer ${jwt}` },
     })
 
     if (response.ok) {
-      const js = await response.json();
-      console.log('js', js);
-      return js;
+      const user = await response.json();
+
+      console.table({ ...user });
+
+      return { ...user };
     } else {
       // https://github.com/developit/unfetch#caveats
       return await redirectOnError();
