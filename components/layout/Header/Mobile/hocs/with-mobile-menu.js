@@ -32,8 +32,9 @@ const Sidebar = styled.div`
     transform: translateX(0);
     transition: transform 0.5s ease-in-out, opacity 0.7s ease-in-out;
     // border: 1px solid black;
-    background-color: #007bff;
-    // background-color: #2d4262
+    // background-color: #007bff;
+    // background-color: #2d4262;
+    background-color: #2E65B2;
     > ul {
       margin: 0;
       padding: 0;
@@ -60,8 +61,8 @@ const Sidebar = styled.div`
 
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
-  { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated'] },
-  { path: '/login', label: 'Login', id: 2, accessForRoles: ['public', 'authenticated'] },
+  { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated', 'free'] },
+  { path: '/login', label: 'Login', id: 2, accessForRoles: ['public', 'authenticated', 'free'] },
   // { path: '/graphql-sample', label: 'GraphQL', id: 3, accessForRoles: ['free'] },
 ];
 
@@ -133,7 +134,12 @@ export const withMobileMenu = (ComposedComponent) => compose(
                   key={id}
                   onClick={() => sidebarToggler()}
                 >
-                  <Link href={path}><a>{label}</a></Link>
+                  <Link href={path}>
+                    <a
+                      style={{
+                        fontFamily: 'Montserrat'
+                      }}
+                    >{label}</a></Link>
                 </li>
               )
             } else {

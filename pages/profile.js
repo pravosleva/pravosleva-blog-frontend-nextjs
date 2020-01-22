@@ -11,7 +11,7 @@ import getHost from '../helpers/auth/get-host';
 
 const Profile = props => {
   // const { name, login, bio, avatarUrl } = props.data;
-  const user =  useSelector(state => state.userInfo.fromServer);
+  const userInfoFromServer =  useSelector(state => state.userInfo.fromServer);
 
   return (
     <Layout>
@@ -22,7 +22,7 @@ const Profile = props => {
       <p>{bio}</p>
       */}
 
-      <h2>from getInitialProps</h2>
+      <h2>From getInitialProps</h2>
       <ul>
         <li>DONE: Was received by SSR for this page</li>
       </ul>
@@ -32,16 +32,16 @@ const Profile = props => {
       >
         <pre>{JSON.stringify(props, null, 2)}</pre>
       </div>
-      <h2>from Redux store</h2>
+      <h2>From Redux store</h2>
       <ul>
-        <li>DONE: Will be set after login:<br /><code>await login().then(user => dispatch(actionCreator(user)))</code></li>
+        <li>DONE: Will be set after login:<br /><code>await login().then(usr => dispatch(actionCreator(usr)))</code></li>
         <li>TODO: Should be set after <code>/users/me</code></li>
       </ul>
       <div
         className='article-body'
         style={{ marginBottom: '40px', marginTop: '30px' }}
       >
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+        <pre>{JSON.stringify(userInfoFromServer, null, 2)}</pre>
       </div>
 
       <style jsx>{`
@@ -82,11 +82,11 @@ Profile.getInitialProps = async ctx => {
     })
 
     if (response.ok) {
-      const user = await response.json();
+      const usr = await response.json();
 
-      console.table({ ...user });
+      console.table({ ...usr });
 
-      return { ...user };
+      return { ...usr };
     } else {
       // https://github.com/developit/unfetch#caveats
       return await redirectOnError();

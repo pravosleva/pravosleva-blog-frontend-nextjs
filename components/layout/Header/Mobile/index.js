@@ -97,6 +97,7 @@ const MobileHeader = ({
                 marginRight: 'auto',
                 marginBottom: '0px',
                 fontFamily: 'Montserrat',
+                fontWeight: '500',
                 // To be yellow or not?
                 // color: isCurrentLocation(location.pathname, '/')
                 //   ? 'yellow' // '#FFDF64'
@@ -104,7 +105,7 @@ const MobileHeader = ({
               }}
               onClick={() => sidebarToggler(false)}
             >
-              <Link href='/'><a>Pravosleva</a></Link>
+              <Link href='/'><a>Pravo$leva</a></Link>
             </li>
 
             {/*

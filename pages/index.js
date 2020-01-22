@@ -34,7 +34,8 @@ const Loader = () => (
       size={15}
       margin={5}
       //size={"150px"} this also works
-      color='rgb(18, 58, 188)'
+      // color='rgb(18, 58, 188)'
+      color='#2E65B2'
       loading={true}
     />
   </div>

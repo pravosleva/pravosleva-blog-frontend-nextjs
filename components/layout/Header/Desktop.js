@@ -21,9 +21,11 @@ const Nav = styled('div')`
   color: #fff;
   background-color: #2E65B2;
   > ul {
+    max-width: 960px;
+
     display: flex;
     list-style: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     line-height: 80px;
     font-size: 16px;
