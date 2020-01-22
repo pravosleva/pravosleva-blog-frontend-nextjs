@@ -2,11 +2,31 @@ import { useEffect } from 'react';
 import Router from 'next/router';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
+import axios from 'axios';
 
-export const login = ({ jwt }) => {
+
+const api = axios.create({ baseURL: '/api' });
+
+export const login = async ({ jwt }) => {
   if (jwt) {
+    const user = await api.get('/profile', {
+      headers: { 'Authorization': `Bearer ${jwt}` }
+    })
+      .then(res => {
+        if (res.status === 200) return res.data;
+
+        throw res;
+      })
+      .catch(err => err);
+
     cookie.set('jwt', jwt, { expires: 1 });
     Router.push('/profile');
+
+    if (user) {
+      return Promise.resolve(user);
+    } else {
+      return Promise.reject('user was not received in helpers/auth/index');
+    }
   }
 }
 
@@ -55,7 +75,7 @@ export const withAuthSync = WrappedComponent => {
   }
 
   Wrapper.getInitialProps = async ctx => {
-    const jwt = auth(ctx)
+    const jwt = auth(ctx);
 
     const componentProps =
       WrappedComponent.getInitialProps &&
@@ -64,5 +84,5 @@ export const withAuthSync = WrappedComponent => {
     return { ...componentProps, jwt }
   }
 
-  return Wrapper
+  return Wrapper;
 }

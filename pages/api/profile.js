@@ -1,4 +1,3 @@
-// import fetch from 'isomorphic-unfetch';
 import axios from 'axios';
 
 
@@ -30,8 +29,6 @@ export default async (req, res) => {
         return res.data;
       })
       .catch(err => err);
-
-    // console.log(response);
 
     if (response.id) {
       // OK: User received!

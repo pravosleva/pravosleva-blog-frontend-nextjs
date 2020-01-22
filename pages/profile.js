@@ -2,6 +2,8 @@ import React from 'react';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
+import { useSelector } from 'react-redux';
+
 import Layout from '../components/layout';
 import { withAuthSync } from '../helpers/auth';
 import getHost from '../helpers/auth/get-host';
@@ -9,6 +11,7 @@ import getHost from '../helpers/auth/get-host';
 
 const Profile = props => {
   // const { name, login, bio, avatarUrl } = props.data;
+  const user =  useSelector(state => state.userInfo.fromServer);
 
   return (
     <Layout>
@@ -19,12 +22,26 @@ const Profile = props => {
       <p>{bio}</p>
       */}
 
-      <h1>User</h1>
+      <h2>from getInitialProps</h2>
+      <ul>
+        <li>DONE: Was received by SSR for this page</li>
+      </ul>
       <div
         className='article-body'
         style={{ marginBottom: '40px', marginTop: '30px' }}
       >
         <pre>{JSON.stringify(props, null, 2)}</pre>
+      </div>
+      <h2>from Redux store</h2>
+      <ul>
+        <li>DONE: Will be set after login:<br /><code>await login().then(user => dispatch(actionCreator(user)))</code></li>
+        <li>TODO: Should be set after <code>/users/me</code></li>
+      </ul>
+      <div
+        className='article-body'
+        style={{ marginBottom: '40px', marginTop: '30px' }}
+      >
+        <pre>{JSON.stringify(user, null, 2)}</pre>
       </div>
 
       <style jsx>{`

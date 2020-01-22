@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import fetch from 'isomorphic-unfetch';
+import { useDispatch } from 'react-redux';
+
 import Layout from '../components/layout';
 import { login } from '../helpers/auth';
+import { userInfoActions } from '../store/reducer/user-info';
 
 
 const Login = () => {
   const [userData, setUserData] = useState({ username: '', password: '', error: '' });
+  const dispatch = useDispatch();
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -22,9 +26,14 @@ const Login = () => {
         body: JSON.stringify({ username, password }),
       });
       if (response.status === 200) {
-        const { jwt } = await response.json();
+        const json = await response.json()
+        const { jwt } = json;
 
-        await login({ jwt });
+        await login({ jwt })
+          .then(user => {
+            dispatch(userInfoActions.fillDelta({ isLoading: false, fromServer: user, isLoadedSuccessfully: true }));
+          })
+          .catch(err => console.log(err));
       } else {
         console.log('Login failed.')
         // https://github.com/developit/unfetch#caveats
