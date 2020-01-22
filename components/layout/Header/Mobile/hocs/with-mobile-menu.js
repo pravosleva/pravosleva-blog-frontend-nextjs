@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { compose, withStateHandlers, withProps } from 'recompose';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 
 
-// import { scrollDisablingComponentsActions } from '../../../../../store/reducers/scroll-disabling-components';
+import { scrollDisablingComponentsActions } from '../../../../../store/reducer/scroll-disabling-components';
 import { withScrollDisabler } from '../../../../../helpers/body-scroll-disabler';
 
 
@@ -71,23 +72,23 @@ export const withMobileMenu = (ComposedComponent) => compose(
   withStateHandlers(
     { sidebarOpened: false },
     {
-      sidebarToggler: ({ sidebarOpened }, props) => (val) => ({
-        sidebarOpened: (val === true || val === false )
-          ? val
-          : !sidebarOpened
+      sidebarToggler: ({ sidebarOpened }, props) => val => {
+        // Need to scroll top:
+        if (window) {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        }
+
+        return ({
+          sidebarOpened: (val === true || val === false )
+            ? val
+            : !sidebarOpened
         })
+      }
     },
   ),
-  // withProps({
-  //   scrollToRef: props => (ref, paddingTop = 10) => {
-  //     if (ref.current && window) {
-  //       window.scrollTo({
-  //         top: ref.current.offsetTop - paddingTop,
-  //         behavior: 'smooth',
-  //       });
-  //     }
-  //   },
-  // }),
   withScrollDisabler,
 )(({
   // Sidebar hoc:
@@ -100,23 +101,23 @@ export const withMobileMenu = (ComposedComponent) => compose(
 
   ...props
 }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const user = useSelector(state => state.userInfo.fromServer);
   // const userInfoRole = user ? user.role : null;
 
   useEffect(() => {
     if (sidebarOpened) {
-      scrollToRef(topDocRef);
-      // dispatch(scrollDisablingComponentsActions.add('Layout_Header_Mobile_hocs_with-mobile-menu'));
+      // scrollToRef(topDocRef);
+      dispatch(scrollDisablingComponentsActions.add('Layout_Header_Mobile_hocs_with-mobile-menu'));
     } else {
-      // dispatch(scrollDisablingComponentsActions.remove('Layout_Header_Mobile_hocs_with-mobile-menu'));
+      dispatch(scrollDisablingComponentsActions.remove('Layout_Header_Mobile_hocs_with-mobile-menu'));
       // Or this:
       // dispatch(scrollDisablingComponentsActions.reset());
     }
   }, [
     sidebarOpened,
-    scrollToRef,
-    // dispatch,
+    // scrollToRef,
+    dispatch,
     topDocRef,
   ]);
 
@@ -128,8 +129,11 @@ export const withMobileMenu = (ComposedComponent) => compose(
 
             if (accessForRoles.includes('free')) {
               return (
-                <li key={id}>
-                  <Link href={path} onClick={sidebarToggler}><a>{label}</a></Link>
+                <li
+                  key={id}
+                  onClick={() => sidebarToggler()}
+                >
+                  <Link href={path}><a>{label}</a></Link>
                 </li>
               )
             } else {
@@ -147,7 +151,12 @@ export const withMobileMenu = (ComposedComponent) => compose(
           })}
         </ul>
       </Sidebar>
-      <ComposedComponent {...props} sidebarOpened={sidebarOpened} sidebarToggler={sidebarToggler} />
+      <ComposedComponent
+        {...props}
+        sidebarOpened={sidebarOpened}
+        sidebarToggler={sidebarToggler}
+        // scrollToRef={scrollToRef}
+      />
     </Wrapper>
   )
 });

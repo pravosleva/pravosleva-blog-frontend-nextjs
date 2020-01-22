@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 export const withScrollDisabler = WrappedComponent => {
   const Wrapper = props => {
-    // const scrollDisablingComponentsList = useSelector(state => state.scrollDisablingComponents.list);
+    const scrollDisablingComponentsList = useSelector(state => state.scrollDisablingComponents.list);
     // const dispatch = useDispatch();
 
     const scrollToRef = (ref, paddingTop = 10) => {
@@ -17,17 +17,13 @@ export const withScrollDisabler = WrappedComponent => {
     };
 
     useEffect(() => {
-      /*
       const shouldDisable = scrollDisablingComponentsList.length > 0;
 
       document.body.style.overflow = shouldDisable ? 'hidden' : 'auto';
       document.body.style.position = shouldDisable ? 'fixed' : null;
       document.body.style.left = shouldDisable ? '0' : null;
       document.body.style.right = shouldDisable ? '0' : null;
-      */
-    }, [
-      // scrollDisablingComponentsList.length
-    ]);
+    }, [scrollDisablingComponentsList.length]);
 
     return <WrappedComponent {...props} scrollToRef={scrollToRef} />;
   }

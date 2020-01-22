@@ -91,20 +91,20 @@ const MobileHeader = ({
       >
         <Nav ref={topDocRef}>
           <ul>
-            <li style={{
-              marginLeft: '20px',
-              marginRight: 'auto',
-              marginBottom: '0px',
-              fontFamily: 'Montserrat',
-              // To be yellow or not?
-              // color: isCurrentLocation(location.pathname, '/')
-              //   ? 'yellow' // '#FFDF64'
-              //   : 'inherit',
-            }}>
-              <Link
-                href='/'
-                onClick={() => sidebarToggler(false)}
-                style={{ color: 'inherit' }}><a>Pravosleva</a></Link>
+            <li
+              style={{
+                marginLeft: '20px',
+                marginRight: 'auto',
+                marginBottom: '0px',
+                fontFamily: 'Montserrat',
+                // To be yellow or not?
+                // color: isCurrentLocation(location.pathname, '/')
+                //   ? 'yellow' // '#FFDF64'
+                //   : 'inherit',
+              }}
+              onClick={() => sidebarToggler(false)}
+            >
+              <Link href='/'><a>Pravosleva</a></Link>
             </li>
 
             {/*
@@ -160,7 +160,10 @@ const MobileHeader = ({
                 alignItems: 'center',
               }}
             >
-              <HamburgerButton onClick={sidebarToggler} sidebarOpened={sidebarOpened}>
+              <HamburgerButton
+                onClick={sidebarToggler}
+                sidebarOpened={sidebarOpened}
+              >
                 {
                   sidebarOpened
                   ? <CrossCloseIcon />
