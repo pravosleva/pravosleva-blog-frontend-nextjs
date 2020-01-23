@@ -5,8 +5,8 @@ import nextCookie from 'next-cookies';
 import { useSelector } from 'react-redux';
 
 import Layout from '../components/layout';
-import { withAuthSync } from '../helpers/auth';
-import getHost from '../helpers/auth/get-host';
+import { withAuthSync } from '../hocs/auth';
+import getHost from '../hocs/auth/get-host';
 
 
 const Profile = props => {
@@ -68,7 +68,7 @@ const Profile = props => {
 
 Profile.getInitialProps = async ctx => {
   const { jwt } = nextCookie(ctx);
-  const apiUrl = getHost(ctx.req) + '/api/profile';
+  const nextApiUrl = getHost(ctx.req) + '/api/profile';
 
   const redirectOnError = () =>
     typeof window !== 'undefined'
@@ -76,10 +76,10 @@ Profile.getInitialProps = async ctx => {
       : ctx.res.writeHead(302, { Location: '/login' }).end();
 
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(nextApiUrl, {
       credentials: 'include',
       headers: { Authorization: `Bearer ${jwt}` },
-    })
+    });
 
     if (response.ok) {
       const usr = await response.json();

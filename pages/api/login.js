@@ -4,16 +4,13 @@ import axios from 'axios';
 const dev = process.env.NODE_ENV === 'development';
 const baseURL = dev
   ? 'http://localhost:1337'
-  : 'http://80.87.194.181/api';
+  : 'http://80.87.194.181/strapi';
 const api = axios.create({ baseURL });
 
 export default async (req, res) => {
   const { username, password } = await req.body;
 
   if (!username || !password) return res.status(500).json({ message: '(!username || !password) is true!' });
-
-  console.log('username', username);
-  console.log('password', password);
 
   const route = '/auth/local';
   let status = 500;

@@ -3,7 +3,7 @@ import fetch from 'isomorphic-unfetch';
 import { useDispatch } from 'react-redux';
 
 import Layout from '../components/layout';
-import { login } from '../helpers/auth';
+import { login } from '../hocs/auth/fns';
 import { userInfoActions } from '../store/reducer/user-info';
 
 
@@ -17,10 +17,15 @@ const Login = () => {
 
     const username = userData.username;
     const password = userData.password;
-    const url = '/api/login';
+    const nextApiUrl = '/api/login';
+
+    if (!username || !password) {
+      setUserData(Object.assign({}, userData, { error: 'Please check your data.' }));
+      return;
+    };
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(nextApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -29,11 +34,15 @@ const Login = () => {
         const json = await response.json()
         const { jwt } = json;
 
+        dispatch(userInfoActions.fillDelta({ isLoading: true, isLoadedSuccessfully: false }));
         await login({ jwt })
           .then(user => {
             dispatch(userInfoActions.fillDelta({ isLoading: false, fromServer: user, isLoadedSuccessfully: true }));
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            dispatch(userInfoActions.fillDelta({ isLoading: false, fromServer: err, isLoadedSuccessfully: false }));
+            console.log(err);
+          });
       } else {
         console.log('Login failed.')
         // https://github.com/developit/unfetch#caveats
@@ -53,6 +62,7 @@ const Login = () => {
       setUserData(
         Object.assign({}, userData, {
           error: response ? response.statusText : error.message,
+          password: '',
         }),
       );
     }
@@ -65,13 +75,14 @@ const Login = () => {
           <label htmlFor="username">Username</label>
 
           <input
+            className='standart'
             type="text"
             id="username"
             name="username"
             value={userData.username}
             onChange={event =>
               setUserData(
-                Object.assign({}, userData, { username: event.target.value })
+                Object.assign({}, userData, { username: event.target.value, error: '' })
               )
             }
           />
@@ -79,18 +90,19 @@ const Login = () => {
           <label htmlFor="password">Password</label>
 
           <input
+            className='standart'
             type="password"
             id="password"
             name="password"
             value={userData.password}
             onChange={event =>
               setUserData(
-                Object.assign({}, userData, { password: event.target.value })
+                Object.assign({}, userData, { password: event.target.value, error: '' })
               )
             }
           />
 
-          <button type="submit">Login</button>
+          <button className='standart' type="submit">Login</button>
 
           {userData.error && <p className="error">Error: {userData.error}</p>}
         </form>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 
 import { scrollDisablingComponentsActions } from '../../../../../store/reducer/scroll-disabling-components';
-import { withScrollDisabler } from '../../../../../helpers/body-scroll-disabler';
+import { withScrollDisabler } from '../../../../../hocs/body-scroll-disabler';
 
 
 const Wrapper = styled.div`
@@ -62,7 +62,7 @@ const Sidebar = styled.div`
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
   { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated', 'free'] },
-  { path: '/login', label: 'Login', id: 2, accessForRoles: ['public', 'authenticated', 'free'] },
+  // { path: '/login', label: 'Login', id: 2, accessForRoles: ['public', 'authenticated', 'free'] },
   // { path: '/graphql-sample', label: 'GraphQL', id: 3, accessForRoles: ['free'] },
 ];
 
@@ -144,15 +144,15 @@ export const withMobileMenu = (ComposedComponent) => compose(
               )
             } else {
               // For current user:
-              // if (userInfoRole && userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
-              //   return (
-              //     <li key={id}>
-              //       <Link href={path} onClick={sidebarToggler}><a>{label}</a></Link>
-              //     </li>
-              //   )
-              // } else {
+              if (userInfoRole && userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
+                return (
+                  <li key={id}>
+                    <Link href={path} onClick={sidebarToggler}><a>{label}</a></Link>
+                  </li>
+                )
+              } else {
                 return null;
-              // }
+              }
             }
           })}
         </ul>

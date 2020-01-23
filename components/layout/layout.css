@@ -118,6 +118,12 @@ select,
 textarea {
   font: inherit;
   margin: 0;
+  border-radius: 6px;
+  font-family: 'Montserrat';
+}
+input.standart,
+button.standart {
+  padding: 20px;
 }
 optgroup {
   font-weight: 700;
@@ -631,6 +637,9 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+label {
+  font-family: 'Montserrat';
 }
 
 /* SPECIAL LINKS */

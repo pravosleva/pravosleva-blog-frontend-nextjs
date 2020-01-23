@@ -1,6 +1,7 @@
 import Headroom from 'react-headroom';
 import styled, { keyframes, css } from 'styled-components';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 import { withMobileMenu } from './hocs/with-mobile-menu';
 import { HamburgerIcon, CrossCloseIcon } from './components';
@@ -68,14 +69,14 @@ const Nav = styled('div')`
   }
   // animation:${slideDownEffect} 1s 1;
 `;
-const isCurrentLocation = (current, mayBe) => current === mayBe;
-const getSlicedText = ({ text, limit = 7 }) => {
-  let sliced = text.slice(0, limit);
-
-  if (sliced.length < text.length) sliced += '...';
-
-  return sliced;
-};
+// const isCurrentLocation = (current, mayBe) => current === mayBe;
+// const getSlicedText = ({ text, limit = 7 }) => {
+//   let sliced = text.slice(0, limit);
+//
+//   if (sliced.length < text.length) sliced += '...';
+//
+//   return sliced;
+// };
 
 const MobileHeader = ({
   // withMobileMenu:
@@ -83,6 +84,9 @@ const MobileHeader = ({
   sidebarOpened,
   topDocRef,
 }) => {
+  const user = useSelector(state => state.userInfo.fromServer);
+  const isUserLogged = user && user ? user.id : null;
+
   return (
     <Headroom>
       <header
@@ -108,19 +112,20 @@ const MobileHeader = ({
               <Link href='/'><a>Pravo$leva</a></Link>
             </li>
 
-            {/*
+            {
               !isUserLogged && (
                 <li style={{
                   display: 'flex',
                   alignItems: 'center',
 
                   // TMP: For centering (no burger menu):
-                  marginRight: '20px',
+                  // marginRight: '20px',
+                  marginBottom: '0px',
                 }}>
-                  <LoginInModal device='mobile' />
+                  <Link href='/login'><a>Login</a></Link>
                 </li>
               )
-            */}
+            }
             {/*
               isUserLogged && (
                 <>
