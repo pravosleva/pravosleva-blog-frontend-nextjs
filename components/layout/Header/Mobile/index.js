@@ -121,6 +121,7 @@ const MobileHeader = ({
                   // TMP: For centering (no burger menu):
                   // marginRight: '20px',
                   marginBottom: '0px',
+                  fontFamily: 'Montserrat',
                 }}>
                   <Link href='/login'><a>Login</a></Link>
                 </li>
