@@ -23,7 +23,7 @@ const Loader = () => (
     className='fade-in-effect'
     style={{
       margin: '30px 0px 20px',
-      minHeight: '360px',
+      // minHeight: '360px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
@@ -148,9 +148,10 @@ const IndexPage = ({ initialArtiles }) => {
             : null
         */}
         {
-          isLoading
-          ? <Loader />
-          : <Tiles articles={articles} />
+          <Tiles articles={articles} />
+        }
+        {
+          isLoading && <Loader />
         }
         {
           !isLoading && articles.length > 0

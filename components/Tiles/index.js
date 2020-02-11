@@ -1,4 +1,6 @@
+import { memo } from 'react';
 import Link from 'next/link';
+import { Map } from 'immutable';
 
 
 const dev = process.env.NODE_ENV === 'development';
@@ -6,7 +8,7 @@ const baseURL = dev
   ? 'http://localhost:1337'
   : 'http://www.pravosleva.ru/api'; // 'http://80.87.194.181/api';
 
-export const Tiles = ({
+const Tls = ({
   articles,
 }) => (
   <>
@@ -50,3 +52,20 @@ export const Tiles = ({
     }
   </>
 );
+function areEqual(prevProps, nextProps) {
+  /*
+  возвращает true, если nextProps рендерит
+  тот же результат что и prevProps,
+  иначе возвращает false
+  */
+
+  const test1 = new Map({ ...prevProps.articles });
+  const test2 = new Map({ ...nextProps.articles });
+
+  console.log(test1);
+  console.log(test2);
+
+  return test1.equals(test2);
+}
+
+export const Tiles = memo(Tls, areEqual);
