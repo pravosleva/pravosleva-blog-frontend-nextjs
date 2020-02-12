@@ -15,7 +15,7 @@ const Tls = ({
     {
       articles.length > 0
       ? (
-        <div className='tiles-grid-wrapper'>
+        <div className='tiles-grid-wrapper fade-in-effect'>
           {
             articles.map(({ id, briefBackground, title, brief = 'No brief' }, i) => {
               const bgSrc = briefBackground && briefBackground.url
