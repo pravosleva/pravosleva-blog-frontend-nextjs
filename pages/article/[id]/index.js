@@ -20,7 +20,7 @@ const Gallery = dynamic(() => import('react-photo-gallery'), {
 const dev = process.env.NODE_ENV === 'development';
 const baseURL = dev
   ? 'http://localhost:1337'
-  : 'http://80.87.194.181/api';
+  : 'http://pravosleva.ru/api';
 const api = axios.create({ baseURL });
 // to best see the results, click the popout button in the preview browser
 // and resize your browser
@@ -66,12 +66,39 @@ const Article = ({ initArticleData: article }) => {
     })
   }
 
-  console.log(imagesPacks);
+  const bgSrc = briefBackground && briefBackground.url
+    ?
+      dev ? `http://80.87.194.181/api${briefBackground.url}` : `${baseURL}${briefBackground.url}`
+    : '/text-1.jpeg';
+  const thisPageUrl = dev ? `http://pravosleva.ru/article/${article.id}` : `http://localhost:1337/article/${article.id}`;
 
   return (
     <>
       <Head>
         <title>{`Pravosleva | ${article && article.title ? article.title : 'Not found'}`}</title>
+        {
+          !!article.brief &&
+          <meta name='description' content={article.brief} />
+        }
+        {
+          !!article.brief &&
+          <meta property='og:description' content={article.brief} />
+        }
+        {
+          !!article.briefBackground && !!article.briefBackground.url && // 537x240
+          <meta property='vk:image' content={bgSrc} />
+        }
+        {
+          !!article.briefBackground && !!article.briefBackground.url && // 1024x512
+          <meta property='twitter:image' content={bgSrc} />
+        }
+        <meta property='og:image:width' content='600' />
+        <meta property='og:image:height' content='315' />
+        <meta property='og:title' content={article.title} />
+        <meta property='og:image' content={bgSrc} />
+        <meta property='og:type' content='article' />
+        <meta property='og:url' content={thisPageUrl} />
+        <meta property='og:site_name' content='pravosleva.ru' />
       </Head>
       <Layout>
         {
