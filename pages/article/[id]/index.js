@@ -86,11 +86,11 @@ const Article = ({ initArticleData: article }) => {
           <meta property='og:description' content={article.brief} />
         }
         {
-          !!article.briefBackground && !!article.briefBackground.url && // 537x240
+          bgSrc && // 537x240
           <meta property='vk:image' content={bgSrc} />
         }
         {
-          !!article.briefBackground && !!article.briefBackground.url && // 1024x512
+          bgSrc && // 1024x512
           <meta property='twitter:image' content={bgSrc} />
         }
         <meta property='og:image:width' content='600' />
