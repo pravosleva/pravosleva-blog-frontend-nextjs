@@ -17,8 +17,9 @@ const Gallery = dynamic(() => import('react-photo-gallery'), {
 });
 
 // const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
-const dev = process.env.NODE_ENV === 'development';
-const baseURL = dev
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = !isDev;
+const baseURL = isDev
   ? 'http://localhost:1337'
   : 'http://pravosleva.ru/api';
 const api = axios.create({ baseURL });
@@ -59,7 +60,7 @@ const Article = ({ initArticleData: article }) => {
         name,
         description,
         images: images.map(({ url }) => ({
-          src: dev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
+          src: isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
           caption: `${article.title}: ${description}.`,
         }))
       })
@@ -68,9 +69,9 @@ const Article = ({ initArticleData: article }) => {
 
   const bgSrc = briefBackground && briefBackground.url
     ?
-      dev ? `http://80.87.194.181/api${briefBackground.url}` : `${baseURL}${briefBackground.url}`
+      isDev ? `http://80.87.194.181/api${briefBackground.url}` : `${baseURL}${briefBackground.url}`
     : '/text-1.jpeg';
-  const thisPageUrl = dev ? `http://pravosleva.ru/article/${article.id}` : `http://localhost:1337/article/${article.id}`;
+  const thisPageUrl = `http://pravosleva.ru/article/${article.id}`;
 
   return (
     <>
@@ -97,7 +98,9 @@ const Article = ({ initArticleData: article }) => {
         <meta property='og:title' content={article.title} />
         <meta property='og:image' content={bgSrc} />
         <meta property='og:type' content='article' />
-        <meta property='og:url' content={thisPageUrl} />
+        {
+          isProd && <meta property='og:url' content={thisPageUrl} />
+        }
         <meta property='og:site_name' content='pravosleva.ru' />
       </Head>
       <Layout>

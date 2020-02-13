@@ -20,7 +20,10 @@ const Tls = ({
             articles.map(({ id, briefBackground, title, brief = 'No brief' }, i) => {
               const bgSrc = briefBackground && briefBackground.url
                 ?
-                  dev ? `http://80.87.194.181/api${briefBackground.url}` : `${baseURL}${briefBackground.url}`
+                  dev
+                  ? `http://80.87.194.181/api${briefBackground.url}`
+                  // В данном случае работаю с боевой базой в dev режиме
+                  : `${baseURL}${briefBackground.url}`
                 : '/text-1.jpeg';
 
               return (
