@@ -67,9 +67,9 @@ const Article = ({ initArticleData: article }) => {
     })
   }
 
-  const bgSrc = briefBackground && briefBackground.url
+  const bgSrc = article.briefBackground && article.briefBackground.url
     ?
-      isDev ? `http://80.87.194.181/api${briefBackground.url}` : `${baseURL}${briefBackground.url}`
+      isDev ? `http://80.87.194.181/api${article.briefBackground.url}` : `${baseURL}${article.briefBackground.url}`
     : '/text-1.jpeg';
   const thisPageUrl = `http://pravosleva.ru/article/${article.id}`;
 
