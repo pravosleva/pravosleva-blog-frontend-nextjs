@@ -13,7 +13,7 @@ import Layout from '../../../components/layout';
 
 
 const Gallery = dynamic(() => import('react-photo-gallery'), {
-  ssr: false
+  ssr: true,
 });
 
 // const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
