@@ -11,11 +11,12 @@ import PropTypes from 'prop-types';
 
 import DesktopHeader from './Header/Desktop';
 import MobileHeader from './Header/Mobile';
-import './layout.css';
-// import './rc-banner-anim.css';
-import './tiles.css';
-import './block-quotes.css';
-import './react-image-lightbox.css';
+import '../../css/layout.css';
+// import '../../css/rc-banner-anim.css';
+import '../../css/tiles.css';
+import '../../css/block-quotes.css';
+import '../../css/react-image-lightbox.css';
+import '../../css/react-photo-gallery.css';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { counterActions } from '../store/counter';
 
