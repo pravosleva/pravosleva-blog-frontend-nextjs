@@ -5,7 +5,8 @@ import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import { PulseLoader } from 'react-spinners';
 // import Gallery from 'react-photo-gallery';
-import Lightbox from 'react-image-lightbox';
+// import Lightbox from 'react-image-lightbox';
+import FsLightbox from 'fslightbox-react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
@@ -52,6 +53,7 @@ const Article = ({ initArticleData: article }) => {
     setViewerIsOpen(false);
   };
   let imagesPacks = [];
+  const allSrc = [];
 
   if (article && article.gallery && article.gallery.length > 0) {
     article.gallery.forEach(({ name, description, images = [], id }) => {
@@ -63,7 +65,11 @@ const Article = ({ initArticleData: article }) => {
           src: isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
           caption: `${article.title}: ${description}.`,
         }))
-      })
+      });
+
+      images.forEach(({ url }) => {
+        allSrc.push(isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`);
+      });
     })
   }
 
@@ -165,7 +171,7 @@ const Article = ({ initArticleData: article }) => {
                             ) : null}
                           </ModalGateway>
                           */}
-                          {/* WAY 2: react-image-lightbox */}
+                          {/* WAY 2: react-image-lightbox
                           {
                             viewerIsOpen && currentPackIndex === i && images[currentImageIndex]
                             ? (
@@ -190,9 +196,15 @@ const Article = ({ initArticleData: article }) => {
                               />
                             ) : null
                           }
+                          */}
                         </div>
                       ))
                     }
+                    {/* WAY 3:  */}
+                    <FsLightbox
+                      toggler={viewerIsOpen}
+                      sources={allSrc}
+                    />
                   </>
                 ) : null
               }
