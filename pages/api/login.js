@@ -15,6 +15,8 @@ export default async (req, res) => {
   const route = '/auth/local';
   let status = 500;
 
+  console.log(baseURL);
+
   try {
     const response = await api.post(route,
       { identifier: username, password },
