@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import Router from 'next/router';
-import fetch from 'isomorphic-unfetch';
+// import axios from 'axios';
 import nextCookie from 'next-cookies';
-
-import Layout from '../components/layout';
-import { withAuthSync } from '../hocs/auth';
-import getHost from '../hocs/auth/get-host';
+import { getMe } from '../hocs/auth/fns';
 import { useSelector, useDispatch } from 'react-redux';
 import { userInfoActions } from '../store/reducer/user-info';
+
+import Layout from '../components/layout';
 
 
 const Profile = ({ usr = null }) => {
@@ -44,7 +43,9 @@ const Profile = ({ usr = null }) => {
       <ul>
         <li>DONE: Will be set after login:<br /><code>await login().then(usr => dispatch(actionCreator(usr)))</code></li>
         <li>DONE: Then will be set to Redux by <code>useEffect</code></li>
-        <li>TODO: Should be set after <code>/users/me</code></li>
+        <li>DONE: * <code>getMe(ctx)</code> should be called in <code>getInitialProps</code></li>
+        <li>TODO: * Should be refactored: Redux-saga?</li>
+        <li>TODO: Should <code>/users/me</code> be moved to hoc?</li>
       </ul>
       <div
         className='article-body'
@@ -75,33 +76,41 @@ const Profile = ({ usr = null }) => {
   );
 }
 
+// const isDev = process.env.NODE_ENV === 'development';
 Profile.getInitialProps = async ctx => {
   const { jwt } = nextCookie(ctx);
-  const nextApiUrl = getHost(ctx.req) + '/api/profile';
+  // const baseURL = isDev
+  //   ? 'http://localhost:1337'
+  //   : 'http://80.87.194.181';
+  // const api = axios.create({ baseURL });
 
   const redirectOnError = () =>
     typeof window !== 'undefined'
       ? Router.push('/login')
       : ctx.res.writeHead(302, { Location: '/login' }).end();
+  
+  if (!jwt) {
+    await redirectOnError();
+    return {};
+  }
 
   try {
-    const response = await fetch(nextApiUrl, {
-      credentials: 'include',
-      headers: { Authorization: `Bearer ${jwt}` },
-    });
+    const res = await getMe(ctx)
+      .then(usr => usr)
+      .catch(err => err);
 
-    if (response.ok) {
-      const usr = await response.json();
-
-      return { usr };
-    } else {
+    if (res && res.id) return { usr: res }
+    else {
       // https://github.com/developit/unfetch#caveats
-      return await redirectOnError();
+      await redirectOnError();
+      return;
     }
-  } catch (error) {
+  } catch (err) { // Like { message: 'CATCHED; 404; Not Found' }
+    console.log(err);
     // Implementation or Network error
-    return redirectOnError();
+    await redirectOnError();
+    return;
   }
 }
 
-export default withAuthSync(Profile);
+export default Profile;

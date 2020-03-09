@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { compose, withStateHandlers, withProps } from 'recompose';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
-
-
 import { scrollDisablingComponentsActions } from '../../../../../store/reducer/scroll-disabling-components';
 import { withScrollDisabler } from '../../../../../hocs/body-scroll-disabler';
 
@@ -61,8 +59,8 @@ const Sidebar = styled.div`
 
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
-  { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated', 'free'] },
-  // { path: '/login', label: 'Login', id: 2, accessForRoles: ['public', 'authenticated', 'free'] },
+  { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated'] }, // 'public', 'authenticated', 'free'
+  // { path: '/login', label: 'Login', id: 2, accessForRoles: ['unauthenticated'] },
   // { path: '/graphql-sample', label: 'GraphQL', id: 3, accessForRoles: ['free'] },
 ];
 
@@ -103,8 +101,8 @@ export const withMobileMenu = (ComposedComponent) => compose(
   ...props
 }) => {
   const dispatch = useDispatch();
-  // const user = useSelector(state => state.userInfo.fromServer);
-  // const userInfoRole = user ? user.role : null;
+  const user = useSelector(state => state.userInfo.fromServer);
+  const userInfoRole = user ? user.role : null;
 
   useEffect(() => {
     if (sidebarOpened) {
@@ -133,27 +131,29 @@ export const withMobileMenu = (ComposedComponent) => compose(
                 <li
                   key={id}
                   onClick={() => sidebarToggler()}
+                  style={{
+                    fontFamily: 'Montserrat'
+                  }}
                 >
-                  <Link href={path}>
-                    <a
-                      style={{
-                        fontFamily: 'Montserrat'
-                      }}
-                    >{label}</a></Link>
+                  <Link href={path}><a>{label}</a></Link>
                 </li>
               )
-            } else {
+            } else if (userInfoRole) {
               // For current user:
-              if (userInfoRole && userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
+              if (userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
                 return (
-                  <li key={id}>
-                    <Link href={path} onClick={sidebarToggler}><a>{label}</a></Link>
+                  <li key={id} onClick={sidebarToggler}>
+                    <Link href={path}><a>{label}</a></Link>
                   </li>
                 )
               } else {
                 return null;
               }
-            }
+            } else if (accessForRoles.includes('unauthenticated')) {
+              return <li key={id} onClick={sidebarToggler}>
+                <Link href={path}><a>{label}</a></Link>
+              </li>
+            } else return null;
           })}
         </ul>
       </Sidebar>

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
@@ -12,9 +12,14 @@ import dynamic from 'next/dynamic';
 
 import Layout from '../../../components/layout';
 
+// AUTH
+import { getMe } from '../../../hocs/auth/fns';
+import { useDispatch } from 'react-redux';
+import { userInfoActions } from '../../../store/reducer/user-info';
+
 
 const Gallery = dynamic(() => import('react-photo-gallery'), {
-  ssr: true,
+  ssr: false,
 });
 
 // const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
@@ -36,7 +41,7 @@ function columns(containerWidth) {
   return columns;
 }
 
-const Article = ({ initArticleData: article }) => {
+const Article = ({ initArticleData: article, usr = null }) => {
   const router = useRouter();
   const { id } = router.query;
   // GALLERY:
@@ -78,6 +83,13 @@ const Article = ({ initArticleData: article }) => {
       isDev ? `http://80.87.194.181/api${article.briefBackground.url}` : `${baseURL}${article.briefBackground.url}`
     : '/text-1.jpeg';
   const thisPageUrl = `http://pravosleva.ru/article/${article.id}`;
+
+  // --- TODO: REFACTOR AUTH: Set to Redux on client
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (usr.id) dispatch(userInfoActions.setUser({ ...usr }));
+  }, [usr.id]);
+  // ---
 
   return (
     <>
@@ -242,7 +254,13 @@ Article.getInitialProps = async ctx => {
 
   const res = await fetchArticle(id);
 
-  return { initArticleData: res }
+  // --- TODO: REFACTOR AUTH
+  const usr = await getMe(ctx)
+    .then(usr => usr)
+    .catch(err => err);
+  // ---
+
+  return { initArticleData: res, usr }
 }
 
 export default Article;

@@ -5,12 +5,18 @@ import axios from 'axios';
 // EXAMPLE: formatDistance(new Date(createdAt), now, { addSuffix: true })
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { PulseLoader } from 'react-spinners';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
+// import Head from 'next/head';
+// import dynamic from 'next/dynamic';
 
 import Layout from '../components/layout';
 import useDebounce from '../hooks/use-debounce';
 import { Tiles } from '../components/Tiles';
+
+// AUTH
+// import nextCookie from 'next-cookies';
+import { getMe } from '../hocs/auth/fns';
+import { useDispatch } from 'react-redux';
+import { userInfoActions } from '../store/reducer/user-info';
 
 
 const dev = process.env.NODE_ENV === 'development';
@@ -47,7 +53,7 @@ const Loader = () => (
 
 // const delay = (ms = 3000) => new Promise(res => setTimeout(res, ms));
 
-const IndexPage = ({ initialArtiles }) => {
+const IndexPage = ({ initialArtiles, usr = null }) => {
   const [isLoading, setLoading] = useState(false);
   const [articles, setArticles] = useState(initialArtiles);
   const [queryText, setQueryText] = useState('');
@@ -104,6 +110,13 @@ const IndexPage = ({ initialArtiles }) => {
     },
     [debouncedSetQueryText, debouncedSearchBy, setLoading, setArticles]
   );
+
+  // --- TODO: REFACTOR AUTH: Set to Redux on client
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (usr.id) dispatch(userInfoActions.setUser({ ...usr }));
+  }, [usr.id]);
+  // ---
 
   return (
     <>
@@ -272,7 +285,13 @@ async function fetchArticles ({ queryText = '', targetField = 'body' }) {
 IndexPage.getInitialProps = async ctx => {
   const res = await fetchArticles({});
 
-  return { initialArtiles: res }
+  // --- TODO: REFACTOR AUTH
+  const usr = await getMe(ctx)
+    .then(usr => usr)
+    .catch(err => err);
+  // ---
+
+  return { initialArtiles: res, usr }
 }
 
 export default IndexPage;

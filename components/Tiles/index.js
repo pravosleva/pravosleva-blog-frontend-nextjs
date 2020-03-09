@@ -65,8 +65,8 @@ function areEqual(prevProps, nextProps) {
   const test1 = new Map({ ...prevProps.articles });
   const test2 = new Map({ ...nextProps.articles });
 
-  console.log(test1);
-  console.log(test2);
+  // console.log(test1);
+  // console.log(test2);
 
   return test1.equals(test2);
 }

@@ -1,10 +1,13 @@
 import Headroom from 'react-headroom';
 import styled, { keyframes, css } from 'styled-components';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { withMobileMenu } from './hocs/with-mobile-menu';
 import { HamburgerIcon, CrossCloseIcon } from './components';
+import { logout } from '../../../../hocs/auth/fns';
+import { userInfoActions } from '../../../../store/reducer/user-info';
+// import { withAuthSync } from '../../../../hocs/auth/page-auth-hoc';
 
 
 // Could be used if !ssr
@@ -85,7 +88,8 @@ const MobileHeader = ({
   topDocRef,
 }) => {
   const user = useSelector(state => state.userInfo.fromServer);
-  const isUserLogged = user && user ? user.id : null;
+  const isUserLogged = (user && user ? user.id : null);
+  const dispatch = useDispatch();
 
   return (
     <Headroom>
@@ -113,7 +117,8 @@ const MobileHeader = ({
             </li>
 
             {
-              !isUserLogged && (
+              !isUserLogged
+                ? (
                 <li style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -124,6 +129,24 @@ const MobileHeader = ({
                   fontFamily: 'Montserrat',
                 }}>
                   <Link href='/login'><a>Login</a></Link>
+                </li>
+              ) : (
+                <li
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+
+                    // TMP: For centering (no burger menu):
+                    // marginRight: '20px',
+                    marginBottom: '0px',
+                    fontFamily: 'Montserrat',
+                  }}
+                  onClick={() => {
+                    dispatch(userInfoActions.reset());
+                    logout();
+                  }}
+                >
+                  <a href='#'>Logout</a>
                 </li>
               )
             }
