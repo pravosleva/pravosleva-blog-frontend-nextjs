@@ -4,7 +4,7 @@ import axios from 'axios';
 const isDev = process.env.NODE_ENV === 'development';
 const baseURL = isDev
   ? 'http://localhost:1337'
-  : 'http://80.87.194.181'; // : 'http://80.87.194.181/strapi';
+  : 'http://80.87.194.181/strapi';
 const api = axios.create({ baseURL });
 
 export default async (req, res) => {
