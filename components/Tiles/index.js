@@ -8,7 +8,7 @@ const baseURL = dev
   ? 'http://localhost:1337'
   : 'http://www.pravosleva.ru/api'; // 'http://80.87.194.181/api';
 
-const Tls = ({
+const Grid = ({
   articles,
 }) => (
   <>
@@ -71,4 +71,4 @@ function areEqual(prevProps, nextProps) {
   return test1.equals(test2);
 }
 
-export const Tiles = memo(Tls, areEqual);
+export const Tiles = memo(Grid, areEqual);

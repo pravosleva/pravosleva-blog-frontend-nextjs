@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-
+// import { useDispatch } from 'react-redux';
 import { login, auth, logout } from './fns';
 import { makeCounter } from '../../lib/make-counter';
-import { userInfoActions } from '../../store/reducer/user-info';
+// import { userInfoActions } from '../../store/reducer/user-info';
 
 
 const hocRenderCounter = makeCounter();
@@ -29,7 +28,7 @@ export const withAuthSync = WrappedComponent => {
         window.removeEventListener('storage', syncLogout);
         window.localStorage.removeItem('logout');
       }
-    }, [])
+    }, []);
 
     return <WrappedComponent {...props} />
   }

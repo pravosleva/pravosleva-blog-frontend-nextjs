@@ -8,15 +8,12 @@ const baseURL = dev
 const api = axios.create({ baseURL });
 
 export default async (req, res) => {
-  if (!('authorization' in req.headers)) {
+  if (!('authorization' in req.headers))
     return res.status(401).send('Authorization header missing');
-  }
 
   const auth = await req.headers.authorization;
   const route = '/users/me';
   let status = 500;
-
-  console.log(auth);
 
   try {
     const response = await api.get(route,

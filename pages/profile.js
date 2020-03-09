@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
-import { useSelector } from 'react-redux';
 
 import Layout from '../components/layout';
 import { withAuthSync } from '../hocs/auth';
 import getHost from '../hocs/auth/get-host';
+import { useSelector, useDispatch } from 'react-redux';
+import { userInfoActions } from '../store/reducer/user-info';
 
 
-const Profile = props => {
+const Profile = ({ usr = null }) => {
   // const { name, login, bio, avatarUrl } = props.data;
   const userInfoFromServer =  useSelector(state => state.userInfo.fromServer);
+
+  // --- Set to Redux on client
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (usr.id) dispatch(userInfoActions.setUser({ ...usr }));
+  }, [usr.id]);
+  // ---
 
   return (
     <Layout>
@@ -30,11 +38,12 @@ const Profile = props => {
         className='article-body'
         style={{ marginBottom: '40px', marginTop: '30px' }}
       >
-        <pre>{JSON.stringify(props, null, 2)}</pre>
+        <pre>{JSON.stringify(usr, null, 2)}</pre>
       </div>
       <h2>From Redux store</h2>
       <ul>
         <li>DONE: Will be set after login:<br /><code>await login().then(usr => dispatch(actionCreator(usr)))</code></li>
+        <li>DONE: Then will be set to Redux by <code>useEffect</code></li>
         <li>TODO: Should be set after <code>/users/me</code></li>
       </ul>
       <div
@@ -84,9 +93,7 @@ Profile.getInitialProps = async ctx => {
     if (response.ok) {
       const usr = await response.json();
 
-      console.table({ ...usr });
-
-      return { ...usr };
+      return { usr };
     } else {
       // https://github.com/developit/unfetch#caveats
       return await redirectOnError();
