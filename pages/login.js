@@ -12,7 +12,7 @@ import { userInfoActions } from '../store/reducer/user-info';
 const isDev = process.env.NODE_ENV === 'development';
 const baseURL = isDev
   ? 'http://localhost:1337'
-  : 'http://80.87.194.181';
+  : 'http://80.87.194.181/api';
 const api = axios.create({ baseURL });
 const Login = () => {
   const [userData, setUserData] = useState({ username: '', password: '', error: '' });
