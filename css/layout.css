@@ -44,6 +44,7 @@ a {
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
   outline: none !important;
+  font-family: 'Montserrat';
 }
 a:hover { color: red; }
 a.special-link {

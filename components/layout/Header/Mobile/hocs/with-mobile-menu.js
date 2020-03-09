@@ -131,9 +131,6 @@ export const withMobileMenu = (ComposedComponent) => compose(
                 <li
                   key={id}
                   onClick={() => sidebarToggler()}
-                  style={{
-                    fontFamily: 'Montserrat'
-                  }}
                 >
                   <Link href={path}><a>{label}</a></Link>
                 </li>
