@@ -19,6 +19,7 @@ import '../../css/react-image-lightbox.css';
 import '../../css/react-photo-gallery.css';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { counterActions } from '../store/counter';
+import { withSocketApi } from '../../hocs/with-socket-api';
 
 
 const Layout = ({ children }) => {
@@ -42,9 +43,7 @@ const Layout = ({ children }) => {
       </div>
       <footer>
         <div style={{ margin: `0 auto`, maxWidth: 960, padding: '0px 1.0875rem 1.45rem' }}>
-          © {new Date().getFullYear()}{/* , Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a> */}
+          © {new Date().getFullYear()}
         </div>
       </footer>
     </>
@@ -55,4 +54,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default withSocketApi(Layout);
