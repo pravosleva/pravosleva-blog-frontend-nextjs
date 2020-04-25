@@ -61,7 +61,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
   // const allSrc = [];
 
   if (article && article.gallery && article.gallery.length > 0) {
-    article.gallery.forEach(({ name, description, images = [], id }) => {
+    article.gallery.forEach(({ name, description, images = [], id, briefBackground }) => {
       imagesPacks.unshift({
         id,
         name,
@@ -69,7 +69,13 @@ const Article = ({ initArticleData: article, usr = null }) => {
         images: images.map(({ url }) => ({
           src: isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
           caption: `${article.title}: ${description}.`,
-        }))
+        })),
+        // bgSrc: briefBackground && briefBackground.url
+        //   ?
+        //     isDev
+        //     ? `http://80.87.194.181/api${briefBackground.url}`
+        //     : `${baseURL}${briefBackground.url}`
+        //   : '/text-1.jpeg',
       });
 
       // images.forEach(({ url }) => {
@@ -126,12 +132,27 @@ const Article = ({ initArticleData: article, usr = null }) => {
           article
           ? (
             <>
-              <h1 className='fade-in-effect'>{article.title || 'No title'}</h1>
-              {
-                article.brief
-                ? <blockquote style={{ marginBottom: '30px' }} className='brooks fade-in-effect'>{article.brief}</blockquote>
-                : null
-              }
+              <div
+                className='tiles-grid-item white'
+                style={{
+                  borderRadius: '0',
+                  width: '100%',
+                  minHeight: '250px',
+                  backgroundImage: `url(${bgSrc})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  margin: '50px 0 50px 0',
+                }}
+              >
+                <h1 className='fade-in-effect'>{article.title || 'No title'}</h1>
+                {
+                  article.brief
+                  ? <div style={{ marginBottom: '30px' }} className='fade-in-effect'><em style={{ fontFamily: 'Montserrat' }}>{article.brief}</em></div>
+                  : null
+                }
+              </div>
+
               <div
                 className='article-body fade-in-effect'
                 style={{ marginBottom: '40px' }}

@@ -241,7 +241,7 @@ async function _getQueryString({
 }) {
   let queryString = '';
   const {
-    limit = 100,
+    limit = 5,
     start = 0,
   } = options;
 
@@ -267,11 +267,11 @@ async function fetchArticles ({ queryText = '', targetField = 'body' }) {
     queryText: encodeURIComponent(queryText),
     targetField,
     // TMP:
-    options: { limit: 100, start: 0 },
+    options: { limit: 5, start: 0 },
   });
   const route = queryText
     ? `/articles?${query}`
-    : '/articles?_sort=createdAt:DESC&isPublished_eq=true';
+    : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
   const result = await api.get(route)
     .then(res => res.data)
     .catch(err => err);
