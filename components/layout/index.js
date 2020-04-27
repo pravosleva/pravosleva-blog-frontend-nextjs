@@ -1,31 +1,31 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useStaticQuery, graphql } from 'gatsby';
-
 import DesktopHeader from './Header/Desktop';
 import MobileHeader from './Header/Mobile';
 import '../../css/layout.css';
-// import '../../css/rc-banner-anim.css';
 import '../../css/tiles.css';
 import '../../css/block-quotes.css';
 import '../../css/react-image-lightbox.css';
 import '../../css/react-photo-gallery.css';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { counterActions } from '../store/counter';
+import '../../css/custom-breadcrumbs.css';
 import { withSocketApi } from '../../hocs/with-socket-api';
+import { ScrollTopBtn } from './ScrollTopBtn'
 
 
 const Layout = ({ children }) => {
-  // const count = useSelector(state => state.counter.count);
-  // const currentLang = useSelector(state => state.lang.current);
-  // const dispatch = useDispatch();
+  const [showScroll, setShowScroll] = useState(false);
+  const isBrowser = typeof window !== 'undefined';
+  const checkScrollTop = () => {
+    if (!showScroll && isBrowser && window.pageYOffset > 200) {
+      setShowScroll(true);
+    } else if (showScroll && isBrowser && window.pageYOffset <= 200) {
+      setShowScroll(false);
+    }
+  };
+  const scrollTop = () => {
+    if (isBrowser) window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  if (isBrowser) window.addEventListener('scroll', checkScrollTop);
 
   return (
     <>
@@ -46,6 +46,12 @@ const Layout = ({ children }) => {
           © {new Date().getFullYear()}
         </div>
       </footer>
+      <ScrollTopBtn
+        onClick={scrollTop}
+        isShowed={showScroll}
+      >
+        <i className='fas fa-arrow-up'></i>
+      </ScrollTopBtn>
     </>
   )
 }

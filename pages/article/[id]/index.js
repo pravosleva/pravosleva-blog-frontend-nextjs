@@ -4,14 +4,10 @@ import Link from 'next/link';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import { PulseLoader } from 'react-spinners';
-// import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-image-lightbox';
-// import FsLightbox from 'fslightbox-react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-
 import Layout from '../../../components/layout';
-
 // AUTH
 import { getMe } from '../../../hocs/auth/fns';
 import { useDispatch } from 'react-redux';
@@ -132,6 +128,47 @@ const Article = ({ initArticleData: article, usr = null }) => {
           article
           ? (
             <>
+              {/**/}
+              <div
+                className='bx_breadcrumbs'
+                // style={{ marginTop: '38px' }}
+              >
+                <ul itemScope itemType='http://schema.org/BreadcrumbList'>
+                  <li
+                    itemProp='itemListElement'
+                    itemScope
+                    itemType='http://schema.org/ListItem'
+                  >
+                    <Link
+                      href='/'
+                      title='Pravosleva.ru'
+                      itemProp='item'
+                    >
+                      Главная
+                    </Link>
+                  </li>
+                  <li
+                    itemProp='itemListElement'
+                    itemScope
+                    itemType='http://schema.org/ListItem'
+                  >
+                    <span style={{
+                      fontFamily: 'Montserrat',
+                      textDecoration: 'none',
+                      color: 'gray',
+                      fontSize: '16px',
+                      whiteSpace: 'nowrap',
+                    }}>
+                      {
+                        article.title.length > 30
+                        ? `${article.title.substring(0, 30)}...`
+                        : article.title
+                      }
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
               <div
                 className='tiles-grid-item white'
                 style={{
@@ -142,7 +179,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  margin: '50px 0 50px 0',
+                  margin: '10px 0 50px 0',
                 }}
               >
                 <h1 className='fade-in-effect'>{article.title || 'No title'}</h1>
