@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-// import formatDistance from 'date-fns/formatDistance';
-// EXAMPLE: formatDistance(new Date(createdAt), now, { addSuffix: true })
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { PulseLoader } from 'react-spinners';
-// import Head from 'next/head';
-// import dynamic from 'next/dynamic';
 
 import Layout from '../components/layout';
 import useDebounce from '../hooks/use-debounce';
 import { Tiles } from '../components/Tiles';
 
 // AUTH
-// import nextCookie from 'next-cookies';
 import { getMe } from '../hocs/auth/fns';
 import { useDispatch } from 'react-redux';
 import { userInfoActions } from '../store/reducer/user-info';
@@ -29,35 +24,27 @@ const Loader = () => (
     className='fade-in-effect'
     style={{
       margin: '30px 0px 20px',
-      // minHeight: '360px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
     }}
   >
     <PulseLoader
-      // css={override}
       size={15}
       margin={5}
-      //size={"150px"} this also works
-      // color='rgb(18, 58, 188)'
       color='#2E65B2'
       loading={true}
     />
   </div>
 );
-// const Banner = dynamic(() => import('../components/Banner'), {
-//   ssr: false,
-//   loading: () => <Loader />,
-// });
 
-// const delay = (ms = 3000) => new Promise(res => setTimeout(res, ms));
-
-const IndexPage = ({ initialArtiles, usr = null }) => {
+const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
   const [isLoading, setLoading] = useState(false);
   const [articles, setArticles] = useState(initialArtiles);
+  const [articlesCounter, setArticlesCounter] = useState(initialArtilesCounter);
   const [queryText, setQueryText] = useState('');
   const [searchBy, setSearchBy] = useState('body');
+  const [start, setStart] = useState(0);
   const getNextSearchTarget = ({
     targets = ['body', 'title', 'tag'],
     current = 'body'
@@ -89,9 +76,10 @@ const IndexPage = ({ initialArtiles, usr = null }) => {
     () => {
       // Make sure we have a value (user has entered something in input)
       if (debouncedSetQueryText || debouncedSearchBy) {
-        if (window) window.scrollTo({ top: 0, behavior: 'auto' });
+        if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
 
         // Set isSearching state
+        setStart(0);
         setLoading(true);
         // Fire off our API call
         fetchArticles({
@@ -103,6 +91,13 @@ const IndexPage = ({ initialArtiles, usr = null }) => {
             if (Array.isArray(results)) setArticles(results);
             // Set back to false since request finished
             setLoading(false);
+          });
+        fetchArticlesCounter({
+          queryText,
+          targetField: searchBy,
+        })
+          .then(res => {
+            setArticlesCounter(res);
           });
       } else {
         // setArticles([]);
@@ -117,6 +112,38 @@ const IndexPage = ({ initialArtiles, usr = null }) => {
     if (usr.id) dispatch(userInfoActions.setUser({ ...usr }));
   }, [usr.id]);
   // ---
+
+  const handleStartForNextPage = () => {
+    if (!isLoading) setStart(start + 5);
+  }
+  const handleStartForPrevPage = () => {
+    if (!isLoading) setStart(start - 5);
+  }
+  useEffect(() => {
+    if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
+
+    // Set isSearching state
+    setLoading(true);
+    // Fire off our API call
+    fetchArticles({
+      queryText,
+      targetField: searchBy,
+      start,
+    })
+      .then(results => {
+        // Set results state
+        if (Array.isArray(results)) setArticles(results);
+        // Set back to false since request finished
+        setLoading(false);
+      });
+    fetchArticlesCounter({
+      queryText,
+      targetField: searchBy,
+    })
+      .then(res => {
+        setArticlesCounter(res);
+      });
+  }, [start])
 
   return (
     <>
@@ -153,15 +180,15 @@ const IndexPage = ({ initialArtiles, usr = null }) => {
             : null
           }
         </div>
-        {/*
-          isLoading
-          ? <Loader />
-          : articles.length > 0
-            ? <Banner articles={articles} />
-            : null
-        */}
         {
-          <Tiles articles={articles} />
+          <Tiles
+            articles={articles}
+            articlesCounter={articlesCounter}
+            currentStart={start}
+            handleStartForNextPage={handleStartForNextPage}
+            handleStartForPrevPage={handleStartForPrevPage}
+            isLoading={isLoading}
+          />
         }
         {
           isLoading && <Loader />
@@ -193,7 +220,6 @@ const IndexPage = ({ initialArtiles, usr = null }) => {
                           style={{
                             position: 'absolute',
                             top: '0', left: '0',
-                            // transform: 'translateY(5px)',
                             display: 'flex',
                             justifyContent: 'flex-end',
                             alignItems: 'center',
@@ -247,31 +273,36 @@ async function _getQueryString({
 
   if (limit) queryString += '&_limit=' + limit;
   if (start) queryString += '&_start=' + start;
-  switch (targetField) {
-    case 'body':
-    case 'title':
-      queryString += `&${targetField}_contains=${queryText}`;
-      break;
-    case 'tag':
-      const tagID = await getTagIDByName(queryText);
-      if (tagID) queryString += `&tags_in=${tagID}`;
-      break;
-    default: break;
+
+  if (queryText) {
+    switch (targetField) {
+      case 'body':
+      case 'title':
+        queryString += `&${targetField}_contains=${queryText}`;
+        break;
+      case 'tag':
+        const tagID = await getTagIDByName(queryText);
+        if (tagID) queryString += `&tags_in=${tagID}`;
+        break;
+      default: break;
+    }
   }
+
   queryString += '&_sort=createdAt:DESC&isPublished_eq=true';
 
   return queryString.slice(1);
 }
-async function fetchArticles ({ queryText = '', targetField = 'body' }) {
+async function fetchArticles ({ queryText = '', targetField = 'body', start = 0 }) {
   const query = await _getQueryString({
-    queryText: encodeURIComponent(queryText),
+    queryText: !!queryText ? encodeURIComponent(queryText) : null,
     targetField,
     // TMP:
-    options: { limit: 5, start: 0 },
+    options: { limit: 5, start },
   });
-  const route = queryText
-    ? `/articles?${query}`
-    : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
+  // const route = queryText
+  //   ? `/articles?${query}`
+  //   : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
+  const route = `/articles?${query}`;
   const result = await api.get(route)
     .then(res => res.data)
     .catch(err => err);
@@ -281,9 +312,30 @@ async function fetchArticles ({ queryText = '', targetField = 'body' }) {
     return Promise.resolve([]);
   };
 }
+async function fetchArticlesCounter ({ queryText = '', targetField = 'body' }) {
+  const query = await _getQueryString({
+    queryText: !!queryText ? encodeURIComponent(queryText) : null,
+    targetField,
+    // TMP:
+    options: { limit: 5 },
+  });
+  // const route = queryText
+  //   ? `/articles?${query}`
+  //   : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
+  const route = `/articles/count?${query}`;
+  const result = await api.get(route)
+    .then(res => res.data)
+    .catch(err => err);
+  if (Number.isInteger(result)) {
+    return Promise.resolve(result)
+  } else {
+    return Promise.reject('Ответ не является целым числом');
+  };
+}
 
 IndexPage.getInitialProps = async ctx => {
-  const res = await fetchArticles({});
+  const articles = await fetchArticles({});
+  const articlesCounter = await fetchArticlesCounter({});
 
   // --- TODO: REFACTOR AUTH
   const usr = await getMe(ctx)
@@ -291,7 +343,7 @@ IndexPage.getInitialProps = async ctx => {
     .catch(err => err);
   // ---
 
-  return { initialArtiles: res, usr }
+  return { initialArtilesCounter: articlesCounter, initialArtiles: articles, usr }
 }
 
 export default IndexPage;

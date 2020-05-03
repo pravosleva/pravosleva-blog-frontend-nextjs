@@ -139,12 +139,11 @@ const Article = ({ initArticleData: article, usr = null }) => {
                     itemScope
                     itemType='http://schema.org/ListItem'
                   >
-                    <Link
-                      href='/'
-                      title='Pravosleva.ru'
-                      itemProp='item'
-                    >
-                      Главная
+                    <Link href='/'>
+                      <a
+                        title='Pravosleva.ru'
+                        itemProp='item'
+                      >Главная</a>
                     </Link>
                   </li>
                   <li

@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Map } from 'immutable';
+// import { DesktopArrow } from './components/DesktopArrow';
 
 
 const dev = process.env.NODE_ENV === 'development';
@@ -10,8 +11,38 @@ const baseURL = dev
 
 const Grid = ({
   articles,
+  articlesCounter,
+  currentStart,
+  currentLimit = 5,
+  handleStartForNextPage,
+  handleStartForPrevPage,
+  isLoading,
 }) => (
-  <>
+  <div className='tiles-external-wrapper'>
+    {
+      !isLoading && (currentStart ? Math.ceil((Math.ceil(articlesCounter / currentLimit) * currentStart) / articlesCounter) : 1) < Math.ceil(articlesCounter / currentLimit)
+      ? (
+        <div
+          className='tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--next'
+          onClick={handleStartForNextPage}
+        >
+          <i className='fas fa-arrow-right'></i>
+        </div>
+      )
+      : null
+    }
+    {
+      !isLoading && currentStart > 0
+      ? (
+        <div
+          className='tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--prev'
+          onClick={handleStartForPrevPage}
+        >
+          <i className='fas fa-arrow-left'></i>
+        </div>
+      )
+      : null
+    }
     {
       articles.length > 0
       ? (
@@ -53,22 +84,18 @@ const Grid = ({
         </div>
       ) : null
     }
-  </>
+  </div>
 );
-function areEqual(prevProps, nextProps) {
-  /*
-  возвращает true, если nextProps рендерит
-  тот же результат что и prevProps,
-  иначе возвращает false
-  */
+// function areEqual(prevProps, nextProps) {
+//   // возвращает true, если nextProps рендерит
+//   // тот же результат что и prevProps,
+//   // иначе возвращает false
+//
+//   const test1 = new Map({ ...prevProps.articles, start: prevProps.currentStart });
+//   const test2 = new Map({ ...nextProps.articles, start: nextProps.currentStart });
+//
+//   return test1.equals(test2);
+// }
 
-  const test1 = new Map({ ...prevProps.articles });
-  const test2 = new Map({ ...nextProps.articles });
-
-  // console.log(test1);
-  // console.log(test2);
-
-  return test1.equals(test2);
-}
-
-export const Tiles = memo(Grid, areEqual);
+// export const Tiles = memo(Grid, areEqual);
+export const Tiles = Grid;
