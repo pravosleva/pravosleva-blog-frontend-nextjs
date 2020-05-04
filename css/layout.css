@@ -778,7 +778,7 @@ div.article-body > blockquote {
 
 /* ANIMATIONS */
 .fade-in-effect {animation:fading 1.5s 1}
-@keyframes fading{0%{opacity:0}90%{opacity:1}100%{opacity:1}}
+@keyframes fading{0%{opacity:0}100%{opacity:1}}
 
 /* TAGS */
 .the-tag {

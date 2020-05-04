@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Link from 'next/link';
 import { Map } from 'immutable';
 // import { DesktopArrow } from './components/DesktopArrow';
@@ -20,10 +20,10 @@ const Grid = ({
 }) => (
   <div className='tiles-external-wrapper'>
     {
-      !isLoading && (currentStart ? Math.ceil((Math.ceil(articlesCounter / currentLimit) * currentStart) / articlesCounter) : 1) < Math.ceil(articlesCounter / currentLimit)
+      articles.length > 0 && !isLoading && (currentStart ? Math.ceil((Math.ceil(articlesCounter / currentLimit) * currentStart) / articlesCounter) : 1) < Math.ceil(articlesCounter / currentLimit)
       ? (
         <div
-          className='tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--next'
+          className='fade-in-effect tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--next'
           onClick={handleStartForNextPage}
         >
           <i className='fas fa-arrow-right'></i>
@@ -32,10 +32,10 @@ const Grid = ({
       : null
     }
     {
-      !isLoading && currentStart > 0
+      articles.length > 0 && !isLoading && currentStart > 0
       ? (
         <div
-          className='tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--prev'
+          className='fade-in-effect tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--prev'
           onClick={handleStartForPrevPage}
         >
           <i className='fas fa-arrow-left'></i>
@@ -86,16 +86,15 @@ const Grid = ({
     }
   </div>
 );
-// function areEqual(prevProps, nextProps) {
-//   // возвращает true, если nextProps рендерит
-//   // тот же результат что и prevProps,
-//   // иначе возвращает false
-//
-//   const test1 = new Map({ ...prevProps.articles, start: prevProps.currentStart });
-//   const test2 = new Map({ ...nextProps.articles, start: nextProps.currentStart });
-//
-//   return test1.equals(test2);
-// }
+function areEqual(prevProps, nextProps) {
+  // возвращает true, если nextProps рендерит
+  // тот же результат что и prevProps,
+  // иначе возвращает false
 
-// export const Tiles = memo(Grid, areEqual);
-export const Tiles = Grid;
+  const test1 = new Map({ ...prevProps.articles, currentStart: prevProps.currentStart, isLoading: prevProps.isLoading });
+  const test2 = new Map({ ...nextProps.articles, currentStart: nextProps.currentStart, isLoading: nextProps.isLoading });
+
+  return test1.equals(test2);
+}
+
+export const Tiles = memo(Grid, areEqual);

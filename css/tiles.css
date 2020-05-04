@@ -4,6 +4,10 @@
   display: grid;
   grid-gap: 1px;
 }
+.tiles-external-wrapper {
+  box-sizing: border-box;
+  margin-bottom: 40px;
+}
 @media(max-width: 767px) {
   .tiles-grid-wrapper {
     grid-template-columns: 1fr;
@@ -16,8 +20,6 @@
 @media(min-width: 768px) {
   .tiles-external-wrapper {
     position: relative;
-    box-sizing: border-box;
-    margin-bottom: 40px;
   }
   .tiles-grid-wrapper {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -27,8 +29,13 @@
   /* ARROWS */
   .tiles-external-wrapper--desktop-arrow {
     background-color: white;
+    color: #333;
     box-shadow: 0 0 4px 0 rgba(0,0,0,.1);
     transition: .15s ease-out;
+  }
+  .tiles-external-wrapper--desktop-arrow:hover {
+    background-color: #333;
+    color: white;
   }
   .tiles-external-wrapper--desktop-arrow:hover {
     cursor: pointer;

@@ -70,41 +70,28 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
   const debouncedSetQueryText = useDebounce(queryText, 1000);
   const debouncedSearchBy = useDebounce(searchBy, 1000);
 
-  // Here's where the API call happens
-  // We use useEffect since this is an asynchronous action
-  useEffect(
-    () => {
-      // Make sure we have a value (user has entered something in input)
-      if (debouncedSetQueryText || debouncedSearchBy) {
-        if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
+  useEffect(() => {
+    if (debouncedSetQueryText || debouncedSearchBy) {
+      if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
 
-        // Set isSearching state
-        setStart(0);
-        setLoading(true);
-        // Fire off our API call
+      setStart(0);
+      setLoading(true);
+
+      Promise.all([
         fetchArticles({
           queryText: debouncedSetQueryText,
           targetField: debouncedSearchBy,
         })
           .then(results => {
-            // Set results state
             if (Array.isArray(results)) setArticles(results);
-            // Set back to false since request finished
-            setLoading(false);
-          });
-        fetchArticlesCounter({
-          queryText,
-          targetField: searchBy,
-        })
-          .then(res => {
-            setArticlesCounter(res);
-          });
-      } else {
-        // setArticles([]);
-      }
-    },
-    [debouncedSetQueryText, debouncedSearchBy, setLoading, setArticles]
-  );
+          }),
+        fetchArticlesCounter({ queryText, targetField: searchBy })
+          .then(res => setArticlesCounter(res)),
+      ])
+        .then(() => setLoading(false));
+
+    } // else { setArticles([]); }
+  }, [debouncedSetQueryText, debouncedSearchBy, setLoading, setArticles]);
 
   // --- TODO: REFACTOR AUTH: Set to Redux on client
   const dispatch = useDispatch();
@@ -191,61 +178,61 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
           />
         }
         {
-          isLoading && <Loader />
-        }
-        {
-          !isLoading && articles.length > 0
-          ? (
-            <div>
-              {
-                articles.map(({ id, title, createdAt, tags = [] }) => (
-                  <div
-                    key={id}
-                    style={{
-                      padding: '20px 0 10px 0',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      position: 'relative'
-                    }}
-                    className='special-link-wrapper'
-                  >
-                    <Link
-                      href={`/article/${id}`}
-                    ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
-                    <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
-                    {
-                      tags.length > 0
-                      ? (
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '0', left: '0',
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                          }}
-                          className='unselectable'
-                        >
-                          <i className="fas fa-tag" style={{ marginRight: '10px', opacity: '0.2' }}></i>
-                          {tags.map(({ id, name }) => (
-                            <span
-                              key={id}
-                              style={{ marginRight: '10px' }}
-                              className='the-tag'
-                              onClick={() => {
-                                setSearchBy('tag');
-                                setQueryText(name);
-                              }}
-                            >{name}</span>
-                          ))}
-                        </div>
-                      ) : null
-                    }
-                  </div>
-                ))
-              }
-            </div>
-          ) : <div><em style={{ opacity: '0.4' }}>No results...</em></div>
+          isLoading
+          ? <Loader />
+          : articles.length > 0
+            ? (
+              <div>
+                {
+                  articles.map(({ id, title, createdAt, tags = [] }) => (
+                    <div
+                      key={id}
+                      style={{
+                        padding: '20px 0 10px 0',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        position: 'relative'
+                      }}
+                      className='special-link-wrapper'
+                    >
+                      <Link
+                        href={`/article/${id}`}
+                      ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
+                      <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
+                      {
+                        tags.length > 0
+                        ? (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              top: '0', left: '0',
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                              alignItems: 'center',
+                            }}
+                            className='unselectable'
+                          >
+                            <i className="fas fa-tag" style={{ marginRight: '10px', opacity: '0.2' }}></i>
+                            {tags.map(({ id, name }) => (
+                              <span
+                                key={id}
+                                style={{ marginRight: '10px' }}
+                                className='the-tag'
+                                onClick={() => {
+                                  setSearchBy('tag');
+                                  setQueryText(name);
+                                }}
+                              >{name}</span>
+                            ))}
+                          </div>
+                        ) : null
+                      }
+                    </div>
+                  ))
+                }
+              </div>
+            )
+            : <div className='fade-in-effect'><em style={{ opacity: '0.3' }}>No results yet...</em></div>
         }
       </Layout>
     </>
