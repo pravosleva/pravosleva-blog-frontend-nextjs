@@ -660,6 +660,13 @@ label {
   border-radius: 6px;
   */
 }
+.inactive-witout-hover {
+  opacity: 0.4;
+  transition: 0.2s all linear;
+}
+.inactive-witout-hover:hover {
+  opacity: 1;
+}
 /*
 .special-link-wrapper:hover > .special-link {
   color: red;

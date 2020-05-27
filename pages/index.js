@@ -197,6 +197,8 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
                     >
                       <Link
                         href={`/article/${id}`}
+                        rel='preload'
+                        importance='high'
                       ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
                       <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
                       {

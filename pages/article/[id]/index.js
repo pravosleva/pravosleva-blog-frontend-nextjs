@@ -8,7 +8,6 @@ import Lightbox from 'react-image-lightbox';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import Layout from '../../../components/layout';
-// AUTH
 import { getMe } from '../../../hocs/auth/fns';
 import { useDispatch } from 'react-redux';
 import { userInfoActions } from '../../../store/reducer/user-info';
@@ -54,7 +53,6 @@ const Article = ({ initArticleData: article, usr = null }) => {
     setViewerIsOpen(false);
   };
   let imagesPacks = [];
-  // const allSrc = [];
 
   if (article && article.gallery && article.gallery.length > 0) {
     article.gallery.forEach(({ name, description, images = [], id, briefBackground }) => {
@@ -66,17 +64,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
           src: isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
           caption: `${article.title}: ${description}.`,
         })),
-        // bgSrc: briefBackground && briefBackground.url
-        //   ?
-        //     isDev
-        //     ? `http://80.87.194.181/api${briefBackground.url}`
-        //     : `${baseURL}${briefBackground.url}`
-        //   : '/text-1.jpeg',
       });
-
-      // images.forEach(({ url }) => {
-      //   allSrc.push(isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`);
-      // });
     })
   }
 
@@ -129,17 +117,14 @@ const Article = ({ initArticleData: article, usr = null }) => {
           ? (
             <>
               {/**/}
-              <div
-                className='bx_breadcrumbs'
-                // style={{ marginTop: '38px' }}
-              >
+              <div className='bx_breadcrumbs'>
                 <ul itemScope itemType='http://schema.org/BreadcrumbList'>
                   <li
                     itemProp='itemListElement'
                     itemScope
                     itemType='http://schema.org/ListItem'
                   >
-                    <Link href='/'>
+                    <Link href='/' rel='preload' importance='high'>
                       <a
                         title='Pravosleva.ru'
                         itemProp='item'
@@ -225,29 +210,11 @@ const Article = ({ initArticleData: article, usr = null }) => {
                             direction='column'
                             columns={columns}
                           />
-                          {/* WAY 1: react-images
-                          <ModalGateway>
-                            {viewerIsOpen ? (
-                              <Modal onClose={closeLightbox}>
-                                <Carousel
-                                  currentIndex={currentPackIndex}
-                                  views={article.photos.map(({ url }) => ({
-                                    src: `${baseURL}${url}`,
-                                    caption: article.title
-                                  }))}
-                                />
-                              </Modal>
-                            ) : null}
-                          </ModalGateway>
-                          */}
-                          {/* WAY 2: react-image-lightbox */}
                           {
                             viewerIsOpen && currentPackIndex === i && images[currentImageIndex]
                             ? (
                               <Lightbox
                                 imageTitle={`${name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
-                                // imageCaption={`${formatDateByMS(createdAtMS)} (${photos.length} ${getFilesInRussian(photos.length)}${photos.length !== images.length ? `, из них ${images.length} ${getImagesInRussian(images.length)}` : ''})`}
-                                // imageCaption={images[photoIndex]}
                                 imagePadding={0}
                                 clickOutsideToClose={false}
                                 mainSrc={images[currentImageIndex].src}
@@ -255,11 +222,9 @@ const Article = ({ initArticleData: article, usr = null }) => {
                                 prevSrc={images[(currentImageIndex + images.length - 1) % images.length].src}
                                 onCloseRequest={closeLightbox}
                                 onMovePrevRequest={() => {
-                                  // setCurrentPackIndex((currentImageIndex + images.length - 1) % images.length);
                                   setCurrentImageIndex((currentImageIndex + images.length - 1) % images.length);
                                 }}
                                 onMoveNextRequest={() => {
-                                  // setCurrentPackIndex((currentImageIndex + 1) % images.length);
                                   setCurrentImageIndex((currentImageIndex + 1) % images.length);
                                 }}
                               />
@@ -274,20 +239,21 @@ const Article = ({ initArticleData: article, usr = null }) => {
               }
             </>
           ) : (
-            <h1>Not found, try again...</h1>
-            // <div>Hey, where is the f*cking <code>id</code> as query param?</div>
+            <>
+              <h1>Not found, try again...</h1>
+              <div>Hey, where is the f*cking <code>id</code> in query params?</div>
+            </>
           )
         }
         <div
           key={id}
           style={{
             padding: '10px 0 10px 0',
-            // marginBottom: '20px',
             width: '100%',
           }}
           className='special-link-wrapper fade-in-effect unselectable'
         >
-          <Link href="/"><a className='special-link'>Go back to the homepage</a></Link>
+          <Link href='/' rel='preload' importance='high'><a className='special-link'>Go back to the homepage</a></Link>
         </div>
       </Layout>
     </>

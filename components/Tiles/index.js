@@ -71,11 +71,13 @@ const Grid = ({
                   }}
                 >
                   <strong>{title}</strong>
-                  <em>{brief}</em>
-                  <span style={{ textAlign: 'right' }}>
+                  <em style={{ textAlign: 'center' }}>{brief}</em>
+                  <span style={{ textAlign: 'left' }}>
                     <Link
                       href={`/article/${id}`}
-                    ><a className='special-link white unselectable'>Read more</a></Link>
+                      rel='preload'
+                      importance='high'
+                    ><a className='special-link inactive-witout-hover white unselectable'>READ MORE <i className='fas fa-arrow-right'></i></a></Link>
                   </span>
                 </div>
               )
