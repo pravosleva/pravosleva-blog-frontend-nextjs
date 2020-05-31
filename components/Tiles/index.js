@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import Link from 'next/link';
 import { Map } from 'immutable';
 // import { DesktopArrow } from './components/DesktopArrow';
+import { getFormatedDate2 } from '../../lib/timeConverter';
 
 
 const dev = process.env.NODE_ENV === 'development';
@@ -48,7 +49,7 @@ const Grid = ({
       ? (
         <div className='tiles-grid-wrapper fade-in-effect'>
           {
-            articles.map(({ id, briefBackground, title, brief = 'No brief' }, i) => {
+            articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt }, i) => {
               const bgSrc = briefBackground && briefBackground.url
                 ?
                   dev
@@ -72,10 +73,11 @@ const Grid = ({
                 >
                   <strong>{title}</strong>
                   <em style={{ textAlign: 'center' }}>{brief}</em>
-                  <span style={{ textAlign: 'left' }}>
+                  <span style={{ textAlign: 'left', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Link
                       href={`/article/${id}`}
-                    ><a className='special-link inactive-witout-hover white unselectable'>READ MORE <i className='fas fa-arrow-right'></i></a></Link>
+                    ><a className='special-link inactive-without-hover white unselectable'>READ MORE <i className='fas fa-arrow-right'></i></a></Link>
+                    <small className='inactive'>{getFormatedDate2(new Date(createdAt))}</small>
                   </span>
                 </div>
               )

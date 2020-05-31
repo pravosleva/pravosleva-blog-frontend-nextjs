@@ -11,6 +11,7 @@ import Layout from '../../../components/layout';
 import { getMe } from '../../../hocs/auth/fns';
 import { useDispatch } from 'react-redux';
 import { userInfoActions } from '../../../store/reducer/user-info';
+import { getFormatedDate2 } from '../../../lib/timeConverter';
 
 
 const Gallery = dynamic(() => import('react-photo-gallery'), {
@@ -164,6 +165,11 @@ const Article = ({ initArticleData: article, usr = null }) => {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   margin: '10px 0 50px 0',
+                  
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  // alignItems: ''
                 }}
               >
                 <h1>{article.title || 'No title'}</h1>
@@ -172,6 +178,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                   ? <div style={{ marginBottom: '30px' }} className='fade-in-effect'><em style={{ fontFamily: 'Montserrat' }}>{article.brief}</em></div>
                   : null
                 }
+                <small style={{ textAlign: 'right' }} className='inactive'>{getFormatedDate2(new Date(article.createdAt))}</small>
               </div>
 
               <div
@@ -253,7 +260,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
           }}
           className='special-link-wrapper fade-in-effect unselectable'
         >
-          <Link href='/'><a className='special-link'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
+          <Link href='/'><a className='special-link-underline'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
         </div>
       </Layout>
     </>
