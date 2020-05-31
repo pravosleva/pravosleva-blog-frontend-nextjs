@@ -32,6 +32,8 @@ class MyApp extends App {
     return (
       <>
         <Head>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta name="theme-color" content="#0162c8" />
           <title>Pravosleva</title>
 
           {/* Global Site Tag (gtag.js) - Google Analytics
@@ -105,7 +107,8 @@ window.addEventListener('load', function() {
       }, 1000);
     }
   }, true)
-})`
+})
+`
 /* ORIGINAL SAMPLE
   const rippledButtons = document.querySelectorAll('.link-as-rippled-btn');
 
@@ -135,7 +138,7 @@ window.addEventListener('load', function() {
       }, 1000);
     })
   })
-  */
+*/
           }}/>
         </Head>
         <Provider store={reduxStore}>
