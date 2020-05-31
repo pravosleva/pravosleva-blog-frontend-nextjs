@@ -884,6 +884,9 @@ div.article-body > blockquote {
     max-width: 960px;
     min-height: calc(100vh - 50px);
   }
+  .universal-container > main > .special-link-wrapper {
+    padding-bottom: 20px;
+  }
 }
 @media (max-width: 767px) {
   .universal-container {
@@ -897,7 +900,7 @@ div.article-body > blockquote {
   }
   .universal-container > main > .special-link-wrapper {
     width: 100%;
-    padding: 10px 0 10px 20px;
+    padding: 10px 0 40px 20px;
   }
   .universal-container > main > .bx_breadcrumbs {
     padding-left: 20px;

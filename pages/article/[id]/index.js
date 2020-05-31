@@ -136,13 +136,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                     itemScope
                     itemType='http://schema.org/ListItem'
                   >
-                    <span style={{
-                      fontFamily: 'Montserrat',
-                      textDecoration: 'none',
-                      color: 'gray',
-                      fontSize: '16px',
-                      whiteSpace: 'nowrap',
-                    }}>
+                    <span>
                       {
                         article.title.length > 30
                         ? `${article.title.substring(0, 30)}...`
