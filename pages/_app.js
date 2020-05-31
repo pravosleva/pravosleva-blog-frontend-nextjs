@@ -58,6 +58,23 @@ f.parentNode.insertBefore(j, f)
               </>
             )
           */}
+          <script dangerouslySetInnerHTML={{
+                  __html: `
+window.addEventListener('load', function() {
+  const articleBody = document.querySelector('.article-body');
+
+  if (articleBody) articleBody.addEventListener('click', function(e) {
+    if (e.originalTarget.tagName === 'A') {
+      e.preventDefault();
+      const newLink = window.document.createElement('a');
+
+      newLink.setAttribute('href', e.originalTarget.href);
+      newLink.setAttribute('target', '_blank');
+      newLink.click();
+    }
+  });
+})`
+          }}/>
         </Head>
         <Provider store={reduxStore}>
           <Component {...pageProps} />
