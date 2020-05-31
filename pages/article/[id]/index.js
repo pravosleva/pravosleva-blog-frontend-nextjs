@@ -155,30 +155,42 @@ const Article = ({ initArticleData: article, usr = null }) => {
               </div>
 
               <div
-                className='fade-in-effect tiles-grid-item white'
+                className='article-wrapper'
                 style={{
-                  borderRadius: '0',
-                  width: '100%',
                   minHeight: '250px',
-                  backgroundImage: `url(${bgSrc})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  margin: '10px 0 50px 0',
-                  
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  // alignItems: ''
+                  width: '100%',
+                  // background: 'linear-gradient(rgba(230,100,101,0.5), rgba(46,101,178,0.5))',
+                  background: 'linear-gradient(rgba(255,255,255,1), transparent)',
+                  display: 'block',
+                  position: 'relative'
                 }}
               >
-                <h1>{article.title || 'No title'}</h1>
-                {
-                  article.brief
-                  ? <div style={{ marginBottom: '30px' }} className='fade-in-effect'><em style={{ fontFamily: 'Montserrat' }}>{article.brief}</em></div>
-                  : null
-                }
-                <small style={{ textAlign: 'right' }} className='inactive'>{getFormatedDate2(new Date(article.createdAt))}</small>
+                <div
+                  className='fade-in-effect tiles-grid-item white'
+                  style={{
+                    borderRadius: '0',
+                    width: '100%',
+                    minHeight: '250px',
+                    // backgroundImage: `url(${bgSrc})`,
+                    // backgroundRepeat: 'no-repeat',
+                    // backgroundSize: 'cover',
+                    // backgroundPosition: 'center',
+                    margin: '10px 0 50px 0',
+                    
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    // alignItems: ''
+                  }}
+                >
+                  <h1>{article.title || 'No title'}</h1>
+                  {
+                    article.brief
+                    ? <div style={{ marginBottom: '30px' }} className='fade-in-effect'><em style={{ fontFamily: 'Montserrat' }}>{article.brief}</em></div>
+                    : null
+                  }
+                  <small style={{ textAlign: 'right' }} className='inactive'>{getFormatedDate2(new Date(article.createdAt))}</small>
+                </div>
               </div>
 
               <div
@@ -262,6 +274,23 @@ const Article = ({ initArticleData: article, usr = null }) => {
         >
           <Link href='/'><a className='special-link-underline'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
         </div>
+        <style jsx>{`
+          .article-wrapper::after {
+            content: "";
+            background: url(${bgSrc});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(1);
+            // opacity: 0.5;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;
+          }
+        `}</style>
       </Layout>
     </>
   )
