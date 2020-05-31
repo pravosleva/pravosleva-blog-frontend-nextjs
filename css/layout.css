@@ -109,7 +109,7 @@ kbd,
 pre,
 samp {
   font-family: monospace, monospace;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 figure {
   margin: 1em 40px;
@@ -900,7 +900,7 @@ div.article-body > blockquote {
   }
   .universal-container > main > .special-link-wrapper {
     width: 100%;
-    padding: 10px 0 40px 20px;
+    padding: 10px 0 20px 20px;
   }
   .universal-container > main > .bx_breadcrumbs {
     padding-left: 20px;

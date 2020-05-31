@@ -186,10 +186,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                 </div>
               </div>
 
-              <div
-                className='article-body fade-in-effect'
-                style={{ marginBottom: '40px' }}
-              >{
+              <div className='article-body fade-in-effect'>{
                 article.body
                 ? <ReactMarkdown source={article.body} />
                 : 'No body'
