@@ -86,15 +86,7 @@ const Grid = ({
         </div>
       ) : null
     }
-    <div
-      style={{
-        marginTop: '20px',
-        padding: '0',
-        // border: '1px solid red',
-        display: 'flex',
-        justifyContent: 'space-evenly'
-      }}
-    >
+    <div className='mobile-only mobile-arrows-wrapper'>
       {
         articles.length > 0 && !isLoading && currentStart > 0
         ? (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+// import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { PulseLoader } from 'react-spinners';
 
 import Layout from '../components/layout';
@@ -45,9 +45,9 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
   const [queryText, setQueryText] = useState('');
   const [searchBy, setSearchBy] = useState('body');
   const [start, setStart] = useState(0);
-  const getNextSearchTarget = ({
+  const getNextSearchTarget = useCallback(({
     targets = ['body', 'title', 'tag'],
-    current = 'body'
+    current = 'title'
   }) => {
     const currentIndex = targets.findIndex(t => t === current);
     let nextIndex = 0;
@@ -59,7 +59,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
     }
 
     return targets[nextIndex];
-  };
+  }, []);
   const getPrefix = name => {
     switch (name) {
       case 'body': case 'title': return 'in';
@@ -70,9 +70,8 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
   const debouncedSetQueryText = useDebounce(queryText, 1000);
   const debouncedSearchBy = useDebounce(searchBy, 1000);
 
-  useEffect(() => {
-    if (debouncedSetQueryText || debouncedSearchBy) {
-      if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
+  const newFetch = useCallback(() => {
+    if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
 
       setStart(0);
       setLoading(true);
@@ -89,9 +88,18 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
           .then(res => setArticlesCounter(res)),
       ])
         .then(() => setLoading(false));
+  }, [debouncedSetQueryText, debouncedSearchBy, queryText, searchBy])
 
-    } // else { setArticles([]); }
-  }, [debouncedSetQueryText, debouncedSearchBy, setLoading, setArticles]);
+  useEffect(() => {
+    if ((!!debouncedSetQueryText || !!debouncedSearchBy)) {
+      newFetch()
+    }
+  }, [debouncedSetQueryText, setLoading, setArticles]);
+  useEffect(() => {
+    if ((!!debouncedSetQueryText)) {
+      newFetch()
+    }
+  }, [debouncedSearchBy, setLoading, setArticles]);
 
   // --- TODO: REFACTOR AUTH: Set to Redux on client
   const dispatch = useDispatch();
@@ -107,6 +115,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
     if (!isLoading) setStart(start - 5);
   }
   useEffect(() => {
+    console.log('CALLED')
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
 
     // Set isSearching state
@@ -131,15 +140,16 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
         setArticlesCounter(res);
       });
   }, [start])
+  const handleSearchToggler = useCallback(() => {
+    setSearchBy(getNextSearchTarget({ current: searchBy }));
+  }, [searchBy])
 
   return (
     <>
       <Layout>
         <div className='homepage-wrapper'>
           <div id='searchPanel'>
-            <span id='bodySearchToggler' className='unselectable' onClick={() => {
-              setSearchBy(getNextSearchTarget({ current: searchBy }));
-            }}>
+            <span id='bodySearchToggler' className='unselectable' onClick={handleSearchToggler}>
               {
                 (() => {
                   switch (searchBy) {

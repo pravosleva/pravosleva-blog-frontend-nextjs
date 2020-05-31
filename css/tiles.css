@@ -50,6 +50,12 @@
     align-items: center;
   }
 }
+.mobile-arrows-wrapper {
+  margin-top: 20px;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
 @media (min-width: 768px) {
   .tiles-external-wrapper {
     position: relative;
@@ -114,6 +120,9 @@
   .tiles-grid-item:nth-of-type(5n),
   .tiles-grid-item:nth-of-type(6n) {
     grid-column: span 2;
+  }
+  .mobile-only {
+    display: none;
   }
   /*
   .tiles-grid-item:nth-of-type(5n) {
