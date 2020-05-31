@@ -84,11 +84,11 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
           .then(results => {
             if (Array.isArray(results)) setArticles(results);
           }),
-        fetchArticlesCounter({ queryText, targetField: searchBy })
+        fetchArticlesCounter({ queryText: debouncedSetQueryText, targetField: searchBy })
           .then(res => setArticlesCounter(res)),
       ])
         .then(() => setLoading(false));
-  }, [debouncedSetQueryText, debouncedSearchBy, queryText, searchBy])
+  }, [debouncedSetQueryText, debouncedSearchBy, searchBy])
 
   useEffect(() => {
     if ((!!debouncedSetQueryText || !!debouncedSearchBy)) {

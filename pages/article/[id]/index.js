@@ -160,7 +160,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                 }}
               >
                 <div
-                  className='fade-in-effect tiles-grid-item white'
+                  className='fade-in-effect tiles-grid-item-in-article white'
                   style={{
                     borderRadius: '0',
                     width: '100%',

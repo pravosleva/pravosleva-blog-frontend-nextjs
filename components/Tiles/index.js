@@ -21,7 +21,7 @@ const Grid = ({
 }) => (
   <div className='tiles-external-wrapper'>
     {
-      articles.length > 0 && !isLoading && (currentStart ? Math.ceil((Math.ceil(articlesCounter / currentLimit) * currentStart) / articlesCounter) : 1) < Math.ceil(articlesCounter / currentLimit)
+      !!articlesCounter && !isLoading && (!!currentStart ? Math.ceil((Math.ceil(articlesCounter / currentLimit) * currentStart) / articlesCounter) : 1) < Math.ceil(articlesCounter / currentLimit)
       ? (
         <div
           className='fade-in-effect tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--next'
@@ -33,7 +33,7 @@ const Grid = ({
       : null
     }
     {
-      articles.length > 0 && !isLoading && currentStart > 0
+      !!articlesCounter && !isLoading && currentStart > 0
       ? (
         <div
           className='fade-in-effect tiles-external-wrapper--desktop-arrow tiles-external-wrapper--desktop-arrow--prev'
