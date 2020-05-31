@@ -60,10 +60,11 @@ f.parentNode.insertBefore(j, f)
           */}
           <script dangerouslySetInnerHTML={{
                   __html: `
+// From each link in article to new browser tab:
 window.addEventListener('load', function() {
   const articleBody = document.querySelector('.article-body');
 
-  if (articleBody) articleBody.addEventListener('click', function(e) {
+  if (!!articleBody) articleBody.addEventListener('click', function(e) {
     if (e.originalTarget.tagName === 'A') {
       e.preventDefault();
       const newLink = window.document.createElement('a');
@@ -73,7 +74,68 @@ window.addEventListener('load', function() {
       newLink.click();
     }
   });
+})
+
+// Rippled button tap effect:
+window.addEventListener('load', function() {
+  const body = document.querySelector('body');
+
+  body.addEventListener('click', function(e) {
+    if (e.originalTarget.classList.contains('link-as-rippled-btn')) {
+      const x = e.clientX - e.target.offsetLeft;
+      const ripples = document.createElement('span');
+
+      ripples.classList.add('ripples');
+      ripples.style.left = x + 'px';
+      ripples.style.top = '50%';
+      e.originalTarget.appendChild(ripples);
+      setTimeout(() => {
+        ripples.remove();
+      }, 1000);
+    } else if (e.originalTarget.parentNode.classList.contains('link-as-rippled-btn')) {
+      const x = e.clientX - e.originalTarget.parentNode.offsetLeft;
+      const ripples = document.createElement('span');
+
+      ripples.classList.add('ripples');
+      ripples.style.left = x + 'px';
+      ripples.style.top = '50%';
+      e.originalTarget.parentNode.appendChild(ripples);
+      setTimeout(() => {
+        ripples.remove();
+      }, 1000);
+    }
+  }, true)
 })`
+/* ORIGINAL SAMPLE
+  const rippledButtons = document.querySelectorAll('.link-as-rippled-btn');
+
+  rippledButtons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      // e.preventDefault();
+      console.log(e.clientX, e.target.offsetLeft)
+      // const x = e.clientX - e.target.offsetLeft;
+      // const y = e.clientY - e.target.offsetTop;
+      const x = e.clientX - e.target.offsetLeft;
+      const y = e.clientY;
+
+      const ripples = document.createElement('span');
+      ripples.classList.add('ripples');
+
+      // ripples.style.left = x + 'px';
+      // ripples.style.top = y + 'px';
+      ripples.style.left = x + 'px';
+      ripples.style.top = '50%';
+
+      console.log(this)
+      this.appendChild(ripples);
+      console.log(this)
+
+      setTimeout(() => {
+        ripples.remove();
+      }, 1000);
+    })
+  })
+  */
           }}/>
         </Head>
         <Provider store={reduxStore}>

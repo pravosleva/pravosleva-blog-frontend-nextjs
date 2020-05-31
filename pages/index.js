@@ -32,7 +32,7 @@ const Loader = () => (
     <PulseLoader
       size={15}
       margin={5}
-      color='#2E65B2'
+      color='#0162c8'
       loading={true}
     />
   </div>
@@ -115,7 +115,6 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
     if (!isLoading) setStart(start - 5);
   }
   useEffect(() => {
-    console.log('CALLED')
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' });
 
     // Set isSearching state

@@ -19,7 +19,7 @@ const Nav = styled('div')`
 
   padding: 0;
   color: #fff;
-  background-color: #2E65B2;
+  background-color: #0162c8;
   > ul {
     max-width: 960px;
 

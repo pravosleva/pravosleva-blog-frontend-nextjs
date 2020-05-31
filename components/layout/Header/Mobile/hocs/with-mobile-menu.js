@@ -32,7 +32,7 @@ const Sidebar = styled.div`
     // border: 1px solid black;
     // background-color: #007bff;
     // background-color: #2d4262;
-    background-color: #2E65B2;
+    background-color: #0162c8;
     > ul {
       margin: 0;
       padding: 0;

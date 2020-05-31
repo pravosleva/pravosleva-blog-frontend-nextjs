@@ -5,7 +5,7 @@ export const ScrollTopBtn = styled('div')`
   z-index: 3;
   right: 16px;
   bottom: 16px;
-  background-color: #2E65B2;
+  background-color: #0162c8;
   color: #fff;
   border-radius: 50%;
   border: none;

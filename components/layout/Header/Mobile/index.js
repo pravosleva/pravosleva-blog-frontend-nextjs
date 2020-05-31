@@ -39,7 +39,7 @@ const Nav = styled('div')`
   padding: 0;
   color: #fff;
   // background-color: #007bff;
-  background-color: #2E65B2;
+  background-color: #0162c8;
   // background-color: #d24136;
   > ul {
     display: flex;

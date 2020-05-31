@@ -23,7 +23,7 @@ summary {
   display: block;
 }
 footer {
-  color: #fff;
+  color: #0162c8;
   background-color: rgba(0, 0, 0, 0.2);
 }
 audio,
@@ -44,7 +44,7 @@ template {
   display: none;
 }
 a {
-  color: #2e65b2;
+  color: #0162c8;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
   outline: none !important;
@@ -654,7 +654,7 @@ label {
 /* SPECIAL LINKS */
 .special-link,
 .special-link-underline {
-  color: #2e65b2;
+  color: #0162c8;
   text-decoration: none;
 
   font-weight: bold;
@@ -736,8 +736,8 @@ label {
   border: 2px solid lightgray;
   border-radius: 24px;
   background-color: inherit;
-  color: #2e65b2;
-  caret-color: #2e65b2;
+  color: #0162c8;
+  caret-color: #0162c8;
   font-family: inherit;
   font-size: inherit;
   transition: border-color 0.3s linear, max-width 0.3s linear;
@@ -766,7 +766,7 @@ label {
 }
 */
 #searchPanel > input#searchText:focus {
-  border: 2px solid #2e65b2;
+  border: 2px solid #0162c8;
 }
 /* SEARCHING TOOL 1 */
 #searchPanel > span#clearSearchText {
@@ -791,8 +791,8 @@ label {
 }
 #searchPanel > span#clearSearchText:hover {
   /* color: #005170; rgba(0, 81, 112, 0.8) */
-  color: #2e65b2;
-  border: 1px solid #2e65b2;
+  color: #0162c8;
+  border: 1px solid #0162c8;
 }
 /* SEARCHING TOOL 2 */
 #searchPanel > span#bodySearchToggler {
@@ -816,8 +816,8 @@ label {
   transition: border-color 0.3s linear, color 0.3s linear;
 }
 #searchPanel > span#bodySearchToggler:hover {
-  color: #2e65b2;
-  border: 1px solid #2e65b2;
+  color: #0162c8;
+  border: 1px solid #0162c8;
 }
 
 div.article-body > blockquote {

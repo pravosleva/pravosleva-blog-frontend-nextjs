@@ -20,12 +20,12 @@
   /* Mobile */
   .tiles-external-wrapper--mobile-arrow {
     background-color: white;
-    color: #333;
+    color: #0162c8;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
     transition: 0.15s ease-out;
   }
   .tiles-external-wrapper--mobile-arrow:hover {
-    background-color: #333;
+    background-color: #0162c8;
     color: white;
   }
   .tiles-external-wrapper--mobile-arrow:hover {
@@ -73,12 +73,12 @@
   /* Desktop */
   .tiles-external-wrapper--desktop-arrow {
     background-color: white;
-    color: #333;
+    color: #0162c8;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
     transition: 0.15s ease-out;
   }
   .tiles-external-wrapper--desktop-arrow:hover {
-    background-color: #333;
+    background-color: #0162c8;
     color: white;
   }
   .tiles-external-wrapper--desktop-arrow:hover {

@@ -11,6 +11,7 @@ import { getMe } from '../../../hocs/auth/fns';
 import { useDispatch } from 'react-redux';
 import { userInfoActions } from '../../../store/reducer/user-info';
 import { getFormatedDate2 } from '../../../lib/timeConverter';
+import '../../../css/link-as-rippled-btn.css';
 
 
 const Gallery = dynamic(() => import('react-photo-gallery'), {
@@ -255,7 +256,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
           )
         }
         <div className='special-link-wrapper fade-in-effect unselectable'>
-          <Link href='/'><a className='special-link-underline'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
+          <Link href='/'><a className='link-as-rippled-btn'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
         </div>
         <style jsx>{`
           .article-wrapper::after {
