@@ -23,6 +23,15 @@ export const withSocketApi = WrappedComponent => {
         console.log(payload);
         // TODO: dispatch could be used...
       });
+      client.on('SOMEBODY_CONNECTED', payload => {
+        console.log(payload);
+      });
+      client.on('SOMEBODY_RENNECTED', payload => {
+        console.log(payload);
+      });
+      client.on('SOMEBODY_DISCONNECTED', payload => {
+        console.log(payload);
+      });
       /*
       client.on('ORDER_UPDATED', payload => {
         console.log(payload);
@@ -58,7 +67,10 @@ export const withSocketApi = WrappedComponent => {
       });
       */
 
-      return () => client.removeAllListeners();
+      return () => {
+        client.disconnect();
+        client.removeAllListeners();
+      }
     }, []);
 
     return <WrappedComponent {...props} />;
