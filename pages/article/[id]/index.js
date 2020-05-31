@@ -124,7 +124,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                     itemScope
                     itemType='http://schema.org/ListItem'
                   >
-                    <Link href='/' rel='preload' importance='high'>
+                    <Link href='/'>
                       <a
                         title='Pravosleva.ru'
                         itemProp='item'
@@ -154,7 +154,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
               </div>
 
               <div
-                className='tiles-grid-item white'
+                className='fade-in-effect tiles-grid-item white'
                 style={{
                   borderRadius: '0',
                   width: '100%',
@@ -166,7 +166,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                   margin: '10px 0 50px 0',
                 }}
               >
-                <h1 className='fade-in-effect'>{article.title || 'No title'}</h1>
+                <h1>{article.title || 'No title'}</h1>
                 {
                   article.brief
                   ? <div style={{ marginBottom: '30px' }} className='fade-in-effect'><em style={{ fontFamily: 'Montserrat' }}>{article.brief}</em></div>
@@ -253,7 +253,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
           }}
           className='special-link-wrapper fade-in-effect unselectable'
         >
-          <Link href='/' rel='preload' importance='high'><a className='special-link'>Go back to the homepage</a></Link>
+          <Link href='/'><a className='special-link'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
         </div>
       </Layout>
     </>

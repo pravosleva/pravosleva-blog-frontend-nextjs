@@ -75,8 +75,6 @@ const Grid = ({
                   <span style={{ textAlign: 'left' }}>
                     <Link
                       href={`/article/${id}`}
-                      rel='preload'
-                      importance='high'
                     ><a className='special-link inactive-witout-hover white unselectable'>READ MORE <i className='fas fa-arrow-right'></i></a></Link>
                   </span>
                 </div>

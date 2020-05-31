@@ -27,7 +27,7 @@ const Nav = styled('div')`
     list-style: none;
     margin: 0 auto;
     padding: 0;
-    line-height: 80px;
+    line-height: 50px;
     font-size: 16px;
   }
   > ul > li {
@@ -68,16 +68,14 @@ const DesktopHeader = () => {
         <Nav>
           <ul>
             <li style={{ marginLeft: '20px', marginRight: 'auto', marginBottom: '0px' }}>
-              <h1 style={{ margin: 0, lineHeight: 'inherit' }}>
-                <Link href='/'>
-                  <a
-                    style={{
-                      color: `white`,
-                      textDecoration: `none`,
-                    }}
-                  >Pravosleva</a>
-                </Link>
-              </h1>
+              <Link href='/'>
+                <a
+                  style={{
+                    color: `white`,
+                    textDecoration: `none`,
+                  }}
+                >Pravosleva</a>
+              </Link>
             </li>
           </ul>
         </Nav>

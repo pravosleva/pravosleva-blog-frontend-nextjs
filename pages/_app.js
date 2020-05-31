@@ -4,7 +4,7 @@ import Head from 'next/head';
 // import url from 'url';
 
 import withReduxStore from '../hocs/with-redux-store';
-
+import '../css/layout.css';
 
 // let gaTrackingId = process.env.GA_TRACKING_ID || '';
 // const isProduction = process.env.NODE_ENV === 'production';
