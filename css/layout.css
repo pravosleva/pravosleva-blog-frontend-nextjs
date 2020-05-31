@@ -723,9 +723,9 @@ label {
 
 /* SEARCH TEXT */
 #searchPanel {
+  position: relative;
   font-family: Montserrat;
   margin: 10px 0 30px 0;
-  position: relative;
 }
 #searchPanel > input#searchText {
   font-family: Montserrat;
@@ -758,11 +758,13 @@ label {
   /* Firefox 18- */
   color: #4267b2;
 }
+/*
 @media (max-width: 767px) {
   #searchPanel > input#searchText {
-    /* border-radius: 0; */
+    border-radius: 0;
   }
 }
+*/
 #searchPanel > input#searchText:focus {
   border: 2px solid #2e65b2;
 }
@@ -873,4 +875,38 @@ div.article-body > blockquote {
 .text-shadow-10 {
   letter-spacing: 2px;
   text-shadow: 1px 1px rgb(0, 123, 255), -1px -1px rgb(0, 123, 255);
+}
+
+@media (min-width: 768px) {
+  .universal-container {
+    padding: 0 20px 0 20px;
+    margin: 0 auto;
+    max-width: 960px;
+    min-height: calc(100vh - 50px);
+  }
+}
+@media (max-width: 767px) {
+  .universal-container {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 960px;
+    min-height: calc(100vh - 50px);
+  }
+  .universal-container > main > .article-body {
+    padding: 0 20px 0 20px;
+  }
+  .universal-container > main > .special-link-wrapper {
+    width: 100%;
+    padding: 10px 0 10px 20px;
+  }
+  .universal-container > main > .bx_breadcrumbs {
+    padding-left: 20px;
+  }
+  .universal-container > main > .galleries-wrapper {
+    padding: 0 20px 0 20px;
+  }
+
+  .universal-container > main > .homepage-wrapper {
+    padding: 0 2px 0 2px;
+  }
 }

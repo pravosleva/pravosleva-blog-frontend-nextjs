@@ -76,7 +76,7 @@ const Grid = ({
                   <span style={{ textAlign: 'left', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Link
                       href={`/article/${id}`}
-                    ><a className='special-link inactive-without-hover white unselectable'>READ MORE <i className='fas fa-arrow-right'></i></a></Link>
+                    ><a className='special-link inactive-without-hover white unselectable'>READ MORE<i style={{ marginLeft: '10px' }} className='fas fa-arrow-right'></i></a></Link>
                     <small className='inactive'>{getFormatedDate2(new Date(createdAt))}</small>
                   </span>
                 </div>
@@ -86,6 +86,40 @@ const Grid = ({
         </div>
       ) : null
     }
+    <div
+      style={{
+        marginTop: '20px',
+        padding: '0',
+        // border: '1px solid red',
+        display: 'flex',
+        justifyContent: 'space-evenly'
+      }}
+    >
+      {
+        articles.length > 0 && !isLoading && currentStart > 0
+        ? (
+          <div
+            className='fade-in-effect tiles-external-wrapper--mobile-arrow tiles-external-wrapper--mobile-arrow--prev'
+            onClick={handleStartForPrevPage}
+          >
+            <i className='fas fa-arrow-left'></i>
+          </div>
+        )
+        : null
+      }
+      {
+        articles.length > 0 && !isLoading && (currentStart ? Math.ceil((Math.ceil(articlesCounter / currentLimit) * currentStart) / articlesCounter) : 1) < Math.ceil(articlesCounter / currentLimit)
+        ? (
+          <div
+            className='fade-in-effect tiles-external-wrapper--mobile-arrow tiles-external-wrapper--mobile-arrow--next'
+            onClick={handleStartForNextPage}
+          >
+            <i className='fas fa-arrow-right'></i>
+          </div>
+        )
+        : null
+      }
+    </div>
   </div>
 );
 function areEqual(prevProps, nextProps) {

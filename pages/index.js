@@ -135,106 +135,108 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr = null }) => {
   return (
     <>
       <Layout>
-        <div id='searchPanel'>
-          <span id='bodySearchToggler' className='unselectable' onClick={() => {
-            setSearchBy(getNextSearchTarget({ current: searchBy }));
-          }}>
+        <div className='homepage-wrapper'>
+          <div id='searchPanel'>
+            <span id='bodySearchToggler' className='unselectable' onClick={() => {
+              setSearchBy(getNextSearchTarget({ current: searchBy }));
+            }}>
+              {
+                (() => {
+                  switch (searchBy) {
+                    case 'body': return <i className="fas fa-code"></i>;
+                    case 'title': return <i className="fas fa-heading"></i>;
+                    case 'tag': return <i className="fas fa-tag"></i>;
+                    default: return null;
+                  }
+                })()
+              }
+            </span>
+            <input
+              id='searchText'
+              type='text'
+              value={queryText}
+              onChange={e => setQueryText(e.target.value)}
+              placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
+              className='unselectable'
+              style={{
+                maxWidth: queryText ? '100%' : '250px'
+              }}
+            />
             {
-              (() => {
-                switch (searchBy) {
-                  case 'body': return <i className="fas fa-code"></i>;
-                  case 'title': return <i className="fas fa-heading"></i>;
-                  case 'tag': return <i className="fas fa-tag"></i>;
-                  default: return null;
-                }
-              })()
+              queryText
+              ? <span id='clearSearchText' className='unselectable fade-in-effect' onClick={() => setQueryText('')}><i className='fas fa-times'></i></span>
+              : null
             }
-          </span>
-          <input
-            id='searchText'
-            type='text'
-            value={queryText}
-            onChange={e => setQueryText(e.target.value)}
-            placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
-            className='unselectable'
-            style={{
-              maxWidth: queryText ? '100%' : '250px'
-            }}
-          />
+          </div>
           {
-            queryText
-            ? <span id='clearSearchText' className='unselectable fade-in-effect' onClick={() => setQueryText('')}><i className='fas fa-times'></i></span>
-            : null
+            <Tiles
+              articles={articles}
+              articlesCounter={articlesCounter}
+              currentStart={start}
+              handleStartForNextPage={handleStartForNextPage}
+              handleStartForPrevPage={handleStartForPrevPage}
+              isLoading={isLoading}
+            />
           }
+          {isLoading && <Loader />}
+          {/*
+            isLoading
+            ? <Loader />
+            : articles.length > 0
+              ? (
+                <div>
+                  {
+                    articles.map(({ id, title, createdAt, tags = [] }) => (
+                      <div
+                        key={id}
+                        style={{
+                          padding: '20px 0 10px 0',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          position: 'relative'
+                        }}
+                        className='special-link-wrapper'
+                      >
+                        <Link
+                          href={`/article/${id}`}
+                        ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
+                        <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
+                        {
+                          tags.length > 0
+                          ? (
+                            <div
+                              style={{
+                                position: 'absolute',
+                                top: '0', left: '0',
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                              }}
+                              className='unselectable'
+                            >
+                              <i className="fas fa-tag" style={{ marginRight: '10px', opacity: '0.2' }}></i>
+                              {tags.map(({ id, name }) => (
+                                <span
+                                  key={id}
+                                  style={{ marginRight: '10px' }}
+                                  className='the-tag'
+                                  onClick={() => {
+                                    setSearchBy('tag');
+                                    setQueryText(name);
+                                  }}
+                                >{name}</span>
+                              ))}
+                            </div>
+                          ) : null
+                        }
+                      </div>
+                    ))
+                  }
+                </div>
+              )
+              : <div className='fade-in-effect'><em style={{ opacity: '0.3' }}>No results yet...</em></div>
+          */}
         </div>
-        {
-          <Tiles
-            articles={articles}
-            articlesCounter={articlesCounter}
-            currentStart={start}
-            handleStartForNextPage={handleStartForNextPage}
-            handleStartForPrevPage={handleStartForPrevPage}
-            isLoading={isLoading}
-          />
-        }
-        {isLoading && <Loader />}
-        {/*
-          isLoading
-          ? <Loader />
-          : articles.length > 0
-            ? (
-              <div>
-                {
-                  articles.map(({ id, title, createdAt, tags = [] }) => (
-                    <div
-                      key={id}
-                      style={{
-                        padding: '20px 0 10px 0',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        position: 'relative'
-                      }}
-                      className='special-link-wrapper'
-                    >
-                      <Link
-                        href={`/article/${id}`}
-                      ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
-                      <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
-                      {
-                        tags.length > 0
-                        ? (
-                          <div
-                            style={{
-                              position: 'absolute',
-                              top: '0', left: '0',
-                              display: 'flex',
-                              justifyContent: 'flex-end',
-                              alignItems: 'center',
-                            }}
-                            className='unselectable'
-                          >
-                            <i className="fas fa-tag" style={{ marginRight: '10px', opacity: '0.2' }}></i>
-                            {tags.map(({ id, name }) => (
-                              <span
-                                key={id}
-                                style={{ marginRight: '10px' }}
-                                className='the-tag'
-                                onClick={() => {
-                                  setSearchBy('tag');
-                                  setQueryText(name);
-                                }}
-                              >{name}</span>
-                            ))}
-                          </div>
-                        ) : null
-                      }
-                    </div>
-                  ))
-                }
-              </div>
-            )
-            : <div className='fade-in-effect'><em style={{ opacity: '0.3' }}>No results yet...</em></div>
-        */}
       </Layout>
     </>
   );

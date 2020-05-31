@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
-import { PulseLoader } from 'react-spinners';
 import Lightbox from 'react-image-lightbox';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -204,7 +203,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
               {
                 article.gallery && imagesPacks.length > 0
                 ? (
-                  <>
+                  <div className='galleries-wrapper'>
                     {
                       imagesPacks.map(({ id, name, description, images }, i) => (
                         <div
@@ -253,7 +252,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
                         </div>
                       ))
                     }
-                  </>
+                  </div>
                 ) : null
               }
             </>
@@ -264,14 +263,7 @@ const Article = ({ initArticleData: article, usr = null }) => {
             </>
           )
         }
-        <div
-          key={id}
-          style={{
-            padding: '10px 0 10px 0',
-            width: '100%',
-          }}
-          className='special-link-wrapper fade-in-effect unselectable'
-        >
+        <div className='special-link-wrapper fade-in-effect unselectable'>
           <Link href='/'><a className='special-link-underline'><i className='fas fa-arrow-left'></i><span style={{ marginLeft: '10px' }}>Go back to the homepage</span></a></Link>
         </div>
         <style jsx>{`

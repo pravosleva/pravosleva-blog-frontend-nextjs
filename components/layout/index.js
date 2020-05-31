@@ -30,16 +30,8 @@ const Layout = ({ children }) => {
     <>
       <DesktopHeader />
       <MobileHeader />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0px 20px 20px`,
-          paddingTop: 0,
-          minHeight: 'calc(100vh - 50px)',
-        }}
-      >
-        <main style={{ paddingTop: '20px', minHeight: 'calc(100vh - 80px)' }}>{children}</main>
+      <div className='universal-container'>
+        <main style={{ padding: '20px 0 20px 0' }}>{children}</main>
       </div>
       <footer>
         <div style={{ margin: '0 auto', maxWidth: 960, lineHeight: '50px' }}>
