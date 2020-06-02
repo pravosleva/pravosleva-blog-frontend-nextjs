@@ -76,13 +76,6 @@ const Article = ({ initArticleData: article, usr }) => {
       : "/text-1.jpeg";
   const thisPageUrl = `http://pravosleva.ru/article/${article.id}`;
 
-  // --- TODO: REFACTOR AUTH: Set to Redux on client
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (usr.id) dispatch(userInfoActions.setUser({ ...usr }));
-  // }, [usr.id]);
-  // ---
-
   return (
     <>
       <Head>
@@ -148,47 +141,17 @@ const Article = ({ initArticleData: article, usr }) => {
               </ul>
             </div>
 
-            <div
-              className="article-wrapper"
-              style={{
-                minHeight: "250px",
-                width: "100%",
-                // background: 'linear-gradient(rgba(230,100,101,0.5), rgba(46,101,178,0.5))',
-                background: "linear-gradient(rgba(255,255,255,1), transparent)",
-                display: "block",
-                position: "relative",
-              }}
-            >
-              <div
-                className="fade-in-effect tiles-grid-item-in-article white"
-                style={{
-                  borderRadius: "0",
-                  width: "100%",
-                  minHeight: "250px",
-                  // backgroundImage: `url(${bgSrc})`,
-                  // backgroundRepeat: 'no-repeat',
-                  // backgroundSize: 'cover',
-                  // backgroundPosition: 'center',
-                  margin: "10px 0 50px 0",
-
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  // alignItems: ''
-                }}
-              >
-                <h1>{article.title || "No title"}</h1>
+            <div className="article-wrapper">
+              <div className="fade-in-effect tiles-grid-item-in-article white article-wrapper__big-image-as-container">
+                <h1 className='article-page-title'>{article.title || "No title"}</h1>
                 {article.brief ? (
-                  <div
-                    style={{ marginBottom: "30px" }}
-                    className="fade-in-effect"
-                  >
-                    <em style={{ fontFamily: "Montserrat" }}>
+                  <div className="fade-in-effect article-wrapper__big-image-as-container__title">
+                    <em>
                       {article.brief}
                     </em>
                   </div>
                 ) : null}
-                <small style={{ textAlign: "right" }} className="inactive">
+                <small className="inactive article-wrapper__big-image-as-container__date">
                   {getFormatedDate2(new Date(article.createdAt))}
                 </small>
               </div>
@@ -280,6 +243,30 @@ const Article = ({ initArticleData: article, usr }) => {
           </Link>
         </div>
         <style jsx>{`
+          @media(max-width: 767px) {
+            .article-page-title {
+              text-transform: uppercase;
+              font-size: 2em;
+              font-weight: bold;
+              letter-spacing: 0.1em;
+            }
+          }
+          @media(min-width: 768px) {
+            .article-page-title {
+              text-transform: uppercase;
+              font-size: 2em;
+              /* font-weight: bold; */
+              /* letter-spacing: 0.1em; */
+            }
+          }
+          .article-wrapper{
+            min-height: 250px;
+            width: 100%;
+            /* background: 'linear-gradient(rgba(230,100,101,0.5), rgba(46,101,178,0.5))', */
+            background: linear-gradient(rgba(255,255,255,1), transparent);
+            display: block;
+            position: relative;
+          }
           .article-wrapper::after {
             content: "";
             background: url(${bgSrc});
@@ -295,6 +282,23 @@ const Article = ({ initArticleData: article, usr }) => {
             position: absolute;
             z-index: -1;
           }
+          .article-wrapper__big-image-as-container {
+            border-radius: 0;
+            width: 100%;
+            min-height: 250px;
+            margin: 10px 0 50px 0;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .article-wrapper__big-image-as-container__title {
+            margin-bottom: 30px;
+            font-family: Montserrat;
+          }
+          .article-wrapper__big-image-as-container__date {
+            text-align: right;
+          }
         `}</style>
       </Layout>
     </>
@@ -306,7 +310,7 @@ Article.getInitialProps = async (ctx) => {
   const { id } = query;
 
   const fetchArticle = async (id) => {
-    if (!id) return;
+    if (!id) return null;
 
     const result = await api
       .get(`/articles/${id}`)
@@ -318,12 +322,6 @@ Article.getInitialProps = async (ctx) => {
   };
 
   const res = await fetchArticle(id);
-
-  // --- TODO: REFACTOR AUTH
-  // const usr = await getMe(ctx)
-  //   .then(usr => usr)
-  //   .catch(err => err);
-  // ---
 
   return { initArticleData: res, usr: null };
 };

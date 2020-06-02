@@ -96,13 +96,6 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
     }
   }, [debouncedSearchBy, setLoading, setArticles]);
 
-  // --- TODO: REFACTOR AUTH: Set to Redux on client
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (usr.id) dispatch(userInfoActions.setUser({ ...usr }));
-  // }, [usr.id]);
-  // ---
-
   const handleStartForNextPage = () => {
     if (!isLoading) setStart(start + 5);
   };
@@ -339,12 +332,6 @@ async function fetchArticlesCounter({ queryText = "", targetField = "body" }) {
 IndexPage.getInitialProps = async (ctx) => {
   const articles = await fetchArticles({});
   const articlesCounter = await fetchArticlesCounter({});
-
-  // --- TODO: REFACTOR AUTH
-  // const usr = await getMe(ctx)
-  //   .then(usr => usr)
-  //   .catch(err => err);
-  // ---
 
   return {
     initialArtilesCounter: articlesCounter,

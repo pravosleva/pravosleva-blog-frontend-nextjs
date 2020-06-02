@@ -55,6 +55,9 @@ a:hover {
 }
 a.special-link {
   font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.1em;
 }
 a:active,
 a:hover {

@@ -60,19 +60,12 @@ const Grid = ({
 
               return (
                 <div
-                  className='tiles-grid-item white'
+                  className='tiles-grid-item tiles-grid-item-bg white'
                   key={id}
-                  style={{
-                    backgroundImage: `url(${bgSrc})`,
-
-                    // TMP:
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}
+                  style={{ backgroundImage: `url(${bgSrc})` }}
                 >
-                  <strong>{title}</strong>
-                  <em style={{ textAlign: 'center' }}>{brief}</em>
+                  <span className='tiles-grid-item__title'>{title}</span>
+                  <em className='tiles-grid-item__brief' style={{ textAlign: 'center' }}>{brief}</em>
                   <span style={{ textAlign: 'left', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Link
                       href={`/article/${id}`}
@@ -112,6 +105,13 @@ const Grid = ({
         : null
       }
     </div>
+    <style jsx>{`
+      .tiles-grid-item-bg {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    `}</style>
   </div>
 );
 function areEqual(prevProps, nextProps) {
