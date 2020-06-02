@@ -260,7 +260,7 @@ const Article = ({ initArticleData: article, usr }) => {
             }
           }
           .article-wrapper{
-            min-height: 250px;
+            /* min-height: 250px; */
             width: 100%;
             /* background: 'linear-gradient(rgba(230,100,101,0.5), rgba(46,101,178,0.5))', */
             background: linear-gradient(rgba(255,255,255,1), transparent);
