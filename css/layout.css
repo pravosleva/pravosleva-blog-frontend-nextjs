@@ -294,8 +294,8 @@ h3 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 1.38316rem;
@@ -311,8 +311,8 @@ h4 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 1rem;
@@ -728,14 +728,25 @@ label {
 #searchPanel {
   position: relative;
   font-family: Montserrat;
-  margin: 10px 0 30px 0;
+  /* margin: 10px 0 30px 0; */
+}
+.searchPanel-wrapper {
+  margin: 20px 0 40px 0;
+}
+@media (max-width: 767px) {
+  .searchPanel-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 #searchPanel > input#searchText {
+  text-align: left;
   font-family: Montserrat;
   font-weight: 500;
   outline: none;
   width: 100%;
-  padding: 10px 40px 10px 45px;
+  padding: 10px 45px 10px 45px;
   border: 2px solid lightgray;
   border-radius: 24px;
   background-color: inherit;
@@ -903,7 +914,10 @@ div.article-body > blockquote {
   }
   .universal-container > main > .special-link-wrapper {
     width: 100%;
-    padding: 10px 0 20px 20px;
+    padding: 10px 20px 20px 20px;
+
+    display: flex;
+    justify-content: center;
   }
   .universal-container > main > .bx_breadcrumbs {
     padding-left: 20px;

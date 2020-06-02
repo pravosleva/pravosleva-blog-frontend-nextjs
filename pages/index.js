@@ -133,45 +133,47 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
     <>
       <Layout>
         <div className="homepage-wrapper">
-          <div id="searchPanel">
-            <span
-              id="bodySearchToggler"
-              className="unselectable"
-              onClick={handleSearchToggler}
-            >
-              {(() => {
-                switch (searchBy) {
-                  case "body":
-                    return <i className="fas fa-code"></i>;
-                  case "title":
-                    return <i className="fas fa-heading"></i>;
-                  case "tag":
-                    return <i className="fas fa-tag"></i>;
-                  default:
-                    return null;
-                }
-              })()}
-            </span>
-            <input
-              id="searchText"
-              type="text"
-              value={queryText}
-              onChange={(e) => setQueryText(e.target.value)}
-              placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
-              className="unselectable"
-              style={{
-                maxWidth: queryText ? "100%" : "250px",
-              }}
-            />
-            {queryText ? (
+          <div className='searchPanel-wrapper'>
+            <div id="searchPanel">
               <span
-                id="clearSearchText"
-                className="unselectable fade-in-effect"
-                onClick={() => setQueryText("")}
+                id="bodySearchToggler"
+                className="unselectable"
+                onClick={handleSearchToggler}
               >
-                <i className="fas fa-times"></i>
+                {(() => {
+                  switch (searchBy) {
+                    case "body":
+                      return <i className="fas fa-code"></i>;
+                    case "title":
+                      return <i className="fas fa-heading"></i>;
+                    case "tag":
+                      return <i className="fas fa-tag"></i>;
+                    default:
+                      return null;
+                  }
+                })()}
               </span>
-            ) : null}
+              <input
+                id="searchText"
+                type="text"
+                value={queryText}
+                onChange={(e) => setQueryText(e.target.value)}
+                placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
+                className="unselectable"
+                style={{
+                  maxWidth: queryText ? "100%" : "350px",
+                }}
+              />
+              {queryText ? (
+                <span
+                  id="clearSearchText"
+                  className="unselectable fade-in-effect"
+                  onClick={() => setQueryText("")}
+                >
+                  <i className="fas fa-times"></i>
+                </span>
+              ) : null}
+            </div>
           </div>
           {
             <Tiles
@@ -253,8 +255,8 @@ async function getTagIDByName(name) {
     .get(`/tags?name_contains=${name}`)
     .then((res) => res.data)
     .catch((err) => err);
-  if (result && Array.isArray(result) && result.length > 0) return result[0].id;
-  return "tag-not-found";
+  if (!!result && Array.isArray(result) && result.length > 0) return result[0].id;
+  return 'tag-not-found';
 }
 async function _getQueryString({ queryText, targetField, options }) {
   let queryString = "";
@@ -271,7 +273,12 @@ async function _getQueryString({ queryText, targetField, options }) {
         break;
       case "tag":
         const tagID = await getTagIDByName(queryText);
-        if (tagID) queryString += `&tags_in=${tagID}`;
+        if (tagID === 'tag-not-found') {
+          return null;
+        }
+        if (!!tagID) {
+          queryString += `&tags_in=${tagID}`;
+        }
         break;
       default:
         break;
@@ -293,6 +300,8 @@ async function fetchArticles({
     // TMP:
     options: { limit: 5, start },
   });
+  // Special for tag-not-found:
+  if (!query) return Promise.resolve([]);
   // const route = queryText
   //   ? `/articles?${query}`
   //   : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
@@ -314,6 +323,7 @@ async function fetchArticlesCounter({ queryText = "", targetField = "body" }) {
     // TMP:
     options: { limit: 5 },
   });
+  if (!query) return Promise.resolve(0);
   // const route = queryText
   //   ? `/articles?${query}`
   //   : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
