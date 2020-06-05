@@ -5,7 +5,7 @@ const fs = require("fs");
 const dotenv = require("dotenv");
 const isProduction = process.env.NODE_ENV === "production";
 const envFileName = isProduction ? ".env.prod" : ".env.dev";
-const envConfig = dotenv.parse(fs.readFileSync(envFileName));
+const env = dotenv.parse(fs.readFileSync(envFileName));
 
 const nextConfig = {
   webpack(config) {
@@ -16,7 +16,7 @@ const nextConfig = {
   devIndicators: {
     autoPrerender: false,
   },
-  env: envConfig,
+  env,
 };
 
 module.exports = withCSS(nextConfig);

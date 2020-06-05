@@ -88,6 +88,7 @@ const MobileHeader = ({
   topDocRef,
 }) => {
   const user = useSelector(state => state.userInfo.fromServer);
+  const usersConnected = useSelector(state => state.users.items);
   const isUserLogged = (user && user ? user.id : null);
   const dispatch = useDispatch();
 
@@ -98,7 +99,7 @@ const MobileHeader = ({
         style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}
       >
         <Nav ref={topDocRef}>
-          <ul>
+          <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
             <li
               style={{
                 marginLeft: '20px',
@@ -113,7 +114,7 @@ const MobileHeader = ({
               }}
               onClick={() => sidebarToggler(false)}
             >
-              <Link href='/'><a>Pravo$leva</a></Link>
+              <Link href='/'><a style={{ lineHeight: '40px' }}>Pravo$leva <span className='muted badge'>{usersConnected.length}</span></a></Link>
             </li>
 
             {

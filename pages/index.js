@@ -1,31 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import axios from "axios";
-// import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { PulseLoader } from "react-spinners";
-
 import Layout from "../components/layout";
 import useDebounce from "../hooks/use-debounce";
 import { Tiles } from "../components/Tiles";
-
-// AUTH
-// import { getMe } from "../hocs/auth/fns";
 import { useDispatch } from "react-redux";
-import { userInfoActions } from "../store/reducer/user-info";
+// import { userInfoActions } from "../store/reducer/user-info";
+import { getApiUrl } from '../lib/getApiUrl';
 
-const dev = process.env.NODE_ENV === "development";
-const baseURL = dev ? "http://localhost:1337" : "http://80.87.194.181/api";
+const baseURL = getApiUrl();
 const api = axios.create({ baseURL });
 const Loader = () => (
-  <div
-    className="fade-in-effect"
-    style={{
-      margin: "30px 0px 20px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
+  <div className="fade-in-effect loader-wrapper">
     <PulseLoader size={15} margin={5} color="#0162c8" loading={true} />
   </div>
 );
@@ -35,6 +22,8 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
   const [articles, setArticles] = useState(initialArtiles);
   const [articlesCounter, setArticlesCounter] = useState(initialArtilesCounter);
   const [queryText, setQueryText] = useState("");
+  const handleChangeText = useCallback((e) => setQueryText(e.target.value), []);
+  const handleClearText = useCallback(() => setQueryText(''), []);
   const [searchBy, setSearchBy] = useState("body");
   const [start, setStart] = useState(0);
   const getNextSearchTarget = useCallback(
@@ -52,7 +41,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
     },
     []
   );
-  const getPrefix = (name) => {
+  const getPrefix = useCallback((name) => {
     switch (name) {
       case "body":
       case "title":
@@ -60,7 +49,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
       default:
         return "by";
     }
-  };
+  }, []);
 
   const debouncedSetQueryText = useDebounce(queryText, 1000);
   const debouncedSearchBy = useDebounce(searchBy, 1000);
@@ -72,62 +61,51 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
     setLoading(true);
 
     Promise.all([
-      fetchArticles({
-        queryText: debouncedSetQueryText,
-        targetField: debouncedSearchBy,
-      }).then((results) => {
-        if (Array.isArray(results)) setArticles(results);
-      }),
-      fetchArticlesCounter({
-        queryText: debouncedSetQueryText,
-        targetField: searchBy,
-      }).then((res) => setArticlesCounter(res)),
+      fetchArticles({ queryText: debouncedSetQueryText, targetField: debouncedSearchBy })
+        .then((results) => {
+          if (Array.isArray(results)) setArticles(results);
+        }),
+      fetchArticlesCounter({ queryText: debouncedSetQueryText, targetField: searchBy })
+        .then(res => setArticlesCounter(res)),
     ]).then(() => setLoading(false));
   }, [debouncedSetQueryText, debouncedSearchBy, searchBy]);
 
   useEffect(() => {
-    if (!!debouncedSetQueryText || !!debouncedSearchBy) {
-      newFetch();
-    }
+    if (!!debouncedSetQueryText || !!debouncedSearchBy) newFetch();
   }, [debouncedSetQueryText, setLoading, setArticles]);
   useEffect(() => {
-    if (!!debouncedSetQueryText) {
-      newFetch();
-    }
+    if (!!debouncedSetQueryText) newFetch();
   }, [debouncedSearchBy, setLoading, setArticles]);
 
-  const handleStartForNextPage = () => {
+  const handleStartForNextPage = useCallback(() => {
     if (!isLoading) setStart(start + 5);
-  };
-  const handleStartForPrevPage = () => {
+  }, [isLoading, start, setStart]);
+  const handleStartForPrevPage = useCallback(() => {
     if (!isLoading) setStart(start - 5);
-  };
+  }, [isLoading, start, setStart]);
   useEffect(() => {
     if (!!window) window.scrollTo({ top: 0, behavior: "auto" });
 
-    // Set isSearching state
     setLoading(true);
-    // Fire off our API call
-    fetchArticles({
-      queryText,
-      targetField: searchBy,
-      start,
-    }).then((results) => {
-      // Set results state
-      if (Array.isArray(results)) setArticles(results);
-      // Set back to false since request finished
-      setLoading(false);
-    });
-    fetchArticlesCounter({
-      queryText,
-      targetField: searchBy,
-    }).then((res) => {
-      setArticlesCounter(res);
-    });
+    fetchArticles({ queryText, targetField: searchBy, start })
+      .then(results => {
+        if (Array.isArray(results)) setArticles(results);
+        setLoading(false);
+      });
+    fetchArticlesCounter({ queryText, targetField: searchBy })
+      .then(res => setArticlesCounter(res));
   }, [start]);
   const handleSearchToggler = useCallback(() => {
     setSearchBy(getNextSearchTarget({ current: searchBy }));
   }, [searchBy]);
+  const getIconByCritery = useCallback((searchBy) => {
+    switch (searchBy) {
+      case "body": return <i className="fas fa-code"></i>;
+      case "title": return <i className="fas fa-heading"></i>;
+      case "tag": return <i className="fas fa-tag"></i>;
+      default: return <i className="fas fa-code"></i>;
+    }
+  }, []);
 
   return (
     <>
@@ -140,35 +118,22 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
                 className="unselectable"
                 onClick={handleSearchToggler}
               >
-                {(() => {
-                  switch (searchBy) {
-                    case "body":
-                      return <i className="fas fa-code"></i>;
-                    case "title":
-                      return <i className="fas fa-heading"></i>;
-                    case "tag":
-                      return <i className="fas fa-tag"></i>;
-                    default:
-                      return null;
-                  }
-                })()}
+                {getIconByCritery(searchBy)}
               </span>
               <input
                 id="searchText"
                 type="text"
                 value={queryText}
-                onChange={(e) => setQueryText(e.target.value)}
+                onChange={handleChangeText}
                 placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
                 className="unselectable"
-                style={{
-                  maxWidth: queryText ? "100%" : "350px",
-                }}
+                style={{ maxWidth: queryText ? "100%" : "350px" }}
               />
               {queryText ? (
                 <span
                   id="clearSearchText"
                   className="unselectable fade-in-effect"
-                  onClick={() => setQueryText("")}
+                  onClick={handleClearText}
                 >
                   <i className="fas fa-times"></i>
                 </span>
@@ -186,63 +151,6 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
             />
           }
           {isLoading && <Loader />}
-          {/*
-            isLoading
-            ? <Loader />
-            : articles.length > 0
-              ? (
-                <div>
-                  {
-                    articles.map(({ id, title, createdAt, tags = [] }) => (
-                      <div
-                        key={id}
-                        style={{
-                          padding: '20px 0 10px 0',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          position: 'relative'
-                        }}
-                        className='special-link-wrapper'
-                      >
-                        <Link
-                          href={`/article/${id}`}
-                        ><a className='special-link unselectable'>{title.length > 30 ? `${title.substr(0, 30)}...` : title}</a></Link>
-                        <small className='unselectable' style={{ opacity: '0.5', padding: '10px 0 10px 10px', textAlign: 'right' }}>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</small>
-                        {
-                          tags.length > 0
-                          ? (
-                            <div
-                              style={{
-                                position: 'absolute',
-                                top: '0', left: '0',
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                alignItems: 'center',
-                              }}
-                              className='unselectable'
-                            >
-                              <i className="fas fa-tag" style={{ marginRight: '10px', opacity: '0.2' }}></i>
-                              {tags.map(({ id, name }) => (
-                                <span
-                                  key={id}
-                                  style={{ marginRight: '10px' }}
-                                  className='the-tag'
-                                  onClick={() => {
-                                    setSearchBy('tag');
-                                    setQueryText(name);
-                                  }}
-                                >{name}</span>
-                              ))}
-                            </div>
-                          ) : null
-                        }
-                      </div>
-                    ))
-                  }
-                </div>
-              )
-              : <div className='fade-in-effect'><em style={{ opacity: '0.3' }}>No results yet...</em></div>
-          */}
         </div>
       </Layout>
     </>
@@ -253,19 +161,20 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
 async function getTagIDByName(name) {
   const result = await api
     .get(`/tags?name_contains=${name}`)
-    .then((res) => res.data)
-    .catch((err) => err);
+    .then(res => res.data)
+    .catch(err => err);
+
   if (!!result && Array.isArray(result) && result.length > 0) return result[0].id;
+
   return 'tag-not-found';
 }
 async function _getQueryString({ queryText, targetField, options }) {
-  let queryString = "";
+  let queryString = '';
   const { limit = 5, start = 0 } = options;
 
-  if (limit) queryString += "&_limit=" + limit;
-  if (start) queryString += "&_start=" + start;
-
-  if (queryText) {
+  if (!!limit) queryString += "&_limit=" + limit;
+  if (!!start) queryString += "&_start=" + start;
+  if (!!queryText) {
     switch (targetField) {
       case "body":
       case "title":
@@ -273,12 +182,9 @@ async function _getQueryString({ queryText, targetField, options }) {
         break;
       case "tag":
         const tagID = await getTagIDByName(queryText);
-        if (tagID === 'tag-not-found') {
-          return null;
-        }
-        if (!!tagID) {
-          queryString += `&tags_in=${tagID}`;
-        }
+
+        if (tagID === 'tag-not-found') return null;
+        if (!!tagID) queryString += `&tags_in=${tagID}`;
         break;
       default:
         break;
@@ -289,49 +195,39 @@ async function _getQueryString({ queryText, targetField, options }) {
 
   return queryString.slice(1);
 }
-async function fetchArticles({
-  queryText = "",
-  targetField = "body",
-  start = 0,
-}) {
+async function fetchArticles({ queryText, targetField, start }) {
   const query = await _getQueryString({
     queryText: !!queryText ? encodeURIComponent(queryText) : null,
     targetField,
-    // TMP:
-    options: { limit: 5, start },
+    options: { limit: 5, start }, // TMP
   });
-  // Special for tag-not-found:
-  if (!query) return Promise.resolve([]);
-  // const route = queryText
-  //   ? `/articles?${query}`
-  //   : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
-  const route = `/articles?${query}`;
+
+  if (!query) return Promise.resolve([]); // Special for tag-not-found
+
   const result = await api
-    .get(route)
-    .then((res) => res.data)
-    .catch((err) => err);
+    .get(`/articles?${query}`)
+    .then(res => res.data)
+    .catch(err => err);
+
   if (Array.isArray(result)) {
     return Promise.resolve(result);
   } else {
     return Promise.resolve([]);
   }
 }
-async function fetchArticlesCounter({ queryText = "", targetField = "body" }) {
+async function fetchArticlesCounter({ queryText, targetField }) {
   const query = await _getQueryString({
     queryText: !!queryText ? encodeURIComponent(queryText) : null,
     targetField,
-    // TMP:
-    options: { limit: 5 },
+    options: { limit: 5 }, // TMP
   });
   if (!query) return Promise.resolve(0);
-  // const route = queryText
-  //   ? `/articles?${query}`
-  //   : '/articles?_sort=createdAt:DESC&isPublished_eq=true&_limit=5';
-  const route = `/articles/count?${query}`;
+
   const result = await api
-    .get(route)
+    .get(`/articles/count?${query}`)
     .then((res) => res.data)
     .catch((err) => err);
+
   if (Number.isInteger(result)) {
     return Promise.resolve(result);
   } else {
@@ -340,8 +236,12 @@ async function fetchArticlesCounter({ queryText = "", targetField = "body" }) {
 }
 
 IndexPage.getInitialProps = async (ctx) => {
-  const articles = await fetchArticles({});
-  const articlesCounter = await fetchArticlesCounter({});
+  const articles = await fetchArticles({
+    queryText: '',
+    targetField: 'body',
+    start: 0,
+  });
+  const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' });
 
   return {
     initialArtilesCounter: articlesCounter,

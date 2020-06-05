@@ -1,36 +1,52 @@
 import React, { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 // import { getMyOrders, getTheOrder } from './with-auth-once';
-// import { myOrdersActions } from '../store/reducers/my-orders';
+import { usersActions } from '../store/reducer/users';
+import { getSocketApiUrl } from '../lib/getApiUrl';
 
-
-const socketApiUrl = process.env.REACT_APP_SOCKET_ENDPOINT || 'http://localhost:1337';
+const socketApiUrl = getSocketApiUrl();
+const getUsersArr = users => Object.keys(users).map((socketId, i, a) => ({ socketId, ip: users[socketId] }));
 
 export const withSocketApi = WrappedComponent => {
   const Wrapper = props => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
       const client = io.connect(socketApiUrl);
       // const id = user.fromServer ? user.fromServer.id : null;
 
       client.on('HELLO', payload => {
-        console.log(payload);
-        // TODO: dispatch could be used...
+        const { users } = payload;
+
+        if (!!users) {
+          dispatch(usersActions.set(getUsersArr(users)));
+        }
       });
       client.on('ARTICLE_UPDATED', payload => {
         console.log(payload);
         // TODO: dispatch could be used...
       });
       client.on('SOMEBODY_CONNECTED', payload => {
-        console.log(payload);
+        const { users } = payload;
+
+        if (!!users) {
+          dispatch(usersActions.set(getUsersArr(users)));
+        }
       });
       client.on('SOMEBODY_RENNECTED', payload => {
-        console.log(payload);
+        const { users } = payload;
+
+        if (!!users) {
+          dispatch(usersActions.set(getUsersArr(users)));
+        }
       });
       client.on('SOMEBODY_DISCONNECTED', payload => {
-        console.log(payload);
+        const { users } = payload;
+
+        if (!!users) {
+          dispatch(usersActions.set(getUsersArr(users)));
+        }
       });
       /*
       client.on('ORDER_UPDATED', payload => {

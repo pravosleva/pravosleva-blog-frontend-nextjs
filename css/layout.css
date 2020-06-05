@@ -538,9 +538,7 @@ dt {
 th {
   font-weight: bold;
 }
-li {
-  margin-bottom: calc(1.45rem / 2);
-}
+li { margin-bottom: calc(1.45rem / 2); }
 ol li {
   padding-left: 0;
 }
@@ -928,5 +926,28 @@ div.article-body > blockquote {
 
   .universal-container > main > .homepage-wrapper {
     padding: 0 2px 0 2px;
+  }
+}
+
+.loader-wrapper {
+  margin: 30px 0px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.muted { opacity: 0.4; }
+.badge {
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+
+  border: 1px solid #FFF;
+  line-height: 20px;
+  height: 20px;
+  border-radius: 10px;
+}
+@media(max-width: 767px) {
+  .badge {
+
   }
 }

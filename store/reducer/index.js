@@ -4,6 +4,7 @@ import { counter } from './counter';
 import { lang } from './lang';
 import { scrollDisablingComponents } from './scroll-disabling-components';
 import { userInfo } from './user-info';
+import { users } from './users';
 // Others...
 
 
@@ -12,5 +13,6 @@ export default combineReducers({
   lang,
   scrollDisablingComponents,
   userInfo,
+  users,
   // Others...
 });

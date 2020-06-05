@@ -1,7 +1,7 @@
 import Headroom from 'react-headroom';
 import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
-
+import { useSelector } from 'react-redux';
 
 /*
 - 320-767 - mobile
@@ -59,14 +59,19 @@ const Nav = styled('div')`
 //   { path: '/cabinet', label: name => <span><Icon icon='user-circle-o' size="lg" /> {name.toUpperCase()}</span>, id: 1, accessForRoles: ['public', 'authenticated'] },
 // ];
 
+const getIPs = (items) => items.map(({ ip }) => ip).join(`
+`);
+
 const DesktopHeader = () => {
+  const usersConnected = useSelector(state => state.users.items);
+
   return (
     <Headroom style={{ zIndex: 5 }}>
       <header
         style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}
       >
         <Nav>
-          <ul>
+          <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
             <li style={{ marginLeft: '20px', marginRight: 'auto', marginBottom: '0px' }}>
               <Link href='/'>
                 <a
@@ -77,6 +82,7 @@ const DesktopHeader = () => {
                 >Pravosleva</a>
               </Link>
             </li>
+            <li style={{ marginBottom: '0px' }} className='muted'><span className='badge' title={getIPs(usersConnected)}>Online: {usersConnected.length}</span></li>
           </ul>
         </Nav>
       </header>

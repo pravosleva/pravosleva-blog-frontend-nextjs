@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DesktopHeader from './Header/Desktop';
 import MobileHeader from './Header/Mobile';
@@ -11,20 +11,27 @@ import { withSocketApi } from '../../hocs/with-socket-api';
 import { ScrollTopBtn } from './ScrollTopBtn'
 
 
+let renderCount = 0;
+
 const Layout = ({ children }) => {
   const [showScroll, setShowScroll] = useState(false);
-  const isBrowser = typeof window !== 'undefined';
-  const checkScrollTop = () => {
+  const isBrowser = useMemo(() => typeof window !== 'undefined', []);
+  const checkScrollTop = useCallback(() => {
     if (!showScroll && isBrowser && window.pageYOffset > 200) {
       setShowScroll(true);
     } else if (showScroll && isBrowser && window.pageYOffset <= 200) {
       setShowScroll(false);
     }
-  };
-  const scrollTop = () => {
+  }, [setShowScroll, showScroll]);
+  const scrollTop = useCallback(() => {
     if (isBrowser) window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  if (isBrowser) window.addEventListener('scroll', checkScrollTop);
+  }, []);
+  useEffect(() => {
+    if (isBrowser) window.addEventListener('scroll', checkScrollTop);
+
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, []);
+  const fullYear = useMemo(() => new Date().getFullYear(), []);
 
   return (
     <>
@@ -35,7 +42,7 @@ const Layout = ({ children }) => {
       </div>
       <footer>
         <div style={{ margin: '0 auto', maxWidth: 960, lineHeight: '50px' }}>
-          <span style={{ margin: '0 20px 0 20px' }}>© {new Date().getFullYear()}</span>
+          <span style={{ margin: '0 20px 0 20px' }}>© {fullYear}</span> {renderCount++}
         </div>
       </footer>
       <ScrollTopBtn
