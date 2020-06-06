@@ -6,7 +6,7 @@
     "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start -p 9000",
-    "start:pm2": "pm2 start yarn --name front-9000-dev -- start"
+    "start:pm2": "pm2 start yarn --name front-9000-prod -- start"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
