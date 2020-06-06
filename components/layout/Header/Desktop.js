@@ -21,7 +21,7 @@ const Nav = styled('div')`
   color: #fff;
   background-color: #0162c8;
   > ul {
-    max-width: 960px;
+    max-width: calc(960px + 40px);
 
     display: flex;
     list-style: none;

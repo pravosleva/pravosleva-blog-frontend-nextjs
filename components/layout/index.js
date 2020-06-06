@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
         <main style={{ padding: '20px 0 20px 0' }}>{children}</main>
       </div>
       <footer>
-        <div style={{ margin: '0 auto', maxWidth: 960, lineHeight: '50px' }}>
+        <div style={{ margin: '0 auto', maxWidth: (960 + 40), lineHeight: '50px' }}>
           <span style={{ margin: '0 20px 0 20px' }}>© {fullYear}</span>
         </div>
       </footer>

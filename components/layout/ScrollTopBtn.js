@@ -16,9 +16,7 @@ export const ScrollTopBtn = styled('div')`
   text-align: center;
   width: 56px;
   height: 56px;
-  &:hover {
-    opacity: 0.5;
-  }
+  &:hover {}
   outline: none;
 
   transform: translateX(100px);
