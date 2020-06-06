@@ -8,25 +8,25 @@ import '../../css/react-image-lightbox.css';
 import '../../css/react-photo-gallery.css';
 import '../../css/custom-breadcrumbs.css';
 import { withSocketApi } from '../../hocs/with-socket-api';
-import { ScrollTopBtn } from './ScrollTopBtn'
+import { ScrollTopBtn } from './ScrollTopBtn';
+import { useScroll } from '../../hooks/use-scroll';
 
 const Layout = ({ children }) => {
   const [showScroll, setShowScroll] = useState(false);
   const isBrowser = useMemo(() => typeof window !== 'undefined', []);
-  const checkScrollTop = useCallback(() => {
-    if (!showScroll && isBrowser && window.pageYOffset > 200) {
+  const scroll = useScroll();
+
+  useEffect(() => {
+    // console.log(scroll);
+    if (scroll.y > 200) {
       setShowScroll(true);
-    } else if (showScroll && isBrowser && window.pageYOffset <= 200) {
+    } else {
       setShowScroll(false);
     }
-  }, [setShowScroll, showScroll]);
+  }, [scroll]);
+
   const scrollTop = useCallback(() => {
     if (isBrowser) window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-  useEffect(() => {
-    if (isBrowser) window.addEventListener('scroll', checkScrollTop);
-
-    return () => window.removeEventListener('scroll', checkScrollTop);
   }, []);
   const fullYear = useMemo(() => new Date().getFullYear(), []);
 
