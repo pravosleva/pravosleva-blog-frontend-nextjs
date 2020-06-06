@@ -82,7 +82,7 @@ const DesktopHeader = () => {
                 >Pravosleva</a>
               </Link>
             </li>
-            <li style={{ marginBottom: '0px' }} className='muted'><span className='badge' title={getIPs(usersConnected)}>Online: {usersConnected.length}</span></li>
+            <li style={{ marginBottom: '0px' }} className='muted'><span title={getIPs(usersConnected)}><i className="fas fa-globe"></i> Online: {usersConnected.length}</span></li>
           </ul>
         </Nav>
       </header>

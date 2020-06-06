@@ -10,9 +10,6 @@ import '../../css/custom-breadcrumbs.css';
 import { withSocketApi } from '../../hocs/with-socket-api';
 import { ScrollTopBtn } from './ScrollTopBtn'
 
-
-let renderCount = 0;
-
 const Layout = ({ children }) => {
   const [showScroll, setShowScroll] = useState(false);
   const isBrowser = useMemo(() => typeof window !== 'undefined', []);
@@ -42,7 +39,7 @@ const Layout = ({ children }) => {
       </div>
       <footer>
         <div style={{ margin: '0 auto', maxWidth: 960, lineHeight: '50px' }}>
-          <span style={{ margin: '0 20px 0 20px' }}>© {fullYear}</span> {renderCount++}
+          <span style={{ margin: '0 20px 0 20px' }}>© {fullYear}</span>
         </div>
       </footer>
       <ScrollTopBtn

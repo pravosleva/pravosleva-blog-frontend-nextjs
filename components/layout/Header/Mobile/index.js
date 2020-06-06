@@ -114,7 +114,7 @@ const MobileHeader = ({
               }}
               onClick={() => sidebarToggler(false)}
             >
-              <Link href='/'><a style={{ lineHeight: '40px' }}>Pravo$leva <span className='muted badge'>{usersConnected.length}</span></a></Link>
+              <Link href='/'><a style={{ lineHeight: '40px' }}>Pravo$leva <span className='muted'><i className="fas fa-globe"></i> {usersConnected.length}</span></a></Link>
             </li>
 
             {
