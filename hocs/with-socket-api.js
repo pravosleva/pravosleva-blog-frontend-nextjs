@@ -6,7 +6,7 @@ import { usersActions } from '../store/reducer/users';
 import { getSocketApiUrl } from '../lib/getApiUrl';
 
 const socketApiUrl = getSocketApiUrl();
-const getUsersArr = users => Object.keys(users).map((socketId, i, a) => ({ socketId, ip: users[socketId] }));
+const getUsersArr = users => Object.keys(users).map((key, i, a) => ({ socketId: key, ip: users[key].ip, geo: users[key].geo }));
 
 export const withSocketApi = WrappedComponent => {
   const Wrapper = props => {
@@ -18,6 +18,8 @@ export const withSocketApi = WrappedComponent => {
 
       client.on('HELLO', payload => {
         const { users } = payload;
+
+        console.log(payload)
 
         if (!!users) {
           dispatch(usersActions.set(getUsersArr(users)));

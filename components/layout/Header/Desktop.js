@@ -59,7 +59,42 @@ const Nav = styled('div')`
 //   { path: '/cabinet', label: name => <span><Icon icon='user-circle-o' size="lg" /> {name.toUpperCase()}</span>, id: 1, accessForRoles: ['public', 'authenticated'] },
 // ];
 
-const getIPs = (items) => items.map(({ ip }) => ip).join(`
+const getGeoDataStr = (geo) => {
+  /*
+  { range: [ 3479297920, 3479301339 ],
+  country: 'US',
+  region: 'TX',
+  city: 'San Antonio',
+  ll: [ 29.4889, -98.3987 ],
+  metro: 641,
+  zip: 78218 }
+  */
+  let str = '';
+
+  if (!!geo) {
+    if (!!geo.country) {
+      str += `${geo.country}`;
+    }
+    if (!!geo.region) {
+      if (str) {
+        str += `, ${geo.region}`;
+      } else {
+        str += `${geo.region}`;
+      }
+    }
+    if (!!geo.city) {
+      if (str) {
+        str += `, ${geo.city}`;
+      } else {
+        str += `${geo.city}`;
+      }
+    }
+  }
+  if (!!str) str = `, ${str}`
+
+  return str;
+};
+const getIPs = (items) => items.map(({ ip, geo }) => `${ip}${getGeoDataStr(geo)}`).join(`
 `);
 
 const DesktopHeader = () => {
