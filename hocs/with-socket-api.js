@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 // import { getMyOrders, getTheOrder } from './with-auth-once';
 import { usersActions } from '../store/reducer/users';
 import { getSocketApiUrl } from '../lib/getApiUrl';
@@ -15,7 +15,8 @@ export const withSocketApi = WrappedComponent => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-      if (process.browser) {
+      if (process.browser && !!window.io) {
+        const { io } = window;
         const client = io.connect(socketApiUrl);
         // const id = user.fromServer ? user.fromServer.id : null;
 

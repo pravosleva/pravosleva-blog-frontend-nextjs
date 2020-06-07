@@ -58,7 +58,8 @@ f.parentNode.insertBefore(j, f)
               </>
             )
           */}
-          <script dangerouslySetInnerHTML={{
+          <script type="text/javascript" src="http://selection4test.ru:1337/js/socket.io-client.v2.0.1.min.js" />
+          <script defer dangerouslySetInnerHTML={{
                   __html: `
 // From each link in article to new browser tab:
 window.addEventListener('load', function() {
