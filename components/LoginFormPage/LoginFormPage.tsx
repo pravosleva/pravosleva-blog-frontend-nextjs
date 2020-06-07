@@ -1,6 +1,6 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import styled from 'styled-components'
+import styled, { css, StyledComponent } from 'styled-components'
 
 interface ILoginFormPage {
   onSubmit: () => void
@@ -11,24 +11,53 @@ interface ILoginFormPage {
   children?: any
 }
 
-const Container = styled('div')`
-  @media (min-width: 768px) {
-    padding: 0;
+interface IBlock {
+  fullRight?: boolean
+  children?: any
+}
+const Block: StyledComponent<'div', any, IBlock, never> = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${(p: IBlock) =>
+    p.fullRight &&
+    css`
+      justify-content: flex-end;
+    `}
+
+  & > div {
+  }
+  & > div > input {
+    max-width: 350px;
   }
   @media (max-width: 767px) {
-    padding: 20px;
-  }
-`
-const Block = styled('div')`
-  @media (max-width: 767px) {
-    width: 100%;
-    border: 1px solid red;
     & > div {
-      width: 100%;
       & > input {
         width: 100%;
       }
     }
+  }
+  & > button {
+    border-radius: 0;
+  }
+  & > button:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  & > button:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+`
+const Container = styled('div')`
+  @media (min-width: 768px) {
+    padding: 0;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  @media (max-width: 767px) {
+    padding: 20px;
+  }
+  & > form > ${Block}:not(:last-child) {
+    margin-bottom: 20px;
   }
 `
 
@@ -37,6 +66,7 @@ const LoginFormConnected: React.FC = (props: ILoginFormPage) => {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
+        <h2>In progress...</h2>
         <Block>
           <label>Email</label>
           <div>
@@ -49,8 +79,7 @@ const LoginFormConnected: React.FC = (props: ILoginFormPage) => {
             <Field name="password" component="input" type="password" placeholder="Password" />
           </div>
         </Block>
-
-        <Block>
+        <Block fullRight>
           <button type="submit" disabled={pristine || submitting}>
             Submit
           </button>
