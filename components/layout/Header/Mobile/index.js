@@ -1,25 +1,24 @@
-import Headroom from 'react-headroom';
-import styled, { keyframes, css } from 'styled-components';
-import Link from 'next/link';
-import { useSelector, useDispatch } from 'react-redux';
+import Headroom from 'react-headroom'
+import styled, { keyframes, css } from 'styled-components'
+import Link from 'next/link'
+import { useSelector, useDispatch } from 'react-redux'
 
-import { withMobileMenu } from './hocs/with-mobile-menu';
-import { HamburgerIcon, CrossCloseIcon } from './components';
-import { logout } from '../../../../hocs/auth/fns';
-import { userInfoActions } from '../../../../store/reducer/user-info';
+import { withMobileMenu } from './hocs/with-mobile-menu'
+import { HamburgerIcon, CrossCloseIcon } from './components'
+import { logout } from '../../../../hocs/auth/fns'
+import { userInfoActions } from '../../../../store/reducer/user-info'
 // import { withAuthSync } from '../../../../hocs/auth/page-auth-hoc';
-
 
 // Could be used if !ssr
 export const MobileHeaderLoader = styled.div`
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     display: none;
   }
-  @media(max-width: 767px) {
+  @media (max-width: 767px) {
     height: 40px;
     background-color: transparent;
   }
-`;
+`
 const HamburgerButton = styled.button`
   display: flex;
   align-items: center;
@@ -28,13 +27,15 @@ const HamburgerButton = styled.button`
   // width: 32px;
   height: 100%;
   background: transparent;
-  ${p => p.sidebarOpened && css`
-    margin-right: 0;
-  `}
-`;
+  ${(p) =>
+    p.sidebarOpened &&
+    css`
+      margin-right: 0;
+    `}
+`
 const slideDownEffect = keyframes`
   0%{transform:translateY(-60px)}90%{transform:translateY(0)}100%{transform:translateY(0)}
-`;
+`
 const Nav = styled('div')`
   padding: 0;
   color: #fff;
@@ -71,7 +72,7 @@ const Nav = styled('div')`
     display: none;
   }
   // animation:${slideDownEffect} 1s 1;
-`;
+`
 // const isCurrentLocation = (current, mayBe) => current === mayBe;
 // const getSlicedText = ({ text, limit = 7 }) => {
 //   let sliced = text.slice(0, limit);
@@ -87,10 +88,10 @@ const MobileHeader = ({
   sidebarOpened,
   topDocRef,
 }) => {
-  const user = useSelector(state => state.userInfo.fromServer);
-  const usersConnected = useSelector(state => state.users.items);
-  const isUserLogged = (user && user ? user.id : null);
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userInfo.fromServer)
+  const usersConnected = useSelector((state) => state.users.items)
+  const isUserLogged = user && user ? user.id : null
+  const dispatch = useDispatch()
 
   return (
     <Headroom>
@@ -114,13 +115,19 @@ const MobileHeader = ({
               }}
               onClick={() => sidebarToggler(false)}
             >
-              <Link href='/'><a style={{ lineHeight: '40px' }}>Pravo$leva <span className='muted'><i className="fas fa-globe"></i> {usersConnected.length}</span></a></Link>
+              <Link href="/">
+                <a style={{ lineHeight: '40px' }}>
+                  Pravo$leva{' '}
+                  <span className="muted">
+                    <i className="fas fa-globe"></i> {usersConnected.length}
+                  </span>
+                </a>
+              </Link>
             </li>
 
-            {
-              !isUserLogged
-                ? (
-                <li style={{
+            {!isUserLogged ? (
+              <li
+                style={{
                   display: 'flex',
                   alignItems: 'center',
 
@@ -128,29 +135,31 @@ const MobileHeader = ({
                   // marginRight: '20px',
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
-                }}>
-                  <Link href='/login'><a>Login</a></Link>
-                </li>
-              ) : (
-                <li
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
+                }}
+              >
+                <Link href="/login">
+                  <a>Login</a>
+                </Link>
+              </li>
+            ) : (
+              <li
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
 
-                    // TMP: For centering (no burger menu):
-                    // marginRight: '20px',
-                    marginBottom: '0px',
-                    fontFamily: 'Montserrat',
-                  }}
-                  onClick={() => {
-                    dispatch(userInfoActions.reset());
-                    logout();
-                  }}
-                >
-                  <a href='#'>Logout</a>
-                </li>
-              )
-            }
+                  // TMP: For centering (no burger menu):
+                  // marginRight: '20px',
+                  marginBottom: '0px',
+                  fontFamily: 'Montserrat',
+                }}
+                onClick={() => {
+                  dispatch(userInfoActions.reset())
+                  logout()
+                }}
+              >
+                <a href="#">Logout</a>
+              </li>
+            )}
             {/*
               isUserLogged && (
                 <>
@@ -191,22 +200,15 @@ const MobileHeader = ({
                 alignItems: 'center',
               }}
             >
-              <HamburgerButton
-                onClick={sidebarToggler}
-                sidebarOpened={sidebarOpened}
-              >
-                {
-                  sidebarOpened
-                  ? <CrossCloseIcon />
-                  : <HamburgerIcon />
-                }
+              <HamburgerButton onClick={sidebarToggler} sidebarOpened={sidebarOpened}>
+                {sidebarOpened ? <CrossCloseIcon /> : <HamburgerIcon />}
               </HamburgerButton>
             </li>
           </ul>
         </Nav>
       </header>
     </Headroom>
-  );
+  )
 }
 
-export default withMobileMenu(MobileHeader);
+export default withMobileMenu(MobileHeader)

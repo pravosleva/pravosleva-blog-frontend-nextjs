@@ -14,10 +14,10 @@
   font-size: inherit;
 }
 .bx_breadcrumbs > ul > li > a::after {
-  content: "/";
+  content: '/';
   margin-left: 5px;
   margin-right: 5px;
 }
 .bx_breadcrumbs > ul > li:last-child > a::after {
-  content: "";
+  content: '';
 }

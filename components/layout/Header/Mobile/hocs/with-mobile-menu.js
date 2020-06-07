@@ -1,30 +1,31 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { compose, withStateHandlers, withProps } from 'recompose';
-import styled, { css } from 'styled-components';
-import Link from 'next/link';
-import { scrollDisablingComponentsActions } from '../../../../../store/reducer/scroll-disabling-components';
-import { withScrollDisabler } from '../../../../../hocs/body-scroll-disabler';
-
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { compose, withStateHandlers, withProps } from 'recompose'
+import styled, { css } from 'styled-components'
+import Link from 'next/link'
+import { scrollDisablingComponentsActions } from '../../../../../store/reducer/scroll-disabling-components'
+import { withScrollDisabler } from '../../../../../hocs/body-scroll-disabler'
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  @media(max-width: 767px){
-    top: 0; bottom: 0;
+  @media (max-width: 767px) {
+    top: 0;
+    bottom: 0;
     position: relative;
   }
   box-sizing: border-box;
-`;
+`
 
 const Sidebar = styled.div`
   background-color: white;
   overflow-y: auto;
-  @media(min-width: 768px){
+  @media (min-width: 768px) {
     display: none;
   }
-  @media(max-width: 767px){
-    min-height: calc(100vh - 40px); height: 100%;
+  @media (max-width: 767px) {
+    min-height: calc(100vh - 40px);
+    height: 100%;
     min-width: 100%;
     width: 100%;
     transform: translateX(0);
@@ -46,120 +47,128 @@ const Sidebar = styled.div`
       color: #fff;
     }
 
-    ${(p) => !p.opened && css`
-      transform: translateX(-100%);
-      opacity: 0;
-    `}
-    position: absolute; top: 40px;
+    ${(p) =>
+      !p.opened &&
+      css`
+        transform: translateX(-100%);
+        opacity: 0;
+      `}
+    position: absolute;
+    top: 40px;
     overflow-x: hidden;
   }
   box-sizing: border-box;
   z-index: 3;
-`;
+`
 
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
   { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated'] }, // 'public', 'authenticated', 'free'
   // { path: '/login', label: 'Login', id: 2, accessForRoles: ['unauthenticated'] },
   // { path: '/graphql-sample', label: 'GraphQL', id: 3, accessForRoles: ['free'] },
-];
+]
 
-export const withMobileMenu = (ComposedComponent) => compose(
-  withProps({
-    topDocRef: React.createRef(),
-  }),
-  withStateHandlers(
-    { sidebarOpened: false },
-    {
-      sidebarToggler: ({ sidebarOpened }, props) => val => {
-        // Need to scroll top:
-        if (window) {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          });
-        }
+export const withMobileMenu = (ComposedComponent) =>
+  compose(
+    withProps({
+      topDocRef: React.createRef(),
+    }),
+    withStateHandlers(
+      { sidebarOpened: false },
+      {
+        sidebarToggler: ({ sidebarOpened }, props) => (val) => {
+          // Need to scroll top:
+          if (window) {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            })
+          }
 
-        return ({
-          sidebarOpened: (val === true || val === false )
-            ? val
-            : !sidebarOpened
-        })
+          return {
+            sidebarOpened: val === true || val === false ? val : !sidebarOpened,
+          }
+        },
       }
-    },
-  ),
-  withScrollDisabler,
-)(({
-  // Sidebar hoc:
-  sidebarOpened,
-  topDocRef,
-  sidebarToggler,
+    ),
+    withScrollDisabler
+  )(
+    ({
+      // Sidebar hoc:
+      sidebarOpened,
+      topDocRef,
+      sidebarToggler,
 
-  // Scroll disabler hoc (topDocRef used there):
-  scrollToRef,
+      // Scroll disabler hoc (topDocRef used there):
+      scrollToRef,
 
-  ...props
-}) => {
-  const dispatch = useDispatch();
-  const user = useSelector(state => state.userInfo.fromServer);
-  const userInfoRole = user ? user.role : null;
+      ...props
+    }) => {
+      const dispatch = useDispatch()
+      const user = useSelector((state) => state.userInfo.fromServer)
+      const userInfoRole = user ? user.role : null
 
-  useEffect(() => {
-    if (sidebarOpened) {
-      // scrollToRef(topDocRef);
-      dispatch(scrollDisablingComponentsActions.add('Layout_Header_Mobile_hocs_with-mobile-menu'));
-    } else {
-      dispatch(scrollDisablingComponentsActions.remove('Layout_Header_Mobile_hocs_with-mobile-menu'));
-      // Or this:
-      // dispatch(scrollDisablingComponentsActions.reset());
+      useEffect(() => {
+        if (sidebarOpened) {
+          // scrollToRef(topDocRef);
+          dispatch(scrollDisablingComponentsActions.add('Layout_Header_Mobile_hocs_with-mobile-menu'))
+        } else {
+          dispatch(scrollDisablingComponentsActions.remove('Layout_Header_Mobile_hocs_with-mobile-menu'))
+          // Or this:
+          // dispatch(scrollDisablingComponentsActions.reset());
+        }
+      }, [
+        sidebarOpened,
+        // scrollToRef,
+        dispatch,
+        topDocRef,
+      ])
+
+      return (
+        <Wrapper opened={sidebarOpened}>
+          <Sidebar opened={sidebarOpened}>
+            <ul>
+              {[...items].map(({ id, path, label, accessForRoles }) => {
+                if (accessForRoles.includes('free')) {
+                  return (
+                    <li key={id} onClick={() => sidebarToggler()}>
+                      <Link href={path}>
+                        <a>{label}</a>
+                      </Link>
+                    </li>
+                  )
+                } else if (userInfoRole) {
+                  // For current user:
+                  if (userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
+                    return (
+                      <li key={id} onClick={sidebarToggler}>
+                        <Link href={path}>
+                          <a>{label}</a>
+                        </Link>
+                      </li>
+                    )
+                  } else {
+                    return null
+                  }
+                } else if (accessForRoles.includes('unauthenticated')) {
+                  return (
+                    <li key={id} onClick={sidebarToggler}>
+                      <Link href={path}>
+                        <a>{label}</a>
+                      </Link>
+                    </li>
+                  )
+                } else return null
+              })}
+            </ul>
+          </Sidebar>
+          <ComposedComponent
+            {...props}
+            sidebarOpened={sidebarOpened}
+            sidebarToggler={sidebarToggler}
+            // scrollToRef={scrollToRef}
+          />
+        </Wrapper>
+      )
     }
-  }, [
-    sidebarOpened,
-    // scrollToRef,
-    dispatch,
-    topDocRef,
-  ]);
-
-  return (
-    <Wrapper opened={sidebarOpened}>
-      <Sidebar opened={sidebarOpened}>
-        <ul>
-          {[...items].map(({ id, path, label, accessForRoles }) => {
-
-            if (accessForRoles.includes('free')) {
-              return (
-                <li
-                  key={id}
-                  onClick={() => sidebarToggler()}
-                >
-                  <Link href={path}><a>{label}</a></Link>
-                </li>
-              )
-            } else if (userInfoRole) {
-              // For current user:
-              if (userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
-                return (
-                  <li key={id} onClick={sidebarToggler}>
-                    <Link href={path}><a>{label}</a></Link>
-                  </li>
-                )
-              } else {
-                return null;
-              }
-            } else if (accessForRoles.includes('unauthenticated')) {
-              return <li key={id} onClick={sidebarToggler}>
-                <Link href={path}><a>{label}</a></Link>
-              </li>
-            } else return null;
-          })}
-        </ul>
-      </Sidebar>
-      <ComposedComponent
-        {...props}
-        sidebarOpened={sidebarOpened}
-        sidebarToggler={sidebarToggler}
-        // scrollToRef={scrollToRef}
-      />
-    </Wrapper>
   )
-});

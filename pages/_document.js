@@ -1,22 +1,18 @@
-import Document, {
-  Head,
-  Main,
-  NextScript,
-} from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
-import Router from 'next/router';
+import Document, { Head, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
+import Router from 'next/router'
 
 // import { gaPageView } from '../helpers/google-analytics';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const sheet = new ServerStyleSheet();
-    const originalRenderPage = ctx.renderPage;
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         })
 
       const initialProps = await Document.getInitialProps(ctx)
@@ -27,10 +23,10 @@ class MyDocument extends Document {
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>
-        )
+        ),
       }
     } finally {
-      sheet.seal();
+      sheet.seal()
     }
   }
 
@@ -38,10 +34,10 @@ class MyDocument extends Document {
     // We want to do this code _once_ after the component has successfully
     // mounted in the browser only, so we use a special semiphore here.
     // https://github.com/zeit/next.js/issues/160
-    if (!window || window.__NEXT_ROUTER_PAGEVIEW_REGISTERED__) return;
+    if (!window || window.__NEXT_ROUTER_PAGEVIEW_REGISTERED__) return
 
-    window.__NEXT_ROUTER_PAGEVIEW_REGISTERED__ = true;
-    let lastTrackedUrl = '';
+    window.__NEXT_ROUTER_PAGEVIEW_REGISTERED__ = true
+    let lastTrackedUrl = ''
 
     // NOTE: No corresponding `off` as we want this event listener to exist
     // for the entire lifecycle of the page
@@ -50,17 +46,17 @@ class MyDocument extends Document {
 
     // WAY 1:
     Router.router.events.on('routeChangeComplete', (newUrl = document.location) => {
-      if (newUrl === lastTrackedUrl || typeof window === 'undefined' || !window.gtag) return;
+      if (newUrl === lastTrackedUrl || typeof window === 'undefined' || !window.gtag) return
 
       // Don't double track the same URL
-      lastTrackedUrl = newUrl;
+      lastTrackedUrl = newUrl
 
       // Believe it or not, this triggers a new pageview event!
       // https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications
 
       // SHOULD BE UNCOMMENTED:
       // gaPageView(url.parse(newUrl).path);
-    });
+    })
 
     // Or WAY 2:
     // Router.onRouteChangeComplete = url => gaPageView(url);
@@ -71,20 +67,22 @@ class MyDocument extends Document {
       <html>
         <Head>
           <link rel="icon" href="/favicon.ico" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet" />
+          <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.8.0/css/all.css"
+            integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y"
+            crossOrigin="anonymous"
           />
-          <link href='https://fonts.googleapis.com/css?family=Montserrat:400,500' rel='stylesheet' />
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossOrigin="anonymous" />
         </Head>
         <body>
           <Main />
           <NextScript />
         </body>
       </html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

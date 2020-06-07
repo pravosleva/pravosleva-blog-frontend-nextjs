@@ -1,7 +1,6 @@
-import React from "react";
-import Link from 'next/link';
-import PropTypes from "prop-types";
-
+import React from 'react'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
 
 const Header = ({ siteTitle }) => (
   <header
@@ -27,7 +26,9 @@ const Header = ({ siteTitle }) => (
               color: `white`,
               textDecoration: `none`,
             }}
-          >{siteTitle}</a>
+          >
+            {siteTitle}
+          </a>
         </Link>
       </h1>
     </div>

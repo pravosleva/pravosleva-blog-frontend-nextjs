@@ -1,31 +1,27 @@
-import App from 'next/app';
-import { Provider } from 'react-redux';
-import Head from 'next/head';
+import App from 'next/app'
+import { Provider } from 'react-redux'
+import Head from 'next/head'
 // import url from 'url';
 
-import withReduxStore from '../hocs/with-redux-store';
-import '../css/layout.css';
+import withReduxStore from '../hocs/with-redux-store'
+import '../css/layout.css'
 
 // let gaTrackingId = process.env.GA_TRACKING_ID || '';
 // const isProduction = process.env.NODE_ENV === 'production';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
+    let pageProps = {}
 
-    if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);
+    if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx)
     // This exposes the query to the user
-    pageProps.query = ctx.query;
+    pageProps.query = ctx.query
 
-    return { pageProps };
+    return { pageProps }
   }
 
-  render () {
-    const {
-      Component,
-      pageProps,
-      reduxStore,
-    } = this.props;
+  render() {
+    const { Component, pageProps, reduxStore } = this.props
 
     return (
       <>
@@ -59,8 +55,10 @@ f.parentNode.insertBefore(j, f)
             )
           */}
           <script type="text/javascript" src="http://selection4test.ru:1337/js/socket.io-client.v2.0.1.min.js" />
-          <script defer dangerouslySetInnerHTML={{
-                  __html: `
+          <script
+            defer
+            dangerouslySetInnerHTML={{
+              __html: `
 // From each link in article to new browser tab:
 window.addEventListener('load', function() {
   const articleBody = document.querySelector('.article-body');
@@ -107,8 +105,8 @@ window.addEventListener('load', function() {
     }
   }, true)
 })
-`
-/* ORIGINAL SAMPLE
+`,
+              /* ORIGINAL SAMPLE
   const rippledButtons = document.querySelectorAll('.link-as-rippled-btn');
 
   rippledButtons.forEach(btn => {
@@ -138,14 +136,15 @@ window.addEventListener('load', function() {
     })
   })
 */
-          }}/>
+            }}
+          />
         </Head>
         <Provider store={reduxStore}>
           <Component {...pageProps} />
         </Provider>
       </>
-    );
+    )
   }
 }
 
-export default withReduxStore(MyApp);
+export default withReduxStore(MyApp)

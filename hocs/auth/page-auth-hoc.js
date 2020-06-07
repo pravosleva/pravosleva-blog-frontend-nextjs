@@ -1,54 +1,51 @@
-import { useEffect } from 'react';
-import Router from 'next/router';
+import { useEffect } from 'react'
+import Router from 'next/router'
 // import axios from 'axios';
 // import { compose, lifecycle } from 'recompose';
 import {
   // login,
   auth,
   // logout,
-} from './fns';
-import { makeCounter } from '../../lib/make-counter';
+} from './fns'
+import { makeCounter } from '@/lib/make-counter'
 // import { useSelector, useDispatch } from 'react-redux';
-// import { userInfoActions } from '../../store/reducer/user-info';
+// import { userInfoActions } from '@/store/reducer/user-info';
 
-
-const hocRenderCounter = makeCounter();
+const hocRenderCounter = makeCounter()
 // const isDev = process.env.NODE_ENV === 'development';
 // const baseURL = isDev
 //   ? 'http://localhost:1337'
 //   : 'http://80.87.194.181';
 // const api = axios.create({ baseURL });
 
-export const withAuthSync = WrappedComponent => {
-  const Wrapper = props => {
-    const syncLogout = event => {
+export const withAuthSync = (WrappedComponent) => {
+  const Wrapper = (props) => {
+    const syncLogout = (event) => {
       if (event.key === 'logout') {
-        console.log('logged out from storage!');
-        Router.push('/login');
+        console.log('logged out from storage!')
+        Router.push('/login')
       }
     }
 
     useEffect(() => {
-      hocRenderCounter.inc();
-      console.log(`page-auth-hoc render counter: ${hocRenderCounter.get()}`);
+      hocRenderCounter.inc()
+      console.log(`page-auth-hoc render counter: ${hocRenderCounter.get()}`)
 
-      window.addEventListener('storage', syncLogout);
+      window.addEventListener('storage', syncLogout)
 
       return () => {
-        window.removeEventListener('storage', syncLogout);
-        window.localStorage.removeItem('logout');
+        window.removeEventListener('storage', syncLogout)
+        window.localStorage.removeItem('logout')
       }
-    }, []);
+    }, [])
 
     return <WrappedComponent {...props} />
   }
 
-  Wrapper.getInitialProps = async ctx => {
-    const jwt = auth(ctx);
+  Wrapper.getInitialProps = async (ctx) => {
+    const jwt = auth(ctx)
 
-    const componentProps =
-      WrappedComponent.getInitialProps &&
-      (await WrappedComponent.getInitialProps(ctx));
+    const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx))
 
     // TODO: REFACTORING
     // const usr = await api.get('/users/me', {
@@ -64,8 +61,8 @@ export const withAuthSync = WrappedComponent => {
     return { ...componentProps, jwt }
   }
 
-  return Wrapper;
-};
+  return Wrapper
+}
 
 // const dev = process.env.NODE_ENV === 'development';
 // const baseURL = dev

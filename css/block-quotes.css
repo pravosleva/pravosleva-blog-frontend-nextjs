@@ -1,6 +1,6 @@
 /* Some vars */
 /* @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700); */
-@import url(https://fonts.googleapis.com/css?family=Sanchez:400italic,400);
+@import url(https://fonts.googleapis.com/css?family=Sanchez:400italic, 400);
 /* @import url(https://fonts.googleapis.com/css?family=Roboto:100); */
 .brooks {
   position: relative;
@@ -29,7 +29,8 @@
   line-height: 1.5em;
   font-weight: 100;
 }
-.ludwig:before, .ludwig:after {
+.ludwig:before,
+.ludwig:after {
   content: '\201C';
   font-family: 'Sanchez';
   color: #4d91b3;

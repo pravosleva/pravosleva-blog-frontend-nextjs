@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components'
 
 export const ScrollTopBtn = styled('div')`
   position: fixed;
@@ -16,15 +16,18 @@ export const ScrollTopBtn = styled('div')`
   text-align: center;
   width: 56px;
   height: 56px;
-  &:hover {}
+  &:hover {
+  }
   outline: none;
 
   transform: translateX(100px);
   transition: all 0.5s ease-out;
-  ${p => p.isShowed && css`
-    transform: translateX(0px);
-  `}
+  ${(p) =>
+    p.isShowed &&
+    css`
+      transform: translateX(0px);
+    `}
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`

@@ -29,7 +29,7 @@ li {
   overflow: hidden;
 
   background-color: rgba(0, 0, 0, 0.6);
-  background-blend-mode: overlay,normal;
+  background-blend-mode: overlay, normal;
 }
 .text-wrapper {
   color: #fff;
@@ -166,7 +166,7 @@ li {
   border-radius: 8px;
   margin: 0 5px;
   background: rgba(102, 102, 102, 0.35);
-  transition: background .3s;
+  transition: background 0.3s;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 }
 .banner-anim-thumb-default span:active,

@@ -1,1 +1,1 @@
-export * from './page-auth-hoc';
+export * from './page-auth-hoc'

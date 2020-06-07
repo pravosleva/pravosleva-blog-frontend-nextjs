@@ -1,9 +1,8 @@
-import { createSymbiote } from 'redux-symbiote';
-
+import { createSymbiote } from 'redux-symbiote'
 
 const initialState = {
   count: 0,
-};
+}
 
 export const { actions: counterActions, reducer: counter } = createSymbiote(
   initialState,
@@ -14,5 +13,5 @@ export const { actions: counterActions, reducer: counter } = createSymbiote(
     reset: (state, payload) => ({ ...state, count: 0 }),
     set: (state, payload) => ({ ...state, count: payload }),
   },
-  'counter',
-);
+  'counter'
+)

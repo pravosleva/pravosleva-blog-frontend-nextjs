@@ -1,63 +1,62 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import Head from 'next/head';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 // import io from 'socket.io-client';
-// import { getMyOrders, getTheOrder } from './with-auth-once';
-import { usersActions } from '../store/reducer/users';
-import { getSocketApiUrl } from '../lib/getApiUrl';
+import { usersActions } from '@/store/reducer/users'
+import { getSocketApiUrl } from '@/lib/getApiUrl'
 // import dynamic from 'next/dynamic'
 
-const socketApiUrl = getSocketApiUrl();
-const getUsersArr = users => Object.keys(users).map((key, i, a) => ({ socketId: key, ip: users[key].ip, geo: users[key].geo }));
+const socketApiUrl = getSocketApiUrl()
+const getUsersArr = (users) =>
+  Object.keys(users).map((key, i, a) => ({ socketId: key, ip: users[key].ip, geo: users[key].geo }))
 
-export const withSocketApi = WrappedComponent => {
-  const Wrapper = props => {
-    const dispatch = useDispatch();
+export const withSocketApi = (WrappedComponent) => {
+  const Wrapper = (props) => {
+    const dispatch = useDispatch()
 
     useEffect(() => {
       if (process.browser && !!window.io) {
-        const { io } = window;
-        const client = io.connect(socketApiUrl);
+        const { io } = window
+        const client = io.connect(socketApiUrl)
         // const id = user.fromServer ? user.fromServer.id : null;
 
-        client.on('HELLO', payload => {
-          const { users } = payload;
+        client.on('HELLO', (payload) => {
+          const { users } = payload
 
           console.log(payload)
 
           if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)));
+            dispatch(usersActions.set(getUsersArr(users)))
           }
-        });
-        client.on('ARTICLE_UPDATED', payload => {
-          console.log(payload);
+        })
+        client.on('ARTICLE_UPDATED', (payload) => {
+          console.log(payload)
           // TODO: dispatch could be used...
-        });
-        client.on('SOMEBODY_CONNECTED', payload => {
-          const { users } = payload;
+        })
+        client.on('SOMEBODY_CONNECTED', (payload) => {
+          const { users } = payload
 
           console.log(payload)
 
           if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)));
+            dispatch(usersActions.set(getUsersArr(users)))
           }
-        });
-        client.on('SOMEBODY_RECONNECTED', payload => {
-          const { users } = payload;
+        })
+        client.on('SOMEBODY_RECONNECTED', (payload) => {
+          const { users } = payload
 
           if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)));
+            dispatch(usersActions.set(getUsersArr(users)))
           }
-        });
-        client.on('SOMEBODY_DISCONNECTED', payload => {
-          const { users } = payload;
+        })
+        client.on('SOMEBODY_DISCONNECTED', (payload) => {
+          const { users } = payload
 
           console.log(payload)
 
           if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)));
+            dispatch(usersActions.set(getUsersArr(users)))
           }
-        });
+        })
         /*
         client.on('ORDER_UPDATED', payload => {
           console.log(payload);
@@ -94,19 +93,18 @@ export const withSocketApi = WrappedComponent => {
         */
 
         return () => {
-          client.disconnect();
-          client.removeAllListeners();
+          client.disconnect()
+          client.removeAllListeners()
         }
       }
-    }, [process.browser]);
+    }, [process.browser])
 
     return (
       <>
-
         <WrappedComponent {...props} />
       </>
-    );
+    )
   }
 
-  return Wrapper;
+  return Wrapper
 }

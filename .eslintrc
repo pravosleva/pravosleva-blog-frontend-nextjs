@@ -1,0 +1,5 @@
+{
+  "rules": {},
+  "plugins": ["react", "prettier", "standard", "react-hooks"],
+  "extends": ["react-app", "prettier"]
+}

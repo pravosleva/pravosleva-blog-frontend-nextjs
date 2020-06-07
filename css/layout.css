@@ -48,13 +48,13 @@ a {
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
   outline: none !important;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 a:hover {
   color: red;
 }
 a.special-link {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   text-transform: uppercase;
   font-size: 0.9em;
   letter-spacing: 0.1em;
@@ -86,7 +86,7 @@ mark {
 }
 small {
   font-size: 80%;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 sub,
 sup {
@@ -130,7 +130,7 @@ textarea {
   font: inherit;
   margin: 0;
   border-radius: 6px;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 input.standart,
 button.standart {
@@ -147,22 +147,22 @@ button,
 select {
   text-transform: none;
 }
-[type="reset"],
-[type="submit"],
+[type='reset'],
+[type='submit'],
 button,
-html [type="button"] {
+html [type='button'] {
   -webkit-appearance: button;
 }
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner,
 button::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
-[type="button"]:-moz-focusring,
-[type="reset"]:-moz-focusring,
-[type="submit"]:-moz-focusring,
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring,
 button:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
@@ -182,21 +182,21 @@ legend {
 textarea {
   overflow: auto;
 }
-[type="checkbox"],
-[type="radio"] {
+[type='checkbox'],
+[type='radio'] {
   box-sizing: border-box;
   padding: 0;
 }
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
   height: auto;
 }
-[type="search"] {
+[type='search'] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
-[type="search"]::-webkit-search-cancel-button,
-[type="search"]::-webkit-search-decoration {
+[type='search']::-webkit-search-cancel-button,
+[type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 ::-webkit-input-placeholder {
@@ -228,10 +228,10 @@ body {
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
-  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
-  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
-  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-  font-feature-settings: "kern", "liga", "clig", "calt";
+  -moz-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  -ms-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  font-feature-settings: 'kern', 'liga', 'clig', 'calt';
 }
 img {
   max-width: 100%;
@@ -294,8 +294,8 @@ h3 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+    Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 1.38316rem;
@@ -311,8 +311,8 @@ h4 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+    Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 1rem;
@@ -328,8 +328,8 @@ h5 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 0.85028rem;
@@ -345,8 +345,8 @@ h6 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 0.78405rem;
@@ -538,7 +538,9 @@ dt {
 th {
   font-weight: bold;
 }
-li { margin-bottom: calc(1.45rem / 2); }
+li {
+  margin-bottom: calc(1.45rem / 2);
+}
 ol li {
   padding-left: 0;
 }
@@ -599,10 +601,10 @@ td,
 th {
   text-align: left;
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.12);
-  font-feature-settings: "tnum";
-  -moz-font-feature-settings: "tnum";
-  -ms-font-feature-settings: "tnum";
-  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: 'tnum';
+  -moz-font-feature-settings: 'tnum';
+  -ms-font-feature-settings: 'tnum';
+  -webkit-font-feature-settings: 'tnum';
   padding-left: 0.96667rem;
   padding-right: 0.96667rem;
   padding-top: 0.725rem;
@@ -620,8 +622,8 @@ tt,
 code {
   background-color: hsla(0, 0%, 0%, 0.04);
   border-radius: 3px;
-  font-family: "SFMono-Regular", Consolas, "Roboto Mono", "Droid Sans Mono",
-    "Liberation Mono", Menlo, Courier, monospace;
+  font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', 'Droid Sans Mono', 'Liberation Mono', Menlo, Courier,
+    monospace;
   padding: 0;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
@@ -635,13 +637,13 @@ code:after,
 tt:before,
 tt:after {
   letter-spacing: -0.2em;
-  content: " ";
+  content: ' ';
 }
 pre code:before,
 pre code:after,
 pre tt:before,
 pre tt:after {
-  content: "";
+  content: '';
 }
 @media only screen and (max-width: 480px) {
   html {
@@ -649,7 +651,7 @@ pre tt:after {
   }
 }
 label {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 
 /* SPECIAL LINKS */
@@ -688,7 +690,7 @@ label {
   padding: 10px 0 10px 0;
 }
 .special-link-underline::before {
-  content: "";
+  content: '';
   bottom: 0;
   left: 0;
   position: absolute;
@@ -881,8 +883,8 @@ div.article-body > blockquote {
 }
 .text-shadow-8 {
   color: white;
-  text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white, 0 0 20px crimson,
-    0 0 35px crimson, 0 0 40px crimson, 0 0 50px crimson, 0 0 75px crimson;
+  text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white, 0 0 20px crimson, 0 0 35px crimson, 0 0 40px crimson,
+    0 0 50px crimson, 0 0 75px crimson;
 }
 .text-shadow-10 {
   letter-spacing: 2px;
@@ -893,7 +895,9 @@ div.article-body > blockquote {
   .universal-container {
     padding: 0 20px 0 20px;
     margin: 0 auto;
-    max-width: calc(960px + 40px + 4px); /* max width of grid item (320) x max grids amount in row (3) - container paddings (20+20) - grid-gap between tiles (2 x2pcs) */
+    max-width: calc(
+      960px + 40px + 4px
+    ); /* max width of grid item (320) x max grids amount in row (3) - container paddings (20+20) - grid-gap between tiles (2 x2pcs) */
     min-height: calc(100vh - 50px);
   }
   .universal-container > main > .special-link-wrapper {
@@ -938,19 +942,20 @@ div.article-body > blockquote {
   justify-content: center;
   align-items: center;
 }
-.muted { opacity: 0.4; }
+.muted {
+  opacity: 0.4;
+}
 .badge {
   padding-left: 10px;
   padding-right: 10px;
   box-sizing: border-box;
 
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
   line-height: 20px;
   height: 20px;
   border-radius: 10px;
 }
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .badge {
-
   }
 }
