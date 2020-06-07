@@ -77,7 +77,7 @@ const Nav = styled('div')`
   }
   // animation:${slideDownEffect} 1s 1;
 `
-// const isCurrentLocation = (current, mayBe) => current === mayBe;
+
 // const getSlicedText = ({ text, limit = 7 }) => {
 //   let sliced = text.slice(0, limit);
 //
@@ -105,7 +105,6 @@ const MobileHeader = ({
     setIsLoaded(true)
   }, [])
   const handleLogoutCb = useCallback(async () => {
-    // handleProfileMenuClose()
     await logout()
       .then(() => {
         dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
@@ -122,10 +121,7 @@ const MobileHeader = ({
 
   return (
     <Headroom>
-      <header
-        // className='slide-down-effect'
-        style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}
-      >
+      <header style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}>
         <Nav ref={topDocRef}>
           <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
             <li
@@ -135,10 +131,6 @@ const MobileHeader = ({
                 marginBottom: '0px',
                 fontFamily: 'Montserrat',
                 fontWeight: '500',
-                // To be yellow or not?
-                // color: isCurrentLocation(location.pathname, '/')
-                //   ? 'yellow' // '#FFDF64'
-                //   : 'inherit',
               }}
               onClick={() => sidebarToggler(false)}
             >
@@ -185,38 +177,6 @@ const MobileHeader = ({
                 <a href="#">Logout</a>
               </li>
             )}
-            {/*
-              isUserLogged && (
-                <>
-                  <li style={{
-                    marginLeft: '20px',
-                    marginRight: 'auto',
-
-                    // TMP: For centering:
-                    marginLeft: '0',
-                  }}>
-                    <Link
-                      to='/cabinet'
-                      onClick={() => sidebarToggler(false)}
-                    >{getPersonalLabel(username)}</Link>
-                  </li>
-                  <li style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}>
-                    <button
-                      onClick={() => {
-                        // logout()
-                        //   .then(() => cookies.remove('jwt'))
-                        //   .then(() => dispatch(userInfoActions.reset()))
-                        //   .then(() => history.push('/'));
-                      }}
-                      className="login-btn-m"
-                    >Выход</button>
-                  </li>
-                </>
-              )
-            */}
             <li
               style={{
                 marginBottom: '0px',

@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from 'react'
 import Headroom from 'react-headroom'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
@@ -10,17 +10,8 @@ import Cookie from 'js-cookie'
 import { COOKIES } from '@/helpers/services/loginService'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
+import { getGeoDataStr } from '@/utils/geo/getGeoDataStr'
 
-/*
-- 320-767 - mobile
-- 768-1023 - tablet
-- 1024-1279 - laptop
-- 1280+ - desktop
-*/
-
-// const slideDownEffect = keyframes`
-//   0%{transform:translateY(-60px)}90%{transform:translateY(0)}100%{transform:translateY(0)}
-// `
 const Nav = styled('div')`
   font-size: 16px;
   font-weight: 500;
@@ -64,45 +55,6 @@ const Nav = styled('div')`
   }
 `
 
-// const rightItems = [
-//   { path: '/cabinet', label: name => <span><Icon icon='user-circle-o' size="lg" /> {name.toUpperCase()}</span>, id: 1, accessForRoles: ['public', 'authenticated'] },
-// ];
-
-const getGeoDataStr = (geo) => {
-  /*
-  { range: [ 3479297920, 3479301339 ],
-    country: 'US',
-    region: 'TX',
-    city: 'San Antonio',
-    ll: [ 29.4889, -98.3987 ],
-    metro: 641,
-    zip: 78218 }
-  */
-  let str = ''
-
-  if (!!geo) {
-    if (!!geo.country) {
-      str += `${geo.country}`
-    }
-    if (!!geo.region) {
-      if (str) {
-        str += `, ${geo.region}`
-      } else {
-        str += `${geo.region}`
-      }
-    }
-    if (!!geo.city) {
-      if (str) {
-        str += `, ${geo.city}`
-      } else {
-        str += `${geo.city}`
-      }
-    }
-  }
-  if (!!str) str = `, ${str}`
-
-  return str
-}
 const getIPs = (items) =>
   items.map(({ ip, geo }) => `${ip}${getGeoDataStr(geo)}`).join(`
 `)
@@ -120,7 +72,6 @@ const DesktopHeader = () => {
     setIsLoaded(true)
   }, [])
   const handleLogoutCb = useCallback(async () => {
-    // handleProfileMenuClose()
     await logout()
       .then(() => {
         dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
