@@ -36,11 +36,13 @@ export const withSocketApi = WrappedComponent => {
         client.on('SOMEBODY_CONNECTED', payload => {
           const { users } = payload;
 
+          console.log(payload)
+
           if (!!users) {
             dispatch(usersActions.set(getUsersArr(users)));
           }
         });
-        client.on('SOMEBODY_RENNECTED', payload => {
+        client.on('SOMEBODY_RECONNECTED', payload => {
           const { users } = payload;
 
           if (!!users) {
@@ -49,6 +51,8 @@ export const withSocketApi = WrappedComponent => {
         });
         client.on('SOMEBODY_DISCONNECTED', payload => {
           const { users } = payload;
+
+          console.log(payload)
 
           if (!!users) {
             dispatch(usersActions.set(getUsersArr(users)));
