@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const withScrollDisabler = (WrappedComponent) => {
   const Wrapper = (props) => {
     const scrollDisablingComponentsList = useSelector((state) => state.scrollDisablingComponents.list)
-    // const dispatch = useDispatch();
-
     const scrollToRef = (ref, paddingTop = 10) => {
       if (ref.current) {
         window.scrollTo({

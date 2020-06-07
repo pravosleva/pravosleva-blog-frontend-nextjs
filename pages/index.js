@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import Link from 'next/link'
+// import Link from 'next/link'
 import axios from 'axios'
 import { PulseLoader } from 'react-spinners'
-import Layout from '../components/layout'
+import { Layout } from '../components/layout'
 import useDebounce from '../hooks/use-debounce'
 import { Tiles } from '../components/Tiles'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 // import { userInfoActions } from "../store/reducer/user-info";
-import { getApiUrl } from '../lib/getApiUrl'
+import { getApiUrl } from '../utils/getApiUrl'
 
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })

@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { compose, withStateHandlers, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
-import { scrollDisablingComponentsActions } from '../../../../../store/reducer/scroll-disabling-components'
-import { withScrollDisabler } from '../../../../../hocs/body-scroll-disabler'
+import { scrollDisablingComponentsActions } from '@/store/reducers/scroll-disabling-components'
+import { withScrollDisabler } from '@/hocs/body-scroll-disabler'
+import Cookie from 'js-cookie'
+import { COOKIES } from '@/helpers/services/loginService'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,7 +65,7 @@ const Sidebar = styled.div`
 
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
-  { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['public', 'authenticated'] }, // 'public', 'authenticated', 'free'
+  { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['authenticated'] }, // 'public', 'authenticated', 'free'
   // { path: '/login', label: 'Login', id: 2, accessForRoles: ['unauthenticated'] },
   // { path: '/graphql-sample', label: 'GraphQL', id: 3, accessForRoles: ['free'] },
 ]
@@ -105,17 +107,12 @@ export const withMobileMenu = (ComposedComponent) =>
       ...props
     }) => {
       const dispatch = useDispatch()
-      const user = useSelector((state) => state.userInfo.fromServer)
-      const userInfoRole = user ? user.role : null
 
       useEffect(() => {
         if (sidebarOpened) {
-          // scrollToRef(topDocRef);
           dispatch(scrollDisablingComponentsActions.add('Layout_Header_Mobile_hocs_with-mobile-menu'))
         } else {
           dispatch(scrollDisablingComponentsActions.remove('Layout_Header_Mobile_hocs_with-mobile-menu'))
-          // Or this:
-          // dispatch(scrollDisablingComponentsActions.reset());
         }
       }, [
         sidebarOpened,
@@ -124,42 +121,26 @@ export const withMobileMenu = (ComposedComponent) =>
         topDocRef,
       ])
 
+      const [isLoaded, setIsLoaded] = useState(false)
+      const [isAuthenticated, setIsAuthenticated] = useState(false)
+      useEffect(() => {
+        const token = Cookie.get(COOKIES.authToken)
+
+        if (!!token) setIsAuthenticated(true)
+        setIsLoaded(true)
+      }, [])
+
       return (
         <Wrapper opened={sidebarOpened}>
           <Sidebar opened={sidebarOpened}>
             <ul>
-              {[...items].map(({ id, path, label, accessForRoles }) => {
-                if (accessForRoles.includes('free')) {
-                  return (
-                    <li key={id} onClick={() => sidebarToggler()}>
-                      <Link href={path}>
-                        <a>{label}</a>
-                      </Link>
-                    </li>
-                  )
-                } else if (userInfoRole) {
-                  // For current user:
-                  if (userInfoRole.type && accessForRoles.includes(userInfoRole.type)) {
-                    return (
-                      <li key={id} onClick={sidebarToggler}>
-                        <Link href={path}>
-                          <a>{label}</a>
-                        </Link>
-                      </li>
-                    )
-                  } else {
-                    return null
-                  }
-                } else if (accessForRoles.includes('unauthenticated')) {
-                  return (
-                    <li key={id} onClick={sidebarToggler}>
-                      <Link href={path}>
-                        <a>{label}</a>
-                      </Link>
-                    </li>
-                  )
-                } else return null
-              })}
+              {isLoaded && isAuthenticated && (
+                <li>
+                  <Link href="/profile">
+                    <a>Profile</a>
+                  </Link>
+                </li>
+              )}
             </ul>
           </Sidebar>
           <ComposedComponent

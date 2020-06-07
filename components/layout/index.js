@@ -11,7 +11,7 @@ import { withSocketApi } from '@/hocs/with-socket-api'
 import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
 
-const Layout = ({ children }) => {
+const LayoutConnected = ({ children }) => {
   const [showScroll, setShowScroll] = useState(false)
   const isBrowser = useMemo(() => typeof window !== 'undefined', [])
   const scroll = useScroll()
@@ -49,8 +49,8 @@ const Layout = ({ children }) => {
   )
 }
 
-Layout.propTypes = {
+LayoutConnected.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default withSocketApi(Layout)
+export const Layout = withSocketApi(LayoutConnected)

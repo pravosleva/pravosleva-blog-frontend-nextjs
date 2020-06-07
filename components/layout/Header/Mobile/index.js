@@ -1,13 +1,17 @@
+import { useEffect, useState, useCallback } from 'react'
 import Headroom from 'react-headroom'
 import styled, { keyframes, css } from 'styled-components'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
-
 import { withMobileMenu } from './hocs/with-mobile-menu'
 import { HamburgerIcon, CrossCloseIcon } from './components'
-import { logout } from '../../../../hocs/auth/fns'
-import { userInfoActions } from '../../../../store/reducer/user-info'
-// import { withAuthSync } from '../../../../hocs/auth/page-auth-hoc';
+import Cookie from 'js-cookie'
+import { COOKIES } from '@/helpers/services/loginService'
+import { showAsyncToast } from '@/actions'
+import { logout } from '@/helpers/services/restService'
+import { useRouter } from 'next/router'
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 
 // Could be used if !ssr
 export const MobileHeaderLoader = styled.div`
@@ -88,10 +92,33 @@ const MobileHeader = ({
   sidebarOpened,
   topDocRef,
 }) => {
-  const user = useSelector((state) => state.userInfo.fromServer)
   const usersConnected = useSelector((state) => state.users.items)
-  const isUserLogged = user && user ? user.id : null
   const dispatch = useDispatch()
+  const router = useRouter()
+
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  useEffect(() => {
+    const token = Cookie.get(COOKIES.authToken)
+
+    if (!!token) setIsAuthenticated(true)
+    setIsLoaded(true)
+  }, [])
+  const handleLogoutCb = useCallback(async () => {
+    // handleProfileMenuClose()
+    await logout()
+      .then(() => {
+        dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
+        router.push('/auth/login')
+      })
+      .catch((msg) => {
+        dispatch(showAsyncToast({ text: msg, delay: 20000, type: 'error' }))
+      })
+  }, [dispatch, showAsyncToast])
+  const handleLogout = useDebouncedCallback(() => {
+    handleLogoutCb()
+  }, 500)
+  const isCurrentPathCb = useCallback(isCurrentPath, [])
 
   return (
     <Headroom>
@@ -125,7 +152,7 @@ const MobileHeader = ({
               </Link>
             </li>
 
-            {!isUserLogged ? (
+            {isLoaded && !isAuthenticated && (
               <li
                 style={{
                   display: 'flex',
@@ -137,11 +164,12 @@ const MobileHeader = ({
                   fontFamily: 'Montserrat',
                 }}
               >
-                <Link href="/login">
-                  <a>Login</a>
+                <Link href="/auth/login">
+                  <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
                 </Link>
               </li>
-            ) : (
+            )}
+            {isLoaded && isAuthenticated && (
               <li
                 style={{
                   display: 'flex',
@@ -152,10 +180,7 @@ const MobileHeader = ({
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
                 }}
-                onClick={() => {
-                  dispatch(userInfoActions.reset())
-                  logout()
-                }}
+                onClick={handleLogout}
               >
                 <a href="#">Logout</a>
               </li>

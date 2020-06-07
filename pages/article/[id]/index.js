@@ -6,11 +6,11 @@ import ReactMarkdown from 'react-markdown'
 import Lightbox from 'react-image-lightbox'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import Layout from '@/components/layout'
+import { Layout } from '@/components/layout'
 // import { getMe } from "@/hocs/auth/fns";
 // import { useDispatch } from "react-redux";
 // import { userInfoActions } from "@/store/reducer/user-info";
-import { getFormatedDate2 } from '@/lib/timeConverter'
+import { getFormatedDate2 } from '@/utils/timeConverter'
 import '@/css/link-as-rippled-btn.css'
 
 const Gallery = dynamic(() => import('react-photo-gallery'), {
@@ -53,7 +53,7 @@ const Article = ({ initArticleData: article, usr }) => {
   let imagesPacks = []
 
   if (article && article.gallery && article.gallery.length > 0) {
-    article.gallery.forEach(({ name, description, images = [], id, briefBackground }) => {
+    article.gallery.forEach(({ name, description, images = [], id }) => {
       imagesPacks.unshift({
         id,
         name,

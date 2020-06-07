@@ -2,10 +2,11 @@ import React, { memo } from 'react'
 import Link from 'next/link'
 import { Map } from 'immutable'
 // import { DesktopArrow } from './components/DesktopArrow';
-import { getFormatedDate2 } from '@/lib/timeConverter'
+import { getFormatedDate2 } from '@/utils/timeConverter'
+import { getApiUrl } from '@/utils/getApiUrl'
 
 const dev = process.env.NODE_ENV === 'development'
-const baseURL = dev ? 'http://localhost:1337' : 'http://www.pravosleva.ru/api' // 'http://80.87.194.181/api';
+const baseURL = getApiUrl()
 
 const Grid = ({
   articles,

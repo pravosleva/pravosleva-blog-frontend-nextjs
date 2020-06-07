@@ -1,5 +1,6 @@
 {
+  "extends": ["react-app", "prettier"],
   "rules": {},
-  "plugins": ["react", "prettier", "standard", "react-hooks"],
-  "extends": ["react-app", "prettier"]
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "prettier", "standard", "@typescript-eslint", "react-hooks"]
 }

@@ -1,7 +1,15 @@
+import { useCallback, useState, useEffect } from 'react'
 import Headroom from 'react-headroom'
 import styled, { keyframes } from 'styled-components'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
+import { logout } from '@/helpers/services/restService'
+import { showAsyncToast } from '@/actions'
+import Cookie from 'js-cookie'
+import { COOKIES } from '@/helpers/services/loginService'
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 
 /*
 - 320-767 - mobile
@@ -10,9 +18,9 @@ import { useSelector } from 'react-redux'
 - 1280+ - desktop
 */
 
-const slideDownEffect = keyframes`
-  0%{transform:translateY(-60px)}90%{transform:translateY(0)}100%{transform:translateY(0)}
-`
+// const slideDownEffect = keyframes`
+//   0%{transform:translateY(-60px)}90%{transform:translateY(0)}100%{transform:translateY(0)}
+// `
 const Nav = styled('div')`
   font-size: 16px;
   font-weight: 500;
@@ -63,12 +71,12 @@ const Nav = styled('div')`
 const getGeoDataStr = (geo) => {
   /*
   { range: [ 3479297920, 3479301339 ],
-  country: 'US',
-  region: 'TX',
-  city: 'San Antonio',
-  ll: [ 29.4889, -98.3987 ],
-  metro: 641,
-  zip: 78218 }
+    country: 'US',
+    region: 'TX',
+    city: 'San Antonio',
+    ll: [ 29.4889, -98.3987 ],
+    metro: 641,
+    zip: 78218 }
   */
   let str = ''
 
@@ -100,14 +108,39 @@ const getIPs = (items) =>
 `)
 
 const DesktopHeader = () => {
-  const usersConnected = useSelector((state) => state.users.items)
+  const usersConnected = useSelector((state) => state.users?.items)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const token = Cookie.get(COOKIES.authToken)
+
+    if (!!token) setIsAuthenticated(true)
+    setIsLoaded(true)
+  }, [])
+  const handleLogoutCb = useCallback(async () => {
+    // handleProfileMenuClose()
+    await logout()
+      .then(() => {
+        dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
+        router.push('/auth/login')
+      })
+      .catch((msg) => {
+        dispatch(showAsyncToast({ text: msg, delay: 20000, type: 'error' }))
+      })
+  }, [dispatch, showAsyncToast])
+  const handleLogout = useDebouncedCallback(() => {
+    handleLogoutCb()
+  }, 500)
+  const isCurrentPathCb = useCallback(isCurrentPath, [])
 
   return (
     <Headroom style={{ zIndex: 5 }}>
       <header style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}>
         <Nav>
           <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
-            <li style={{ marginLeft: '20px', marginRight: 'auto', marginBottom: '0px' }}>
+            <li style={{ marginLeft: '20px', marginBottom: '0px' }}>
               <Link href="/">
                 <a
                   style={{
@@ -119,11 +152,23 @@ const DesktopHeader = () => {
                 </a>
               </Link>
             </li>
-            <li style={{ marginBottom: '0px' }} className="muted">
+            <li style={{ margin: '0 auto 0 0' }} className="muted">
               <span title={getIPs(usersConnected)}>
-                <i className="fas fa-globe"></i> Online: {usersConnected.length}
+                <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>Online: {usersConnected.length}
               </span>
             </li>
+            {isLoaded && !isAuthenticated && (
+              <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
+                <Link href="/auth/login">
+                  <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
+                </Link>
+              </li>
+            )}
+            {isLoaded && isAuthenticated && (
+              <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
+                <a href="#">Logout</a>
+              </li>
+            )}
           </ul>
         </Nav>
       </header>

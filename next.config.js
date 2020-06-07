@@ -1,4 +1,5 @@
 const withCSS = require('@zeit/next-css')
+const withSass = require('@zeit/next-sass')
 const webpack = require('webpack')
 const path = require('path')
 
@@ -10,15 +11,12 @@ const env = dotenv.parse(fs.readFileSync(envFileName))
 
 const nextConfig = {
   webpack(config) {
-    config.plugins.push(new webpack.EnvironmentPlugin(['NODE_ENV']))
     config.resolve.alias['@'] = `${path.resolve(__dirname)}/`
+    config.plugins.push(new webpack.EnvironmentPlugin(['NODE_ENV']))
 
     return config
-  },
-  devIndicators: {
-    autoPrerender: false,
   },
   env,
 }
 
-module.exports = withCSS(nextConfig)
+module.exports = withSass(withCSS(nextConfig))
