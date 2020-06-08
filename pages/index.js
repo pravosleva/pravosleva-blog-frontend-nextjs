@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
-// import Link from 'next/link'
 import axios from 'axios'
 import { PulseLoader } from 'react-spinners'
-import { Layout } from '../components/layout'
-import useDebounce from '../hooks/use-debounce'
-import { Tiles } from '../components/Tiles'
-// import { useDispatch } from 'react-redux'
-// import { userInfoActions } from "../store/reducer/user-info";
-import { getApiUrl } from '../utils/getApiUrl'
+import { Layout } from '@/components/layout'
+import useDebounce from '@/hooks/use-debounce'
+import { Tiles } from '@/components/Tiles'
+import { getApiUrl } from '@/utils/getApiUrl'
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })
@@ -51,7 +49,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
   const debouncedSetQueryText = useDebounce(queryText, 1000)
   const debouncedSearchBy = useDebounce(searchBy, 1000)
 
-  const newFetch = useCallback(() => {
+  const newFetchCb = useCallback(() => {
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
 
     setStart(0)
@@ -66,6 +64,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
       ),
     ]).then(() => setLoading(false))
   }, [debouncedSetQueryText, debouncedSearchBy, searchBy])
+  const newFetch = useDebouncedCallback(newFetchCb, 500)
 
   useEffect(() => {
     if (!!debouncedSetQueryText || !!debouncedSearchBy) newFetch()
