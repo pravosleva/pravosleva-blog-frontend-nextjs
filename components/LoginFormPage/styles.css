@@ -1,0 +1,123 @@
+.box {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 767px) {
+  .box {
+    margin-top: 50px;
+  }
+}
+.box h2 {
+  margin: 0 0 20px 0;
+  padding: 0;
+  color: #0162c8;
+  text-align: left;
+  background: linear-gradient(45deg, #0162c8, #00ff95 80%);
+  background-clip: text;
+  background: -webkit-linear-gradient(45deg, #0162c8, #00ff95 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.box .inputBox {
+  position: relative;
+}
+.box .inputBox input {
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+.box .inputBox input,
+.box .inputBox textarea {
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid #999;
+}
+.box .inputBox input::placeholder,
+.box .inputBox textarea::placeholder {
+  color: transparent;
+}
+.box .inputBox textarea {
+  padding: 10px 0;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.box button {
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  background: #999;
+  color: #fff;
+  margin-bottom: 0;
+
+  padding: 0.9em 1.7em;
+  font-size: 0.9em;
+  letter-spacing: 0.1em;
+  border-radius: 40px;
+  overflow: hidden;
+}
+.box button:disabled {
+  opacity: 0.4;
+}
+
+.box .inputBox.inputBox--btns {
+  display: flex;
+  justify-content: flex-end;
+}
+.box .inputBox.inputBox--btns > button:not(:last-child) {
+  margin-right: 10px;
+}
+.box .inputBox button {
+  border-radius: 40px;
+}
+.box button[type='submit'] {
+  /* background: #0162c8; */
+  background: linear-gradient(90deg, #0162c8, #55e7fc);
+  color: #fff;
+}
+
+.box form .inputBox label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  color: #999;
+  font-size: 0.9em;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.box .inputBox input:focus ~ label,
+.box .inputBox textarea:focus ~ label,
+.box .inputBox input:valid ~ label,
+.box .inputBox textarea:valid ~ label,
+.box .inputBox input:not(:placeholder-shown) ~ label {
+  top: -12px;
+  left: 0;
+  color: #0162c8;
+  font-size: 12px;
+  font-weight: bold;
+}
+.box .inputBox input:focus,
+.box .inputBox textarea:focus,
+.box .inputBox input:valid,
+.box .inputBox textarea:valid {
+  border-bottom: 2px solid #0162c8;
+}
+
+/* Additional */
+.box .inputBox input:invalid ~ label {
+  color: #f44336;
+}
+.box .inputBox input:invalid {
+  border-bottom-color: #f44336;
+}

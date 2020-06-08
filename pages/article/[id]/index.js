@@ -7,23 +7,17 @@ import Lightbox from 'react-image-lightbox'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { Layout } from '@/components/layout'
-// import { getMe } from "@/hocs/auth/fns";
-// import { useDispatch } from "react-redux";
-// import { userInfoActions } from "@/store/reducer/user-info";
 import { getFormatedDate2 } from '@/utils/timeConverter'
-import '@/css/link-as-rippled-btn.css'
 
 const Gallery = dynamic(() => import('react-photo-gallery'), {
   ssr: false,
 })
 
-// const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
 const baseURL = isDev ? 'http://localhost:1337' : 'http://pravosleva.ru/api'
 const api = axios.create({ baseURL })
-// to best see the results, click the popout button in the preview browser
-// and resize your browser
+
 function columns(containerWidth) {
   let columns = 1
 

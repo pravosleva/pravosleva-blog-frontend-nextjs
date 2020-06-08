@@ -5,6 +5,8 @@ import Head from 'next/head'
 
 import withReduxStore from '@/hocs/with-redux-store'
 import '@/css/layout.css'
+import '@/css/link-as-rippled-btn.css'
+import '@/css/rippled-btn.css'
 import { Toaster } from '@/components/Toaster'
 
 // let gaTrackingId = process.env.GA_TRACKING_ID || '';
@@ -53,9 +55,11 @@ window.addEventListener('load', function() {
 
 // Rippled button tap effect:
 window.addEventListener('load', function() {
-  const body = document.querySelector('body');
+  const clickListenedSpace = document.querySelector('.universal-container');
 
-  body.addEventListener('click', function(e) {
+  if (!clickListenedSpace) return;
+
+  clickListenedSpace.addEventListener('click', function(e) {
     if (e.originalTarget.classList.contains('link-as-rippled-btn')) {
       const x = e.clientX - e.target.offsetLeft;
       const ripples = document.createElement('span');

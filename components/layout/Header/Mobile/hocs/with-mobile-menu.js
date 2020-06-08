@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 import { compose, withStateHandlers, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
@@ -7,6 +8,7 @@ import { scrollDisablingComponentsActions } from '@/store/reducers/scroll-disabl
 import { withScrollDisabler } from '@/hocs/body-scroll-disabler'
 import Cookie from 'js-cookie'
 import { COOKIES } from '@/helpers/services/loginService'
+import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -32,9 +34,6 @@ const Sidebar = styled.div`
     width: 100%;
     transform: translateX(0);
     transition: transform 0.5s ease-in-out, opacity 0.7s ease-in-out;
-    // border: 1px solid black;
-    // background-color: #007bff;
-    // background-color: #2d4262;
     background-color: #0162c8;
     > ul {
       margin: 0;
@@ -47,6 +46,13 @@ const Sidebar = styled.div`
     }
     > ul > li > a {
       color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+    }
+    > ul > li > a.active {
+      color: yellow;
     }
 
     ${(p) =>
@@ -130,6 +136,9 @@ export const withMobileMenu = (ComposedComponent) =>
         setIsLoaded(true)
       }, [])
 
+      const router = useRouter()
+      const isCurrentPathCb = useCallback(isCurrentPath, [])
+
       return (
         <Wrapper opened={sidebarOpened}>
           <Sidebar opened={sidebarOpened}>
@@ -137,7 +146,7 @@ export const withMobileMenu = (ComposedComponent) =>
               {isLoaded && isAuthenticated && (
                 <li>
                   <Link href="/profile">
-                    <a>Profile</a>
+                    <a className={isCurrentPathCb(router.pathname, '/profile') ? 'active' : ''}>Profile</a>
                   </Link>
                 </li>
               )}
