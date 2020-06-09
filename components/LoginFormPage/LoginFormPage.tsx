@@ -28,7 +28,7 @@ const LoginFormConnected: React.FC = (props: ILoginFormPage) => {
   return (
     <Container className="box">
       <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2 className='gradient-animate-effect'>Login</h2>
         <div className="inputBox">
           <Field name="email" component="input" type="email" placeholder="Email" required />
           <label>Email</label>
