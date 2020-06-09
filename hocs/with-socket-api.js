@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-// import io from 'socket.io-client'
+import io from 'socket.io-client'
 import { usersActions } from '@/store/reducers/users'
 import { getSocketApiUrl } from '@/utils/getApiUrl'
-// import dynamic from 'next/dynamic'
 
 const socketApiUrl = getSocketApiUrl()
 const getUsersArr = (users) =>
@@ -14,10 +13,8 @@ export const withSocketApi = (WrappedComponent) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-      if (process.browser && !!window.io) {
-        // const { io } = window
+      if (process.browser) {
         const client = io.connect(socketApiUrl)
-        // const id = user.fromServer ? user.fromServer.id : null;
 
         client.on('HELLO', (payload) => {
           const { users } = payload

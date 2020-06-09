@@ -32,7 +32,6 @@ class MyApp extends App {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <meta name="theme-color" content="#0162c8" />
           <title>Pravosleva</title>
-          <script type="text/javascript" src="http://selection4test.ru:1337/js/socket.io-client.v2.0.1.min.js" />
           <script
             defer
             dangerouslySetInnerHTML={{
