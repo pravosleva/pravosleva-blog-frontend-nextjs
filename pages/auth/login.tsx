@@ -1,25 +1,30 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
-// import dynamic from 'next/dynamic'
-
+import loadable from '@loadable/component'
 import { IRootState } from '@/store/reducers/IRootState'
 import { showAsyncToast } from '@/actions'
 import { getErrorString } from '@/utils/redux-form/errors'
-// import { CustomFullScreenLoader } from '@/mui/custom-components/Loader'
 import { postLogin } from '@/helpers/services/restService'
-import { LoginFormPage } from '@/components/LoginFormPage'
 import { Layout } from '@/components/layout'
 
-// TODO: Разобраться с динамическим импортом
+// V1: TODO: Разобраться с динамическим импортом от Next.js
+// import dynamic from 'next/dynamic'
 // const LoginFormPage: any = dynamic(
 //   () =>
-//     import(/* webpackChunkName: "LoginFormPage" */ '@/mui/custom-components/LoginFormPage').then(
+//     import(/* webpackChunkName: "LoginFormPage" */ '@/components/LoginFormPage').then(
 //       ({ LoginFormPage }) => ({
 //         default: LoginFormPage,
 //       })
 //     ),
 //   { loading: () => <CustomFullScreenLoader /> }
 // )
+
+// V2: loadable-components
+const LoginFormPage: any = loadable(() =>
+  import(/* webpackChunkName: "LoginFormPage" */ '@/components/LoginFormPage').then(({ LoginFormPage }) => ({
+    default: LoginFormPage,
+  }))
+)
 
 export type TLoginInputs = {
   email: string

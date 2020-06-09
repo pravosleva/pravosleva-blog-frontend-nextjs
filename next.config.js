@@ -9,6 +9,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 const envFileName = isProduction ? '.env.prod' : '.env.dev'
 const env = dotenv.parse(fs.readFileSync(envFileName))
 
+const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
+
 const nextConfig = {
   webpack(config) {
     config.resolve.alias['@'] = `${path.resolve(__dirname)}/`
@@ -17,6 +19,18 @@ const nextConfig = {
     return config
   },
   env,
+  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  bundleAnalyzerConfig: {
+    server: {
+      analyzerMode: 'static',
+      reportFilename: '../analyze/server.html', // Относительно .next/server/
+    },
+    browser: {
+      analyzerMode: 'static',
+      reportFilename: './analyze/client.html', // Относительно .next/
+    },
+  },
 }
 
-module.exports = withSass(withCSS(nextConfig))
+module.exports = withBundleAnalyzer(withSass(withCSS(nextConfig)))
