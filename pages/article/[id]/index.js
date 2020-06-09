@@ -1,15 +1,16 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
-import Lightbox from 'react-image-lightbox'
+import loadable from '@loadable/component'
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import { Layout } from '@/components/layout'
 import { getFormatedDate2 } from '@/utils/timeConverter'
 
-const Gallery = dynamic(() => import('react-photo-gallery'), {
+const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
+const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
   ssr: false,
 })
 

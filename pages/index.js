@@ -3,9 +3,15 @@ import axios from 'axios'
 import { PulseLoader } from 'react-spinners'
 import { Layout } from '@/components/layout'
 import useDebounce from '@/hooks/use-debounce'
-import { Tiles } from '@/components/Tiles'
+import loadable from '@loadable/component'
 import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+
+const Tiles = loadable(() =>
+  import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
+    default: Tiles,
+  }))
+)
 
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })
