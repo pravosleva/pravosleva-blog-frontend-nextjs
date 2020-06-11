@@ -27,8 +27,12 @@
 }
 .box h2.gradient-animate-effect {
   color: #fff;
+  /*
   background: linear-gradient(45deg, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
   background: -webkit-linear-gradient(45deg, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
+  */
+  background: linear-gradient(110deg, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
+  background: -webkit-linear-gradient(110deg, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

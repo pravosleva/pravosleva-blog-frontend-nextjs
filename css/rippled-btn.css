@@ -18,9 +18,9 @@
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  animation: animate 1s linear infinite;
+  animation: animateRippledBtn 1s linear infinite;
 }
-@keyframes animate {
+@keyframes animateRippledBtn {
   0% {
     width: 0px;
     height: 0px;
