@@ -69,6 +69,9 @@ rippledButtons.forEach(btn => {
             }}
           />
           */}
+          <link href="https://prismjs.com/themes/prism-tomorrow.css" rel="stylesheet" />
+          <script src="https://prismjs.com/prism.js"></script>
+          <script src="https://prismjs.com/plugins/autoloader/prism-autoloader.js"></script>
         </Head>
         <Provider store={reduxStore}>
           <Toaster />
