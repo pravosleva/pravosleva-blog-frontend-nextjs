@@ -12,51 +12,63 @@ import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
 
 // 1. From each link in article to new browser tab:
-const linkInNewTab = function(e) {
-  console.log(e)
-  if (e.originalTarget.tagName === 'A') {
-    e.preventDefault();
-    const newLink = window.document.createElement('a');
+const linkInNewTab = function (e) {
+  try {
+    const { tagName } = e?.originalTarget
 
-    newLink.setAttribute('href', e.originalTarget.href);
-    newLink.setAttribute('target', '_blank');
-    newLink.click();
+    if (new String(tagName) === 'A') {
+      e.preventDefault()
+      const newLink = window.document.createElement('a')
+
+      newLink.setAttribute('href', e.originalTarget.href)
+      newLink.setAttribute('target', '_blank')
+      newLink.click()
+    }
+  } catch (err) {
+    // console.error(err)
+    return
   }
 }
 // 2. Rippled button tap effect:
-const rippleEffect = function(e) {
-  console.log(e.originalTarget.classList)
-  console.log(e.originalTarget.parentNode.classList)
-  if (e.originalTarget.classList.contains('link-as-rippled-btn')) {
-    console.log('1')
-    const x = e.clientX - e.target.offsetLeft;
-    const ripples = document.createElement('span');
+const rippleEffect = function (e) {
+  try {
+    // const { classList } = e.originalTarget
+    const classList = e.originalTarget?.className.split(/\s+/)
+    // const { classList: parentNodeClassList } = e.originalTarget.parentNode
+    const parentNodeClassList = e.originalTarget?.parentNode?.className.split(/\s+/)
 
-    ripples.classList.add('ripples');
-    ripples.style.left = x + 'px';
-    ripples.style.top = '50%';
-    e.originalTarget.appendChild(ripples);
-    setTimeout(() => {
-      ripples.remove();
-    }, 1000);
-  } else if (e.originalTarget.parentNode.classList.contains('link-as-rippled-btn')) {
-    console.log('2')
-    const x = e.clientX - e.originalTarget.parentNode.offsetLeft;
-    const ripples = document.createElement('span');
+    if (classList.includes('link-as-rippled-btn')) {
+      const x = e.clientX - e.target.offsetLeft
+      const ripples = document.createElement('span')
 
-    ripples.classList.add('ripples');
-    ripples.style.left = x + 'px';
-    ripples.style.top = '50%';
-    e.originalTarget.parentNode.appendChild(ripples);
-    setTimeout(() => {
-      ripples.remove();
-    }, 1000);
+      ripples.classList.add('ripples')
+      ripples.style.left = x + 'px'
+      ripples.style.top = '50%'
+      e.originalTarget.appendChild(ripples)
+      setTimeout(() => {
+        ripples.remove()
+      }, 1000)
+    } else if (parentNodeClassList.includes('link-as-rippled-btn')) {
+      const x = e.clientX - e.originalTarget.parentNode.offsetLeft
+      const ripples = document.createElement('span')
+
+      ripples.classList.add('ripples')
+      ripples.style.left = x + 'px'
+      ripples.style.top = '50%'
+      e.originalTarget.parentNode.appendChild(ripples)
+      setTimeout(() => {
+        ripples.remove()
+      }, 1000)
+    }
+  } catch (err) {
+    // console.error(err)
+    return
   }
 }
 
 const LayoutConnected = ({ children }) => {
   const [showScroll, setShowScroll] = useState(false)
-  const isBrowser = () => typeof window !== 'undefined'
+  const isBrowser = useMemo(() => typeof window !== 'undefined', [typeof window])
   const scroll = useScroll()
 
   useEffect(() => {
@@ -69,26 +81,26 @@ const LayoutConnected = ({ children }) => {
   useEffect(() => {
     if (isBrowser) {
       // 1.
-      const articleBody = document.querySelector('.article-body');
+      const articleBody = document.querySelector('.article-body')
 
-      if (!!articleBody) articleBody.addEventListener('click', linkInNewTab);
+      if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
 
       // 2.
-      const clickListenedSpace = document.querySelector('.universal-container');
+      const clickListenedSpace = document.querySelector('.universal-container')
 
-      if (!!clickListenedSpace) clickListenedSpace.addEventListener('click', rippleEffect, true);
+      if (!!clickListenedSpace) clickListenedSpace.addEventListener('click', rippleEffect, true)
 
       return () => {
         if (isBrowser) {
-          const articleBody = document.querySelector('.article-body');
-          const clickListenedSpace = document.querySelector('.universal-container');
+          const articleBody = document.querySelector('.article-body')
+          const clickListenedSpace = document.querySelector('.universal-container')
 
-          if (!!articleBody) articleBody.removeEventListener('click', linkInNewTab);
-          if (!!clickListenedSpace) clickListenedSpace.removeEventListener('click', rippleEffect);
+          if (!!articleBody) articleBody.removeEventListener('click', linkInNewTab)
+          if (!!clickListenedSpace) clickListenedSpace.removeEventListener('click', rippleEffect)
         }
       }
     }
-  } , [])
+  }, [])
 
   const scrollTop = useCallback(() => {
     if (isBrowser) window.scrollTo({ top: 0, behavior: 'smooth' })

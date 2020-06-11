@@ -440,10 +440,15 @@ pre {
   word-wrap: normal;
   padding: 1.45rem;
 
-  box-shadow: 0px 0px 8px rgba(144,164,183,0.6);
+  box-shadow: 0px 0px 8px rgba(144, 164, 183, 0.6);
 }
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   pre {
+    /*
+    min-height: 70px;
+    resize: vertical;
+    overflow: auto;
+    */
     max-height: 400px;
   }
 }
@@ -637,7 +642,8 @@ code {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 } */
-code, .inline-code {
+code,
+.inline-code {
   background: rgba(250, 239, 240, 0.78);
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
   color: #b44437;
@@ -662,8 +668,8 @@ pre code {
   background: none;
   line-height: 1.42;
 }
-code:before,
-code:after,
+/* code:before,
+code:after, */
 tt:before,
 tt:after {
   letter-spacing: -0.2em;
