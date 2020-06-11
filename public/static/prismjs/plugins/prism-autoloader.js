@@ -194,7 +194,7 @@
 
   var config = (Prism.plugins.autoloader = {
     // languages_path: languages_path,
-    languages_path: '/prismjs/langs/',
+    languages_path: '/static/prismjs/langs/',
     use_minified: true,
     loadLanguages: loadLanguages,
   })

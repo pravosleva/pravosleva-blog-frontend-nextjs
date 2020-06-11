@@ -46,7 +46,7 @@ const Grid = ({
                 ? `http://80.87.194.181/api${briefBackground.url}`
                 : // В данном случае работаю с боевой базой в dev режиме
                   `${baseURL}${briefBackground.url}`
-              : '/text-1.jpeg'
+              : '/static/img/text-1.jpeg'
 
           return (
             <div

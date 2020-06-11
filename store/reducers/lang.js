@@ -3,8 +3,8 @@ import intl from 'react-intl-universal'
 // https://github.com/alibaba/react-intl-universal
 import cookie from 'js-cookie'
 
-import enUS from '../../public/locales/en-US.json'
-import ruRU from '../../public/locales/ru-RU.json'
+import enUS from '@/public/static/locales/en-US.json'
+import ruRU from '@/public/static/locales/ru-RU.json'
 // Others...
 
 const SUPPOER_LOCALES = [

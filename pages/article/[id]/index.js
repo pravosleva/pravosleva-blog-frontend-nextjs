@@ -66,7 +66,7 @@ const Article = ({ initArticleData: article, usr }) => {
       ? isDev
         ? `http://80.87.194.181/api${article.briefBackground.url}`
         : `${baseURL}${article.briefBackground.url}`
-      : '/text-1.jpeg'
+      : '/static/img/text-1.jpeg'
   const thisPageUrl = `http://pravosleva.ru/article/${article.id}`
 
   return (
