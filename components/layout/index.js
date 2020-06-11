@@ -12,25 +12,27 @@ import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
 
 // 1. From each link in article to new browser tab:
-const linkInNewTab = function (e) {
-  try {
-    const { tagName } = e?.originalTarget
+// function linkInNewTab(e) {
+//   try {
+//     const { tagName } = e?.originalTarget
 
-    if (new String(tagName) === 'A') {
-      e.preventDefault()
-      const newLink = window.document.createElement('a')
+//     if (!tagName) return
 
-      newLink.setAttribute('href', e.originalTarget.href)
-      newLink.setAttribute('target', '_blank')
-      newLink.click()
-    }
-  } catch (err) {
-    // console.error(err)
-    return
-  }
-}
+//     if (new String(tagName) === 'A') {
+//       e.preventDefault()
+//       const newLink = window.document.createElement('a')
+
+//       newLink.setAttribute('href', e.originalTarget.href)
+//       newLink.setAttribute('target', '_blank')
+//       newLink.click()
+//     }
+//   } catch (err) {
+//     console.error(err)
+//     return
+//   }
+// }
 // 2. Rippled button tap effect:
-const rippleEffect = function (e) {
+function rippleEffect(e) {
   try {
     // const { classList } = e.originalTarget
     const classList = e.originalTarget?.className.split(/\s+/)
@@ -61,7 +63,7 @@ const rippleEffect = function (e) {
       }, 1000)
     }
   } catch (err) {
-    // console.error(err)
+    console.error(err)
     return
   }
 }
@@ -81,9 +83,9 @@ const LayoutConnected = ({ children }) => {
   useEffect(() => {
     if (isBrowser) {
       // 1.
-      const articleBody = document.querySelector('.article-body')
+      // const articleBody = document.querySelector('.article-body')
 
-      if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
+      // if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
 
       // 2.
       const clickListenedSpace = document.querySelector('.universal-container')
@@ -92,10 +94,10 @@ const LayoutConnected = ({ children }) => {
 
       return () => {
         if (isBrowser) {
-          const articleBody = document.querySelector('.article-body')
+          // const articleBody = document.querySelector('.article-body')
           const clickListenedSpace = document.querySelector('.universal-container')
 
-          if (!!articleBody) articleBody.removeEventListener('click', linkInNewTab)
+          // if (!!articleBody) articleBody.removeEventListener('click', linkInNewTab)
           if (!!clickListenedSpace) clickListenedSpace.removeEventListener('click', rippleEffect)
         }
       }

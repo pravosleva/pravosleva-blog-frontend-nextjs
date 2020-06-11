@@ -32,7 +32,32 @@ class MyApp extends App {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <meta name="theme-color" content="#0162c8" />
           <title>Pravosleva</title>
+          <script
+            defer
+            dangerouslySetInnerHTML={{
+              __html: `
+// 1. From each link in article to new browser tab:
+function linkInNewTab (e) {
+  if (e.originalTarget.tagName === 'A') {
+    e.preventDefault()
+    const newLink = window.document.createElement('a')
 
+    newLink.setAttribute('href', e.originalTarget.href)
+    newLink.setAttribute('target', '_blank')
+    newLink.click()
+  }
+}
+
+window.addEventListener('load', function(e) {
+  const articleBody = document.querySelector('.article-body')
+
+  if (!!articleBody) {
+    articleBody.addEventListener('click', linkInNewTab)
+  }
+})
+`,
+            }}
+          />
           <link href="/prismjs/themes/prism-okaidia.css" rel="stylesheet" />
           <script defer src="/prismjs/prism.js"></script>
           <script defer src="/prismjs/plugins/prism-autoloader.js"></script>
