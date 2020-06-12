@@ -103,9 +103,7 @@ function linkInNewTab (e) {
 window.addEventListener('load', function(e) {
   const articleBody = document.querySelector('.article-body')
 
-  if (!!articleBody) {
-    articleBody.addEventListener('click', linkInNewTab)
-  }
+  if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
 })
 `,
             }}

@@ -31,12 +31,12 @@ function columns(containerWidth) {
 
 const Article = ({ initArticleData: article, usr }) => {
   const router = useRouter()
-  const { id } = router.query
+  // const { id } = router.query
   // GALLERY:
   const [currentPackIndex, setCurrentPackIndex] = useState(0)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [viewerIsOpen, setViewerIsOpen] = useState(false)
-  const openLightbox = useCallback((event, { photo, index }) => {
+  const openLightbox = useCallback((_, { index }) => {
     setCurrentImageIndex(index)
     setViewerIsOpen(true)
   }, [])
@@ -72,25 +72,11 @@ const Article = ({ initArticleData: article, usr }) => {
   return (
     <>
       <Head>
-        <title>{`Pravosleva | ${article && article.title ? article.title : 'Not found'}`}</title>
+        <title>{`Pravosleva | ${!!article && !!article.title ? article.title : 'No title'}`}</title>
         {!!article.brief && <meta name="description" content={article.brief} />}
         {!!article.brief && <meta property="og:description" content={article.brief} />}
-        {bgSrc && (
-          <meta
-            property="vk:image"
-            content={
-              bgSrc // 537x240
-            }
-          />
-        )}
-        {bgSrc && (
-          <meta
-            property="twitter:image"
-            content={
-              bgSrc // 1024x512
-            }
-          />
-        )}
+        {!!bgSrc && <meta property="vk:image" content={bgSrc} />}
+        {!!bgSrc && <meta property="twitter:image" content={bgSrc} />}
         <meta property="og:image:width" content="600" />
         <meta property="og:image:height" content="315" />
         <meta property="og:title" content={article.title} />
@@ -121,7 +107,7 @@ const Article = ({ initArticleData: article, usr }) => {
             <div className="article-wrapper">
               <div className="fade-in-effect tiles-grid-item-in-article white article-wrapper__big-image-as-container">
                 <h1 className="article-page-title">{article.title || 'No title'}</h1>
-                {article.brief ? (
+                {!!article.brief ? (
                   <div className="fade-in-effect article-wrapper__big-image-as-container__title">
                     <em>{article.brief}</em>
                   </div>
@@ -133,7 +119,7 @@ const Article = ({ initArticleData: article, usr }) => {
             </div>
 
             <div className="article-body fade-in-effect">
-              {article.body ? <ReactMarkdown source={article.body} /> : 'No body'}
+              {!!article.body ? <ReactMarkdown source={article.body} /> : 'No body'}
             </div>
             {article.gallery && imagesPacks.length > 0 ? (
               <div className="galleries-wrapper">
@@ -159,7 +145,7 @@ const Article = ({ initArticleData: article, usr }) => {
                     />
                     {viewerIsOpen && currentPackIndex === i && images[currentImageIndex] ? (
                       <Lightbox
-                        imageTitle={`${name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
+                        imageTitle={`${!!name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
                         imagePadding={0}
                         clickOutsideToClose={false}
                         mainSrc={images[currentImageIndex].src}
@@ -213,9 +199,7 @@ const Article = ({ initArticleData: article, usr }) => {
             }
           }
           .article-wrapper {
-            /* min-height: 250px; */
             width: 100%;
-            /* background: 'linear-gradient(rgba(230,100,101,0.5), rgba(46,101,178,0.5))', */
             background: linear-gradient(rgba(255, 255, 255, 1), transparent);
             display: block;
             position: relative;
@@ -227,7 +211,6 @@ const Article = ({ initArticleData: article, usr }) => {
             background-size: cover;
             background-position: center;
             filter: grayscale(1);
-            // opacity: 0.5;
             top: 0;
             left: 0;
             bottom: 0;

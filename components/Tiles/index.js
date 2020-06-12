@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
 import Link from 'next/link'
 import { Map } from 'immutable'
-// import { DesktopArrow } from './components/DesktopArrow';
 import { getFormatedDate2 } from '@/utils/timeConverter'
 import { getApiUrl } from '@/utils/getApiUrl'
 
