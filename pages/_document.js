@@ -5,7 +5,7 @@ import Router from 'next/router'
 // import { gaPageView } from '../helpers/google-analytics';
 
 const isProd = process.env.NODE_ENV === 'production'
-const yandexCounterId = process.env.YANDEX_COUNTER_ID
+const yandexCounterId = !!process.env.YANDEX_COUNTER_ID ? Number(process.env.YANDEX_COUNTER_ID) : null
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
