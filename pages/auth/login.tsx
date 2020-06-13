@@ -6,7 +6,6 @@ import { showAsyncToast } from '@/actions'
 import { getErrorString } from '@/utils/redux-form/errors'
 import { postLogin } from '@/helpers/services/restService'
 import { Layout } from '@/components/layout'
-import '@/css/login-form-page.css'
 
 // V1: TODO: Разобраться с динамическим импортом от Next.js
 // import dynamic from 'next/dynamic'

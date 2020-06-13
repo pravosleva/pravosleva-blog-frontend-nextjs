@@ -74,7 +74,9 @@ class MyDocument extends Document {
           <title>Pravosleva</title>
           <meta name="theme-color" content="#0162c8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          {/*
           <link href="/static/prismjs/themes/prism-okaidia.min.css" rel="stylesheet" />
+          */}
           <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet" />
           <link
             rel="stylesheet"
@@ -86,8 +88,10 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          {/*
           <script defer src="/static/prismjs/prism.min.js"></script>
           <script defer src="/static/prismjs/plugins/prism-autoloader.min.js"></script>
+          */}
           <script
             defer
             dangerouslySetInnerHTML={{

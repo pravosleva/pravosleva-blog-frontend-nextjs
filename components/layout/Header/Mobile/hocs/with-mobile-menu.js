@@ -145,7 +145,7 @@ export const withMobileMenu = (ComposedComponent) =>
             <ul>
               {isLoaded && isAuthenticated && (
                 <li>
-                  <Link href="/profile">
+                  <Link href="/profile" as="/profile">
                     <a className={isCurrentPathCb(router.pathname, '/profile') ? 'active' : ''}>Profile</a>
                   </Link>
                 </li>

@@ -1,13 +1,13 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
 import loadable from '@loadable/component'
 import Head from 'next/head'
-// import dynamic from 'next/dynamic'
 import { Layout } from '@/components/layout'
 import { getFormatedDate2 } from '@/utils/timeConverter'
+import Prism from 'prismjs'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
@@ -69,6 +69,12 @@ const Article = ({ initArticleData: article, usr }) => {
       : '/static/img/text-1.jpeg'
   const thisPageUrl = `http://pravosleva.ru/article/${article.id}`
 
+  useEffect(() => {
+    // You can call the Prism.js API here
+    // Use setTimeout to push onto callback queue so it runs after the DOM is updated
+    setTimeout(() => Prism.highlightAll(), 0)
+  }, [])
+
   return (
     <>
       <Head>
@@ -92,7 +98,7 @@ const Article = ({ initArticleData: article, usr }) => {
             <div className="bx_breadcrumbs">
               <ul itemScope itemType="http://schema.org/BreadcrumbList">
                 <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
-                  <Link href="/">
+                  <Link href="/" as="/">
                     <a title="Pravosleva.ru" itemProp="item">
                       Главная
                     </a>
@@ -174,7 +180,7 @@ const Article = ({ initArticleData: article, usr }) => {
           </>
         )}
         <div className="special-link-wrapper fade-in-effect unselectable">
-          <Link href="/">
+          <Link href="/" as="/">
             <a className="link-as-rippled-btn">
               <i className="fas fa-arrow-left"></i>
               <span style={{ marginLeft: '10px' }}>Go back to the homepage</span>

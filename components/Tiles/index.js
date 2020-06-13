@@ -66,7 +66,7 @@ const Grid = ({
                   alignItems: 'center',
                 }}
               >
-                <Link href={`/article/${id}`}>
+                <Link href="/article/[id]" as={`/article/${id}`}>
                   <a className="special-link inactive-without-hover white unselectable">
                     READ MORE<i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
                   </a>

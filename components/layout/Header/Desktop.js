@@ -92,7 +92,7 @@ const DesktopHeader = () => {
         <Nav>
           <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
             <li style={{ marginLeft: '20px', marginBottom: '0px' }}>
-              <Link href="/">
+              <Link href="/" as="/">
                 <a
                   style={{
                     color: `white`,
@@ -110,7 +110,7 @@ const DesktopHeader = () => {
             </li>
             {isLoaded && !isAuthenticated && (
               <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
-                <Link href="/auth/login">
+                <Link href="/auth/login" as="/auth/login">
                   <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
                 </Link>
               </li>
