@@ -130,7 +130,7 @@ ym(${yandexCounterId}, "init", { clickmap:true, trackLinks:true, accurateTrackBo
                 <div>
                   <img
                     src={`https://mc.yandex.ru/watch/${yandexCounterId}`}
-                    style="position:absolute; left:-9999px;"
+                    style={{ position: 'absolute', left: '-9999px' }}
                     alt=""
                   />
                 </div>
