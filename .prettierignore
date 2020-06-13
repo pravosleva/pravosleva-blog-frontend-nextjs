@@ -1,0 +1,4 @@
+public/static/prismjs/langs/*.min.js
+public/static/prismjs/plugins/*.min.js
+public/static/prismjs/*.min.js
+public/static/prismjs/themes/*.min.css

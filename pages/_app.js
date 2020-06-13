@@ -1,6 +1,5 @@
 import App from 'next/app'
 import { Provider } from 'react-redux'
-import Head from 'next/head'
 import Router from 'next/router'
 import withGA from 'next-ga'
 
@@ -29,9 +28,6 @@ class MyApp extends App {
 
     return (
       <>
-        <Head>
-          <title>Pravosleva</title>
-        </Head>
         <Provider store={reduxStore}>
           <Toaster />
           <Component {...pageProps} />

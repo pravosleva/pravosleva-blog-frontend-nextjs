@@ -71,9 +71,10 @@ class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <link rel="icon" href="/favicon.ico" />
+          <title>Pravosleva</title>
           <meta name="theme-color" content="#0162c8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <link href="/static/prismjs/themes/prism-okaidia.css" rel="stylesheet" />
+          <link href="/static/prismjs/themes/prism-okaidia.min.css" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet" />
           <link
             rel="stylesheet"
@@ -85,27 +86,23 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script defer src="/static/prismjs/prism.js"></script>
-          <script defer src="/static/prismjs/plugins/prism-autoloader.js"></script>
+          <script defer src="/static/prismjs/prism.min.js"></script>
+          <script defer src="/static/prismjs/plugins/prism-autoloader.min.js"></script>
           <script
             defer
             dangerouslySetInnerHTML={{
               __html: `
-// 1. From each link in article to new browser tab:
 function linkInNewTab (e) {
   if (e.originalTarget.tagName === 'A') {
     e.preventDefault()
     const newLink = window.document.createElement('a')
-
     newLink.setAttribute('href', e.originalTarget.href)
     newLink.setAttribute('target', '_blank')
     newLink.click()
   }
 }
-
 window.addEventListener('load', function(e) {
   const articleBody = document.querySelector('.article-body')
-
   if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
 })
 `,
