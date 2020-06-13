@@ -10,7 +10,7 @@ import '@/css/link-as-rippled-btn.css'
 import '@/css/rippled-btn.css'
 import { Toaster } from '@/components/Toaster'
 
-let gaTrackingId = process.env.GA_TRACKING_ID || 'UA-xxxxxxxxx-x'
+const gaTrackingId = process.env.GA_TRACKING_ID || 'UA-xxxxxxxxx-x'
 // const isProduction = process.env.NODE_ENV === 'production';
 
 class MyApp extends App {

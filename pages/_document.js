@@ -4,6 +4,9 @@ import Router from 'next/router'
 
 // import { gaPageView } from '../helpers/google-analytics';
 
+const isProd = process.env.NODE_ENV === 'production'
+const yandexCounterId = process.env.YANDEX_COUNTER_ID
+
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()
@@ -70,6 +73,7 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
           <meta name="theme-color" content="#0162c8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <link href="/static/prismjs/themes/prism.css" rel="stylesheet" />
           <link href="/static/prismjs/themes/prism-okaidia.css" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet" />
           <link
@@ -108,6 +112,31 @@ window.addEventListener('load', function(e) {
 `,
             }}
           />
+          {isProd && !!yandexCounterId && (
+            <>
+              <script
+                type="text/javascript"
+                defer
+                dangerouslySetInnerHTML={{
+                  __html: `
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ym(${yandexCounterId}, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+`,
+                }}
+              />
+              <noscript>
+                <div>
+                  <img
+                    src={`https://mc.yandex.ru/watch/${yandexCounterId}`}
+                    style="position:absolute; left:-9999px;"
+                    alt=""
+                  />
+                </div>
+              </noscript>
+            </>
+          )}
         </body>
       </html>
     )
