@@ -12,12 +12,15 @@ import { axiosUniversalCatch } from '@/helpers/services/axiosUniversalCatch'
 
 const apiUrl = getApiUrl()
 
+const post0 = async (url: string, data: URLSearchParams): Promise<any> => {
+  return axios.post(url, data, baseConfig)
+}
 export const postLogin = async (inputs: TLoginInputs): Promise<string> => {
   const data = new URLSearchParams(getNormalizedInputs(inputs))
   let result: ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any
 
   try {
-    result = await post('/auth/local', data)
+    result = await post0('/auth/local', data)
       .then(httpRequestErrorHandler) // .then((res) => res.data)
       .then(apiResponseErrorHandler) // .then((data) => data)
       .then((data: any) => ({
@@ -34,7 +37,7 @@ export const postLogin = async (inputs: TLoginInputs): Promise<string> => {
   }
 
   if (result.isOk) {
-    if (result.response && result.response?.jwt) {
+    if (!!result.response?.jwt) {
       const { jwt } = result.response
 
       await AuthToken.storeToken(jwt)
@@ -67,19 +70,15 @@ export const post = async (
   url: string,
   data: URLSearchParams
 ): Promise<ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any> => {
-  try {
-    return axios
-      .post(url, data, baseConfig)
-      .then(httpRequestErrorHandler) // .then((res) => res.data)
-      .then(apiResponseErrorHandler) // .then((data) => data)
-      .then((data: any) => ({
-        isOk: true,
-        response: data,
-      }))
-      .catch(axiosUniversalCatch)
-  } catch (err) {
-    throw new Error(err)
-  }
+  return axios
+    .post(url, data, baseConfig)
+    .then(httpRequestErrorHandler) // .then((res) => res.data)
+    .then(apiResponseErrorHandler) // .then((data) => data)
+    .then((data: any) => ({
+      isOk: true,
+      response: data,
+    }))
+    .catch(axiosUniversalCatch)
 }
 
 export const get = async (
