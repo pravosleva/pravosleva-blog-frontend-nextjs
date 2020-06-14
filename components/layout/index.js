@@ -7,7 +7,7 @@ import '@/css/block-quotes.css'
 import '@/css/react-image-lightbox.css'
 import '@/css/react-photo-gallery.css'
 import '@/css/custom-breadcrumbs.css'
-import '@/css/login-form-page.css'
+import '@/css/standart-form.css'
 import { withSocketApi } from '@/hocs/with-socket-api'
 import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
@@ -63,8 +63,7 @@ function rippleEffect(e) {
         ripples.remove()
       }, 1000)
     }
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
     return
   }
 }

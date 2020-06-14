@@ -63,9 +63,20 @@ const baseConfig: AxiosRequestConfig = {
   // },
 }
 
-export const post = async (url: string, data: URLSearchParams) => {
+export const post = async (
+  url: string,
+  data: URLSearchParams
+): Promise<ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any> => {
   try {
-    return axios.post(url, data, baseConfig)
+    return axios
+      .post(url, data, baseConfig)
+      .then(httpRequestErrorHandler) // .then((res) => res.data)
+      .then(apiResponseErrorHandler) // .then((data) => data)
+      .then((data: any) => ({
+        isOk: true,
+        response: data,
+      }))
+      .catch(axiosUniversalCatch)
   } catch (err) {
     throw new Error(err)
   }

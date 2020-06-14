@@ -31,8 +31,32 @@
   background: linear-gradient(45deg, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
   background: -webkit-linear-gradient(45deg, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
   */
-  background: linear-gradient(110deg, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
-  background: -webkit-linear-gradient(110deg, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #0162c8, #fff, #f44336, #fff, #0162c8 80%);
+  background: linear-gradient(
+    110deg,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #fff,
+    #f44336,
+    #fff,
+    #0162c8 80%
+  );
+  background: -webkit-linear-gradient(
+    110deg,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #0162c8,
+    #fff,
+    #f44336,
+    #fff,
+    #0162c8 80%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -40,8 +64,12 @@
   animation: animate 4s linear infinite;
 }
 @keyframes animate {
-  0% { background-position: 0%; }
-  100% { background-position: 200%; }
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
 }
 .box .inputBox {
   position: relative;
@@ -58,7 +86,7 @@
   box-shadow: none;
   border: none;
   border-radius: 0;
-  border-bottom: 2px solid #999;
+  border-bottom: 2px solid lightgray;
 }
 .box .inputBox input::placeholder,
 .box .inputBox textarea::placeholder {
@@ -74,7 +102,7 @@
   border-radius: 0;
   border: none;
   cursor: pointer;
-  background: #999;
+  background: lightgray;
   color: #fff;
   margin-bottom: 0;
 
@@ -108,7 +136,7 @@
   position: absolute;
   top: 10px;
   left: 0;
-  color: #999;
+  color: lightgray;
   font-size: 0.9em;
   transition: 0.5s;
   pointer-events: none;
@@ -133,9 +161,12 @@
 }
 
 /* Additional */
-.box .inputBox input:invalid ~ label {
+.box .inputBox input:invalid ~ label,
+.box .inputBox textarea:invalid ~ label {
   color: #f44336;
 }
+/*
 .box .inputBox input:invalid {
   border-bottom-color: #f44336;
 }
+*/

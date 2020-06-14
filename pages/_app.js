@@ -2,6 +2,7 @@ import App from 'next/app'
 import { Provider } from 'react-redux'
 import Router from 'next/router'
 import withGA from 'next-ga'
+import Head from 'next/head'
 
 import withReduxStore from '@/hocs/with-redux-store'
 import '@/css/layout.css'
@@ -10,7 +11,6 @@ import '@/css/rippled-btn.css'
 import { Toaster } from '@/components/Toaster'
 
 const gaTrackingId = process.env.GA_TRACKING_ID || 'UA-xxxxxxxxx-x'
-// const isProduction = process.env.NODE_ENV === 'production';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -28,6 +28,9 @@ class MyApp extends App {
 
     return (
       <>
+        <Head>
+          <title>Pravosleva</title>
+        </Head>
         <Provider store={reduxStore}>
           <Toaster />
           <Component {...pageProps} />

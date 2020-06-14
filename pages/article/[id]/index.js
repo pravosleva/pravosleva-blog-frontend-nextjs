@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
@@ -30,7 +29,7 @@ function columns(containerWidth) {
 }
 
 const Article = ({ initArticleData: article, usr }) => {
-  const router = useRouter()
+  // const router = useRouter()
   // const { id } = router.query
   // GALLERY:
   const [currentPackIndex, setCurrentPackIndex] = useState(0)
@@ -47,7 +46,7 @@ const Article = ({ initArticleData: article, usr }) => {
   }
   let imagesPacks = []
 
-  if (article && article.gallery && article.gallery.length > 0) {
+  if (article?.gallery?.length > 0) {
     article.gallery.forEach(({ name, description, images = [], id }) => {
       imagesPacks.unshift({
         id,
@@ -61,12 +60,11 @@ const Article = ({ initArticleData: article, usr }) => {
     })
   }
 
-  const bgSrc =
-    article.briefBackground && article.briefBackground.url
-      ? isDev
-        ? `http://80.87.194.181/api${article.briefBackground.url}`
-        : `${baseURL}${article.briefBackground.url}`
-      : '/static/img/text-1.jpeg'
+  const bgSrc = article?.briefBackground?.url
+    ? isDev
+      ? `http://80.87.194.181/api${article.briefBackground.url}`
+      : `${baseURL}${article.briefBackground.url}`
+    : '/static/img/text-1.jpeg'
   const thisPageUrl = `http://pravosleva.ru/article/${article.id}`
 
   useEffect(() => {
@@ -78,7 +76,7 @@ const Article = ({ initArticleData: article, usr }) => {
   return (
     <>
       <Head>
-        <title>{`Pravosleva | ${!!article && !!article.title ? article.title : 'No title'}`}</title>
+        <title>{`Pravosleva | ${article?.title || 'No title'}`}</title>
         {!!article.brief && <meta name="description" content={article.brief} />}
         {!!article.brief && <meta property="og:description" content={article.brief} />}
         {!!bgSrc && <meta property="vk:image" content={bgSrc} />}
@@ -105,7 +103,7 @@ const Article = ({ initArticleData: article, usr }) => {
                   </Link>
                 </li>
                 <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
-                  <span>{article.title.length > 30 ? `${article.title.substring(0, 30)}...` : article.title}</span>
+                  <span>{article?.title?.length > 30 ? `${article.title.substring(0, 30)}...` : article.title}</span>
                 </li>
               </ul>
             </div>
@@ -113,11 +111,11 @@ const Article = ({ initArticleData: article, usr }) => {
             <div className="article-wrapper">
               <div className="fade-in-effect tiles-grid-item-in-article white article-wrapper__big-image-as-container">
                 <h1 className="article-page-title">{article.title || 'No title'}</h1>
-                {!!article.brief ? (
+                {article?.brief && (
                   <div className="fade-in-effect article-wrapper__big-image-as-container__title">
                     <em>{article.brief}</em>
                   </div>
-                ) : null}
+                )}
                 <small className="inactive article-wrapper__big-image-as-container__date">
                   {getFormatedDate2(new Date(article.createdAt))}
                 </small>

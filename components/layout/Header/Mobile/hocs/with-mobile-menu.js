@@ -150,6 +150,11 @@ export const withMobileMenu = (ComposedComponent) =>
                   </Link>
                 </li>
               )}
+              <li>
+                <Link href="/feedback">
+                  <a className={isCurrentPathCb(router.pathname, '/feedback') ? 'active' : ''}>Feedback</a>
+                </Link>
+              </li>
             </ul>
           </Sidebar>
           <ComposedComponent

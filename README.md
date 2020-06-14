@@ -22,10 +22,12 @@ pm2 start ecosystem.dev.config.js
 `.env.prod`
 
 ```
-GA_TRACKING_ID=UA-xxxxxxxxx-x
-YANDEX_COUNTER_ID=xxxxxxxx
 REACT_APP_API_ENDPOINT=http://80.87.194.181/api
 REACT_APP_SOCKET_ENDPOINT=http://80.87.194.181/api
+
+GA_TRACKING_ID=UA-xxxxxxxxx-x
+YANDEX_COUNTER_ID=xxxxxxxx
+RECAPTCHAV3_CLIENT_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxx
 ```
 
 ```bash
