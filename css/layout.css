@@ -928,6 +928,13 @@ div.article-body > blockquote {
   text-shadow: 1px 1px rgb(0, 123, 255), -1px -1px rgb(0, 123, 255);
 }
 
+/*
+.universal-container > main ul {
+  list-style-type: none;
+} */
+.universal-container > main ul input {
+  margin-right: 10px;
+}
 @media (min-width: 768px) {
   .universal-container {
     padding: 0 20px 0 20px;
