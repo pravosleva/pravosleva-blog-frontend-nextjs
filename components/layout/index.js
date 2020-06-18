@@ -40,7 +40,7 @@ function rippleEffect(e) {
     // const { classList: parentNodeClassList } = e.originalTarget.parentNode
     const parentNodeClassList = e.originalTarget?.parentNode?.className.split(/\s+/)
 
-    if (classList.includes('link-as-rippled-btn')) {
+    if (classList.includes('link-as-rippled-btn') || classList.includes('rippled-btn')) {
       const x = e.clientX - e.target.offsetLeft
       const ripples = document.createElement('span')
 
@@ -51,7 +51,7 @@ function rippleEffect(e) {
       setTimeout(() => {
         ripples.remove()
       }, 1000)
-    } else if (parentNodeClassList.includes('link-as-rippled-btn')) {
+    } else if (parentNodeClassList.includes('link-as-rippled-btn') || parentNodeClassList.includes('rippled-btn')) {
       const x = e.clientX - e.originalTarget.parentNode.offsetLeft
       const ripples = document.createElement('span')
 
@@ -126,10 +126,6 @@ const LayoutConnected = ({ children }) => {
       </ScrollTopBtn>
     </>
   )
-}
-
-LayoutConnected.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export const Layout = withSocketApi(LayoutConnected)

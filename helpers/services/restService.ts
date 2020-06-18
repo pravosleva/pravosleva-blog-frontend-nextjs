@@ -78,7 +78,8 @@ export const post = async (
       isOk: true,
       response: data,
     }))
-    .catch(axiosUniversalCatch)
+    .catch(() => ({ isOk: false, msg: 'Не удалось обработать ошибку' }))
+  // .catch(axiosUniversalCatch)
 }
 
 export const get = async (
@@ -97,5 +98,6 @@ export const get = async (
       isOk: true,
       response: data,
     }))
-    .catch(axiosUniversalCatch)
+    .catch(() => ({ isOk: false, msg: 'Не удалось обработать ошибку' }))
+  // .catch(axiosUniversalCatch)
 }

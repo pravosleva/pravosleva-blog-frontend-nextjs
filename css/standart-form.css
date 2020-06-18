@@ -25,6 +25,13 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.box h2.error {
+  background: linear-gradient(45deg, #f44336, #f44336 80%);
+  background-clip: text;
+  background: -webkit-linear-gradient(45deg, #f44336, #f44336 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .box h2.gradient-animate-effect {
   color: #fff;
   /*

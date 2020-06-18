@@ -10,6 +10,7 @@ import { post } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
 
 const RECAPTCHAV3_CLIENT_KEY = process.env.RECAPTCHAV3_CLIENT_KEY
+const recaptchaScoreLimit = 0.95
 
 const Container: StyledComponent<'div', any, {}, never> = styled('div')`
   @media (min-width: 768px) {
@@ -33,42 +34,61 @@ const Feedback = () => {
     e.preventDefault()
     setIsRecaptchaShowed(true)
   }
-  const send = async (): Promise<string> => {
-    const response = await post(
-      '/entries',
+  const send = async (token: string): Promise<string> => {
+    const verifyResult = await post(
+      'http://pravosleva.ru/express-helper/recaptcha-v3/verify',
       new URLSearchParams({
-        companyName,
-        contactName,
-        comment,
+        captcha: token,
       })
     )
 
-    if (response.isOk) {
-      return Promise.resolve('Ok')
+    if (verifyResult.isOk) {
+      if (verifyResult?.response.original?.score > recaptchaScoreLimit) {
+        const createNewEntryResult = await post(
+          '/entries',
+          new URLSearchParams({
+            companyName,
+            contactName,
+            comment,
+          })
+        )
+
+        if (createNewEntryResult.isOk) {
+          return Promise.resolve('New Entry created')
+        }
+      } else {
+        return Promise.reject(
+          `Bot detected! Your score by Google ${verifyResult?.response.original?.score}. Humans limit was set to ${recaptchaScoreLimit}`
+        )
+      }
     }
-    return Promise.reject(response?.msg)
+
+    return Promise.reject(verifyResult?.msg)
   }
   const dispatch = useDispatch()
-  const onResolved = useCallback(() => {
-    // token as arg
-    send()
-      .then((msg) => {
-        dispatch(showAsyncToast({ text: msg, delay: 7000, type: 'success' }))
-        // resetCompanyName()
-        resetContactName()
-        resetComment()
-      })
-      .then(() => {
-        setIsRecaptchaShowed(false)
-        setWasSent(true)
-      })
-      .then(() => {
-        router.push('/feedback/thanks')
-      })
-      .catch((err) => {
-        dispatch(showAsyncToast({ text: err, delay: 10000, type: 'error' }))
-      })
-  }, [send])
+  const onResolved = useCallback(
+    (token) => {
+      send(token)
+        .then((msg) => {
+          dispatch(showAsyncToast({ text: msg, delay: 7000, type: 'success' }))
+          // resetCompanyName()
+          resetContactName()
+          resetComment()
+        })
+        .then(() => {
+          setIsRecaptchaShowed(false)
+          setWasSent(true)
+        })
+        .then(() => {
+          router.push('/feedback/thanks')
+        })
+        .catch((text) => {
+          dispatch(showAsyncToast({ text, delay: 10000, type: 'error' }))
+          router.push(`/feedback/sorry?msg=${encodeURIComponent(text)}`)
+        })
+    },
+    [send]
+  )
   useEffect(() => {
     if (process.browser) {
       loadReCaptcha(RECAPTCHAV3_CLIENT_KEY)
@@ -99,10 +119,12 @@ const Feedback = () => {
               <textarea name="comment" placeholder="invisible" {...bindComment} required />
               <label>Comment</label>
             </div>
-            <button className="rippled-btn" type="submit">
-              Submit
-            </button>
-            {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
+            <div className="special-link-wrapper fade-in-effect unselectable">
+              <button className="rippled-btn" type="submit">
+                Submit
+              </button>
+              {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
+            </div>
           </form>
         )}
       </Container>

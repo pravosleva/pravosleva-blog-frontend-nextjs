@@ -12,6 +12,11 @@ a.link-as-rippled-btn {
   overflow: hidden;
   background: linear-gradient(90deg, #0162c8, #55e7fc);
 }
+@media (max-width: 767px) {
+  a.link-as-rippled-btn {
+    width: 100%;
+  }
+}
 a.link-as-rippled-btn > span.ripples {
   position: absolute;
   background: #fff;
