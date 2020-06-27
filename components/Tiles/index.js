@@ -38,7 +38,7 @@ const Grid = ({
     ) : null}
     {articles.length > 0 ? (
       <div className="tiles-grid-wrapper fade-in-effect">
-        {articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt }, i) => {
+        {articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, i) => {
           const bgSrc =
             briefBackground && briefBackground.url
               ? dev
@@ -66,7 +66,7 @@ const Grid = ({
                   alignItems: 'center',
                 }}
               >
-                <Link href="/article/[id]" as={`/article/${id}`}>
+                <Link href="/article/[slug]" as={`/article/${slug}`}>
                   <a className="special-link inactive-without-hover white unselectable">
                     READ MORE<i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
                   </a>

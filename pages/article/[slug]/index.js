@@ -65,7 +65,7 @@ const Article = ({ initArticleData: article, usr }) => {
       ? `http://80.87.194.181/api${article.briefBackground.url}`
       : `${baseURL}${article.briefBackground.url}`
     : '/static/img/text-1.jpeg'
-  const thisPageUrl = `http://pravosleva.ru/article/${article.id}`
+  const thisPageUrl = `http://pravosleva.ru/article/${article.slug}`
 
   useEffect(() => {
     // You can call the Prism.js API here
@@ -247,21 +247,21 @@ const Article = ({ initArticleData: article, usr }) => {
 
 Article.getInitialProps = async (ctx) => {
   const { query } = ctx
-  const { id } = query
+  const { slug } = query
 
-  const fetchArticle = async (id) => {
-    if (!id) return null
+  const fetchArticle = async (slug) => {
+    if (!slug) return null
 
     const result = await api
-      .get(`/articles/${id}`)
+      .get(`/articles?slug=${slug}`)
       .then((res) => res.data)
       .catch((err) => err)
 
-    if (result && result.id) return result
+    if (Array.isArray(result) && result.length > 0 && !!result[0]?.id) return result[0]
     return null
   }
 
-  const res = await fetchArticle(id)
+  const res = await fetchArticle(slug)
 
   return { initArticleData: res, usr: null }
 }
