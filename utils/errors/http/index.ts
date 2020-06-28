@@ -1,1 +1,1 @@
-export * from './HttpRequestError'
+export * from './HttpError'

@@ -7,16 +7,14 @@ import Head from 'next/head'
 import { Layout } from '@/components/layout'
 import { getFormatedDate2 } from '@/utils/timeConverter'
 import Prism from 'prismjs'
+import { getImageUrl, getBgSrc, baseApiURL, isProd } from '@/utils/getApiUrl'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
   ssr: false,
 })
 
-const isDev = process.env.NODE_ENV === 'development'
-const isProd = !isDev
-const baseURL = isDev ? 'http://localhost:1337' : 'http://pravosleva.ru/api'
-const api = axios.create({ baseURL })
+const api = axios.create({ baseApiURL })
 
 function columns(containerWidth) {
   let columns = 1
@@ -53,18 +51,14 @@ const Article = ({ initArticleData: article, usr }) => {
         name,
         description,
         images: images.map(({ url }) => ({
-          src: isDev ? `http://80.87.194.181/api${url}` : `${baseURL}${url}`,
+          src: getImageUrl(url),
           caption: `${article.title}: ${description}.`,
         })),
       })
     })
   }
 
-  const bgSrc = article?.briefBackground?.url
-    ? isDev
-      ? `http://80.87.194.181/api${article.briefBackground.url}`
-      : `${baseURL}${article.briefBackground.url}`
-    : '/static/img/text-1.jpeg'
+  const bgSrc = article?.briefBackground?.url ? getBgSrc(article.briefBackground.url) : '/static/img/text-1.jpeg'
   const thisPageUrl = `http://pravosleva.ru/article/${article.slug}`
 
   useEffect(() => {

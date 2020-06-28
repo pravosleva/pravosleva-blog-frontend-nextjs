@@ -4,12 +4,12 @@ interface IError {
   [x: string]: string[]
 }
 
-export class ApiResponseError extends UniversalError {
+export class ApiError extends UniversalError {
   constructor(public errors?: IError[]) {
-    super('ApiResponseError')
+    super('ApiError')
 
     // Set the prototype explicitly.
-    Object.setPrototypeOf(this, ApiResponseError.prototype)
+    Object.setPrototypeOf(this, ApiError.prototype)
   }
 
   getErrorMsg(): string {

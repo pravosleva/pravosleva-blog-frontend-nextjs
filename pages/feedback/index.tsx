@@ -10,6 +10,7 @@ import { post } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
 
 const RECAPTCHAV3_CLIENT_KEY = process.env.RECAPTCHAV3_CLIENT_KEY
+const RECAPTCHAV3_VERIFY_URL = process.env.RECAPTCHAV3_VERIFY_URL
 const recaptchaScoreLimit = 0.95
 
 const Container: StyledComponent<'div', any, {}, never> = styled('div')`
@@ -36,7 +37,7 @@ const Feedback = () => {
   }
   const send = async (token: string): Promise<string> => {
     const verifyResult = await post(
-      'http://pravosleva.ru/express-helper/recaptcha-v3/verify',
+      RECAPTCHAV3_VERIFY_URL,
       new URLSearchParams({
         captcha: token,
       })

@@ -1,3 +1,3 @@
-export * from './ApiResponseError'
-export * from './apiResponseErrorHandler'
+export * from './ApiError'
+export * from './apiErrorHandler'
 export * from './IResponseLocalResult'

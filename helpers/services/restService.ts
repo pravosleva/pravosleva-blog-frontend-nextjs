@@ -1,28 +1,26 @@
 import axios, { AxiosRequestConfig } from 'axios'
-
 import { getApiUrl } from '@/utils/getApiUrl'
 import { TLoginInputs } from '@/pages/auth/login'
 import { AuthToken } from './AuthToken'
-// import { catchAxiosError } from './error'
 import { getNormalizedInputs } from '@/utils/strapi/getNormalizedInputs'
-
-import { apiResponseErrorHandler, ResponseLocal } from '@/utils/errors/api'
-import { httpRequestErrorHandler } from '@/utils/errors/http/axios'
-import { axiosUniversalCatch } from '@/helpers/services/axiosUniversalCatch'
+import { apiErrorHandler, ResponseLocal } from '@/utils/errors/api'
+import { httpErrorHandler } from '@/utils/errors/http/axios'
+import { axiosUniversalCatch } from '@/utils/errors/axiosUniversalCatch'
 
 const apiUrl = getApiUrl()
 
 const post0 = async (url: string, data: URLSearchParams): Promise<any> => {
   return axios.post(url, data, baseConfig)
 }
+
 export const postLogin = async (inputs: TLoginInputs): Promise<string> => {
   const data = new URLSearchParams(getNormalizedInputs(inputs))
   let result: ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any
 
   try {
     result = await post0('/auth/local', data)
-      .then(httpRequestErrorHandler) // .then((res) => res.data)
-      .then(apiResponseErrorHandler) // .then((data) => data)
+      .then(httpErrorHandler) // res -> res.data
+      .then(apiErrorHandler) // data -> data
       .then((data: any) => ({
         isOk: true,
         response: data,
@@ -38,9 +36,7 @@ export const postLogin = async (inputs: TLoginInputs): Promise<string> => {
 
   if (result.isOk) {
     if (!!result.response?.jwt) {
-      const { jwt } = result.response
-
-      await AuthToken.storeToken(jwt)
+      await AuthToken.storeToken(result.response.jwt)
       return Promise.resolve(result.msg)
     }
     return Promise.reject('ERR: Не обнаружен токен в ответе!')
@@ -72,14 +68,13 @@ export const post = async (
 ): Promise<ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any> => {
   return axios
     .post(url, data, baseConfig)
-    .then(httpRequestErrorHandler) // .then((res) => res.data)
-    .then(apiResponseErrorHandler) // .then((data) => data)
+    .then(httpErrorHandler) // res -> res.data
+    .then(apiErrorHandler) // data -> data
     .then((data: any) => ({
       isOk: true,
       response: data,
     }))
-    .catch(() => ({ isOk: false, msg: 'Не удалось обработать ошибку' }))
-  // .catch(axiosUniversalCatch)
+    .catch(axiosUniversalCatch)
 }
 
 export const get = async (
@@ -92,12 +87,11 @@ export const get = async (
   }
   return await axios
     .get(url, axiosConfig)
-    .then(httpRequestErrorHandler) // .then((res) => res.data)
-    .then(apiResponseErrorHandler) // .then((data) => data)
+    .then(httpErrorHandler) // res -> res.data
+    .then(apiErrorHandler) // data -> data
     .then((data: any) => ({
       isOk: true,
       response: data,
     }))
-    .catch(() => ({ isOk: false, msg: 'Не удалось обработать ошибку' }))
-  // .catch(axiosUniversalCatch)
+    .catch(axiosUniversalCatch)
 }

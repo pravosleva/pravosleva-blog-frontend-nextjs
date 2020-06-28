@@ -1,11 +1,11 @@
 import { UniversalError } from '@/utils/errors'
 
-export class HttpRequestError extends UniversalError {
+export class HttpError extends UniversalError {
   constructor(public status: number, public message: string) {
-    super('HttpRequestError')
+    super('HttpError')
 
     // Set the prototype explicitly.
-    Object.setPrototypeOf(this, HttpRequestError.prototype)
+    Object.setPrototypeOf(this, HttpError.prototype)
   }
 
   getErrorMsg(): string {
