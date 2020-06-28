@@ -7,14 +7,14 @@ import Head from 'next/head'
 import { Layout } from '@/components/layout'
 import { getFormatedDate2 } from '@/utils/timeConverter'
 import Prism from 'prismjs'
-import { getImageUrl, getBgSrc, baseApiURL, isProd } from '@/utils/getApiUrl'
+import { getImageUrl, getBgSrc, getApiUrl, isProd } from '@/utils/getApiUrl'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
   ssr: false,
 })
 
-const api = axios.create({ baseApiURL })
+const api = axios.create({ baseURL: getApiUrl() })
 
 function columns(containerWidth) {
   let columns = 1
