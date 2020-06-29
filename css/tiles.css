@@ -139,8 +139,7 @@
     transform: translateY(-50%) translateX(-50%);
   }
 
-  .tiles-grid-item:nth-of-type(5n),
-  .tiles-grid-item:nth-of-type(6n) {
+  .tiles-grid-item:nth-of-type(1) {
     grid-column: span 2;
   }
   .mobile-only {
@@ -151,19 +150,91 @@
     grid-row: span 2;
   } */
 }
-.tiles-grid-item:nth-child(1) {
-  border-top-left-radius: 20px;
+@media (min-width: 1020px) {
+  .tiles-grid-item:nth-child(1) {
+    border-top-left-radius: 20px;
+  }
+  .tiles-grid-item:nth-child(2) {
+    border-top-right-radius: 20px;
+  }
+  .tiles-grid-item:nth-child(3) {
+    border-bottom-left-radius: 20px;
+  }
+  .tiles-grid-item:last-child {
+    border-bottom-right-radius: 20px;
+  }
 }
-.tiles-grid-item:last-child {
-  border-bottom-right-radius: 20px;
+@media (max-width: 767px) {
+  .tiles-grid-item:nth-child(1) {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+  .tiles-grid-item:last-child {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
 }
+
 .tiles-grid-item {
-  background-color: rgba(0, 0, 0, 0.7);
-  background-blend-mode: overlay, normal;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  background-blend-mode: saturation, darken;
 
   /* backgroundImage: `url(${bgSrc})`, */
   background-size: cover;
   background-position: center;
+  transition: all 0.3s ease;
+}
+.tiles-grid-item:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  /* box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px; */
+  /* border: 2px solid rgba(0, 0, 0, 0.5); */
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.7);
+  animation: bgReview 80s infinite;
+}
+.tiles-grid-item a {
+  color: #fff;
+  border-radius: 8px;
+  padding: 0 4px 0 4px;
+  transform: translateX(-4px);
+}
+.tiles-grid-item:hover a:hover {
+  color: #fff;
+  /* color: #03a9f4; */
+}
+.tiles-grid-item:hover a {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(0.95) translateX(-4px);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    transform: scale(1) translateX(-4px);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(0.95) translateX(-4px);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+@keyframes bgReview {
+  0% {
+    background-position: center;
+  }
+  30% {
+    background-position: bottom;
+  }
+  50% {
+    background-position: center;
+  }
+  80% {
+    background-position: top;
+  }
+  100% {
+    background-position: center;
+  }
 }
 .tiles-grid-item__title {
   text-transform: uppercase;

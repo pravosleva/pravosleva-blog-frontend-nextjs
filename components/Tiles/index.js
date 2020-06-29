@@ -42,7 +42,11 @@ const Grid = ({
             <div
               className="tiles-grid-item tiles-grid-item-bg white"
               key={id}
-              style={{ backgroundImage: `url(${bgSrc})` }}
+              style={{
+                // backgroundImage: `linear-gradient(#FFF, transparent, #FFF), url(${bgSrc})`,
+                // backgroundImage: `radial-gradient(ellipse closest-side, rgba(15, 14, 22, 0.5), #100e17), url(${bgSrc})`,
+                backgroundImage: `url(${bgSrc})`,
+              }}
             >
               <span className="tiles-grid-item__title">{title}</span>
               <em className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>

@@ -12,7 +12,7 @@ const Tiles = loadable(() =>
     default: Tiles,
   }))
 )
-
+const LIMIT = 5
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })
 const Loader = () => (
@@ -84,10 +84,10 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   }, [debouncedSetQueryText, debouncedSearchBy])
 
   const handleStartForNextPage = useCallback(() => {
-    if (!isLoading) setStart(start + 5)
+    if (!isLoading) setStart(start + LIMIT)
   }, [isLoading, start, setStart])
   const handleStartForPrevPage = useCallback(() => {
-    if (!isLoading) setStart(start - 5)
+    if (!isLoading) setStart(start - LIMIT)
   }, [isLoading, start, setStart])
   useEffect(() => {
     // console.log(++renderCounter)
@@ -147,6 +147,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               articles={articles}
               articlesCounter={articlesCounter}
               currentStart={start}
+              currentLimit={LIMIT}
               handleStartForNextPage={handleStartForNextPage}
               handleStartForPrevPage={handleStartForPrevPage}
               isLoading={isLoading}
@@ -172,7 +173,7 @@ async function getTagIDByName(name) {
 }
 async function _getQueryString({ queryText, targetField, options }) {
   let queryString = ''
-  const { limit = 5, start = 0 } = options
+  const { limit = LIMIT, start = 0 } = options
 
   if (!!limit) queryString += '&_limit=' + limit
   if (!!start) queryString += '&_start=' + start
@@ -201,7 +202,7 @@ async function fetchArticles({ queryText, targetField, start }) {
   const query = await _getQueryString({
     queryText: !!queryText ? encodeURIComponent(queryText) : null,
     targetField,
-    options: { limit: 5, start }, // TMP
+    options: { limit: LIMIT, start }, // TMP
   })
 
   if (!query) return Promise.resolve([]) // Special for tag-not-found
@@ -221,7 +222,7 @@ async function fetchArticlesCounter({ queryText, targetField }) {
   const query = await _getQueryString({
     queryText: !!queryText ? encodeURIComponent(queryText) : null,
     targetField,
-    options: { limit: 5 }, // TMP
+    options: { limit: LIMIT }, // TMP
   })
   if (!query) return Promise.resolve(0)
 
