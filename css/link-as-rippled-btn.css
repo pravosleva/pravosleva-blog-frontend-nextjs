@@ -14,10 +14,11 @@ a.link-as-rippled-btn {
 }
 @media (max-width: 767px) {
   a.link-as-rippled-btn {
-    width: 100%;
+    /* width: 100%; */
+    text-align: center;
   }
 }
-a.link-as-rippled-btn > span.ripples {
+.link-as-rippled-btn > span.ripples {
   position: absolute;
   background: #fff;
   border-radius: 50%;

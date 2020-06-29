@@ -91,26 +91,6 @@ class MyDocument extends Document {
           <script defer src="/static/prismjs/prism.min.js"></script>
           <script defer src="/static/prismjs/plugins/prism-autoloader.min.js"></script>
           */}
-          <script
-            defer
-            dangerouslySetInnerHTML={{
-              __html: `
-function linkInNewTab (e) {
-  if (e.originalTarget.tagName === 'A') {
-    e.preventDefault()
-    const newLink = window.document.createElement('a')
-    newLink.setAttribute('href', e.originalTarget.href)
-    newLink.setAttribute('target', '_blank')
-    newLink.click()
-  }
-}
-window.addEventListener('load', function(e) {
-  const articleBody = document.querySelector('.article-body')
-  if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
-})
-`,
-            }}
-          />
           {isProd && !!yandexCounterId && (
             <>
               <script

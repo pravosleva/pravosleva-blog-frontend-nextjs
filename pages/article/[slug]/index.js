@@ -26,7 +26,7 @@ function columns(containerWidth) {
   return columns
 }
 
-const Article = ({ initArticleData: article, usr }) => {
+const Article = ({ initArticleData: article }) => {
   // const router = useRouter()
   // const { id } = router.query
   // GALLERY:
@@ -37,28 +37,13 @@ const Article = ({ initArticleData: article, usr }) => {
     setCurrentImageIndex(index)
     setViewerIsOpen(true)
   }, [])
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setCurrentPackIndex(0)
     setCurrentImageIndex(0)
     setViewerIsOpen(false)
-  }
-  let imagesPacks = []
+  }, [])
 
-  if (article?.gallery?.length > 0) {
-    article.gallery.forEach(({ name, description, images = [], id }) => {
-      imagesPacks.unshift({
-        id,
-        name,
-        description,
-        images: images.map(({ url }) => ({
-          src: getImageUrl(url),
-          caption: `${article.title}: ${description}.`,
-        })),
-      })
-    })
-  }
-
-  const bgSrc = article?.briefBackground?.url ? getBgSrc(article.briefBackground.url, true) : '/static/img/text-1.jpeg'
+  const bgSrc = getBgSrc(article?.briefBackground?.url, true)
   const thisPageUrl = `http://pravosleva.ru/article/${article.slug}`
 
   useEffect(() => {
@@ -119,47 +104,57 @@ const Article = ({ initArticleData: article, usr }) => {
             <div className="article-body fade-in-effect">
               {!!article.body ? <ReactMarkdown source={article.body} /> : 'No body'}
             </div>
-            {article.gallery && imagesPacks.length > 0 ? (
+            {article.gallery && article.gallery.length > 0 ? (
               <div className="galleries-wrapper">
-                {imagesPacks.map(({ id, name, description, images }, i) => (
-                  <div
-                    key={id}
-                    style={{
-                      marginBottom: '40px',
-                    }}
-                    onClick={() => setCurrentPackIndex(i)}
-                  >
-                    {name && <h2>{name}</h2>}
-                    {description && <p>{description}</p>}
-                    <Gallery
-                      photos={images.map(({ src }) => ({
-                        src,
-                        width: 16,
-                        height: 9,
-                      }))}
-                      onClick={openLightbox}
-                      direction="column"
-                      columns={columns}
-                    />
-                    {viewerIsOpen && currentPackIndex === i && images[currentImageIndex] ? (
-                      <Lightbox
-                        imageTitle={`${!!name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
-                        imagePadding={0}
-                        clickOutsideToClose={false}
-                        mainSrc={images[currentImageIndex].src}
-                        nextSrc={images[(currentImageIndex + 1) % images.length].src}
-                        prevSrc={images[(currentImageIndex + images.length - 1) % images.length].src}
-                        onCloseRequest={closeLightbox}
-                        onMovePrevRequest={() => {
-                          setCurrentImageIndex((currentImageIndex + images.length - 1) % images.length)
-                        }}
-                        onMoveNextRequest={() => {
-                          setCurrentImageIndex((currentImageIndex + 1) % images.length)
-                        }}
+                {article.gallery
+                  .map(({ name, description, images = [], id }) => ({
+                    id,
+                    name,
+                    description,
+                    images: images.map(({ url }) => ({
+                      src: getImageUrl(url, true),
+                      caption: `${article.title}: ${description}.`,
+                    })),
+                  }))
+                  .map(({ id, name, description, images }, i) => (
+                    <div
+                      key={id}
+                      style={{
+                        marginBottom: '40px',
+                      }}
+                      onClick={() => setCurrentPackIndex(i)}
+                    >
+                      {name && <h2>{name}</h2>}
+                      {description && <p>{description}</p>}
+                      <Gallery
+                        photos={images.map(({ src }) => ({
+                          src,
+                          width: 16,
+                          height: 9,
+                        }))}
+                        onClick={openLightbox}
+                        direction="column"
+                        columns={columns}
                       />
-                    ) : null}
-                  </div>
-                ))}
+                      {viewerIsOpen && currentPackIndex === i && images[currentImageIndex] ? (
+                        <Lightbox
+                          imageTitle={`${!!name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}
+                          imagePadding={0}
+                          clickOutsideToClose={false}
+                          mainSrc={images[currentImageIndex].src}
+                          nextSrc={images[(currentImageIndex + 1) % images.length].src}
+                          prevSrc={images[(currentImageIndex + images.length - 1) % images.length].src}
+                          onCloseRequest={closeLightbox}
+                          onMovePrevRequest={() => {
+                            setCurrentImageIndex((currentImageIndex + images.length - 1) % images.length)
+                          }}
+                          onMoveNextRequest={() => {
+                            setCurrentImageIndex((currentImageIndex + 1) % images.length)
+                          }}
+                        />
+                      ) : null}
+                    </div>
+                  ))}
               </div>
             ) : null}
           </>
@@ -257,7 +252,7 @@ Article.getInitialProps = async (ctx) => {
 
   const res = await fetchArticle(slug)
 
-  return { initArticleData: res, usr: null }
+  return { initArticleData: res }
 }
 
 export default Article

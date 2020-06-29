@@ -999,7 +999,4 @@ div.article-body > blockquote {
   height: 20px;
   border-radius: 10px;
 }
-@media (max-width: 767px) {
-  .badge {
-  }
-}
+/* @media (max-width: 767px) { .badge {} } */
