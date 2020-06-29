@@ -2,10 +2,7 @@ import React, { memo } from 'react'
 import Link from 'next/link'
 import { Map } from 'immutable'
 import { getFormatedDate2 } from '@/utils/timeConverter'
-import { getApiUrl } from '@/utils/getApiUrl'
-
-const dev = process.env.NODE_ENV === 'development'
-const baseURL = getApiUrl()
+import { getBgSrc } from '@/utils/getApiUrl'
 
 const Grid = ({
   articles,
@@ -38,14 +35,8 @@ const Grid = ({
     ) : null}
     {articles.length > 0 ? (
       <div className="tiles-grid-wrapper fade-in-effect">
-        {articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, i) => {
-          const bgSrc =
-            briefBackground && briefBackground.url
-              ? dev
-                ? `http://80.87.194.181/api${briefBackground.url}`
-                : // В данном случае работаю с боевой базой в dev режиме
-                  `${baseURL}${briefBackground.url}`
-              : '/static/img/text-1.jpeg'
+        {articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, _i) => {
+          const bgSrc = getBgSrc(briefBackground.url, true)
 
           return (
             <div
@@ -109,12 +100,16 @@ const Grid = ({
   </div>
 )
 function areEqual(prevProps, nextProps) {
-  // возвращает true, если nextProps рендерит
-  // тот же результат что и prevProps,
-  // иначе возвращает false
-
-  const test1 = new Map({ ...prevProps.articles, currentStart: prevProps.currentStart, isLoading: prevProps.isLoading })
-  const test2 = new Map({ ...nextProps.articles, currentStart: nextProps.currentStart, isLoading: nextProps.isLoading })
+  const test1 = new Map({
+    articles: prevProps.articles,
+    currentStart: prevProps.currentStart,
+    isLoading: prevProps.isLoading,
+  })
+  const test2 = new Map({
+    articles: nextProps.articles,
+    currentStart: nextProps.currentStart,
+    isLoading: nextProps.isLoading,
+  })
 
   return test1.equals(test2)
 }

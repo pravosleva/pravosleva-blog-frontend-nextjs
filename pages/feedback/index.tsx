@@ -28,7 +28,7 @@ const Feedback = () => {
   const router = useRouter()
   const [wasSent, setWasSent] = useState(false)
   const [isRecaptchaShowed, setIsRecaptchaShowed] = useState(false)
-  const { value: companyName, bind: bindCompanyName, reset: resetCompanyName } = useInput('')
+  const { value: companyName, bind: bindCompanyName } = useInput('')
   const { value: contactName, bind: bindContactName, reset: resetContactName } = useInput('')
   const { value: comment, bind: bindComment, reset: resetComment } = useInput('')
   const showRecaptcha = (e: any) => {

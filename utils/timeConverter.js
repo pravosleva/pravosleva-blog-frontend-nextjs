@@ -9,7 +9,7 @@ export const getFormatedDate = (inputDate) => {
   return `${date} ${monthNames[monthIndex]}, ${dayNames[dayIndex]}`
 }
 
-// 21 апр 2020
+// 21 апр, 2020
 export const getFormatedDate2 = (inputDate) => {
   const monthNames = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
   const date = inputDate.getDate() < 10 ? `0${inputDate.getDate()}` : inputDate.getDate()

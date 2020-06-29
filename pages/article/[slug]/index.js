@@ -58,7 +58,7 @@ const Article = ({ initArticleData: article, usr }) => {
     })
   }
 
-  const bgSrc = article?.briefBackground?.url ? getBgSrc(article.briefBackground.url) : '/static/img/text-1.jpeg'
+  const bgSrc = article?.briefBackground?.url ? getBgSrc(article.briefBackground.url, true) : '/static/img/text-1.jpeg'
   const thisPageUrl = `http://pravosleva.ru/article/${article.slug}`
 
   useEffect(() => {

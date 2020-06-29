@@ -20,8 +20,7 @@ const Loader = () => (
     <PulseLoader size={15} margin={5} color="#0162c8" loading={true} />
   </div>
 )
-
-const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
+const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const [isLoading, setLoading] = useState(false)
   const [articles, setArticles] = useState(initialArtiles)
   const [articlesCounter, setArticlesCounter] = useState(initialArtilesCounter)
@@ -54,6 +53,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
 
   const debouncedSetQueryText = useDebounce(queryText, 1000)
   const debouncedSearchBy = useDebounce(searchBy, 1000)
+  const [isFirstRender, setIsFirstRender] = useState(true)
 
   const newFetchCb = useCallback(() => {
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
@@ -68,16 +68,20 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
       fetchArticlesCounter({ queryText: debouncedSetQueryText, targetField: searchBy }).then((res) =>
         setArticlesCounter(res)
       ),
-    ]).then(() => setLoading(false))
+    ]).then(() => {
+      setLoading(false)
+      setIsFirstRender(false)
+    })
   }, [debouncedSetQueryText, debouncedSearchBy, searchBy])
   const newFetch = useDebouncedCallback(newFetchCb, 500)
 
   useEffect(() => {
-    if (!!debouncedSetQueryText || !!debouncedSearchBy) newFetch()
-  }, [debouncedSetQueryText, setLoading, setArticles])
-  useEffect(() => {
-    if (!!debouncedSetQueryText) newFetch()
-  }, [debouncedSearchBy, setLoading, setArticles])
+    if (!!debouncedSetQueryText || !!debouncedSearchBy) {
+      newFetch()
+    } else if (!!debouncedSearchBy) {
+      newFetch()
+    }
+  }, [debouncedSetQueryText, debouncedSearchBy])
 
   const handleStartForNextPage = useCallback(() => {
     if (!isLoading) setStart(start + 5)
@@ -86,7 +90,9 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter, usr }) => {
     if (!isLoading) setStart(start - 5)
   }, [isLoading, start, setStart])
   useEffect(() => {
+    // console.log(++renderCounter)
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
+    if (isFirstRender) return
 
     setLoading(true)
     fetchArticles({ queryText, targetField: searchBy, start }).then((results) => {
@@ -232,17 +238,18 @@ async function fetchArticlesCounter({ queryText, targetField }) {
 }
 
 IndexPage.getInitialProps = async (ctx) => {
-  const articles = await fetchArticles({
-    queryText: '',
-    targetField: 'body',
-    start: 0,
-  })
-  const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
+  // const articles = await fetchArticles({
+  //   queryText: '',
+  //   targetField: 'body',
+  //   start: 0,
+  // })
+  // const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
 
   return {
-    initialArtilesCounter: articlesCounter,
-    initialArtiles: articles,
-    usr: null,
+    // initialArtilesCounter: articlesCounter,
+    // initialArtiles: articles,
+    initialArtilesCounter: 0,
+    initialArtiles: [],
   }
 }
 

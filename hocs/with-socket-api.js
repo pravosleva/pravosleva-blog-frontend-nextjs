@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import io from 'socket.io-client'
 import { usersActions } from '@/store/reducers/users'
 import { getSocketApiUrl } from '@/utils/getApiUrl'
+import { showAsyncToast } from '@/actions'
 
 const socketApiUrl = getSocketApiUrl()
 const getUsersArr = (users) =>
@@ -28,6 +29,7 @@ export const withSocketApi = (WrappedComponent) => {
         client.on('ARTICLE_UPDATED', (payload) => {
           console.log(payload)
           // TODO: dispatch could be used...
+          dispatch(showAsyncToast({ text: `Updated: ${payload.id}`, delay: 7000, type: 'info' }))
         })
         client.on('SOMEBODY_CONNECTED', (payload) => {
           const { users } = payload
@@ -96,11 +98,7 @@ export const withSocketApi = (WrappedComponent) => {
       }
     }, [process.browser])
 
-    return (
-      <>
-        <WrappedComponent {...props} />
-      </>
-    )
+    return <WrappedComponent {...props} />
   }
 
   return Wrapper

@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import DesktopHeader from './Header/Desktop'
 import MobileHeader from './Header/Mobile'
 import '@/css/tiles.css'
@@ -106,7 +105,7 @@ const LayoutConnected = ({ children }) => {
 
   const scrollTop = useCallback(() => {
     if (isBrowser) window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+  }, [isBrowser])
   const fullYear = useMemo(() => new Date().getFullYear(), [])
 
   return (
