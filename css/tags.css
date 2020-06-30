@@ -10,7 +10,18 @@
 @media (max-width: 767px) {
   .tags-wrapper {
     margin: 10px 0 0 0;
+    justify-content: center;
   }
+  .tags-wrapper button.rippled-btn {
+    width: auto;
+  }
+}
+.tags-wrapper button.rippled-btn {
+  background: linear-gradient(90deg, #0162c8, #0162c8);
+  transition: all 0.3s ease-out;
+}
+.tags-wrapper button.rippled-btn:hover {
+  opacity: 0.5;
 }
 .tags-wrapper button {
   outline: none;
@@ -28,5 +39,10 @@
 @media (min-width: 768px) {
   .tags-wrapper button:not(:last-child) {
     margin-right: 10px;
+  }
+}
+@media (max-width: 767px) {
+  .tags-wrapper button {
+    margin: 10px 10px 0 10px;
   }
 }

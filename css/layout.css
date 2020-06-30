@@ -23,8 +23,8 @@ summary {
   display: block;
 }
 footer {
-  color: #0162c8;
-  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 audio,
 canvas,
