@@ -220,7 +220,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               {getTags(articles).map(({ name, counter }) => (
                 <button className="rippled-btn" key={name} onClick={() => handleTagClick(name)}>
                   <span>
-                    {name} {counter}
+                    <i className="fas fa-tag"></i> {name} {counter}
                   </span>
                 </button>
               ))}
