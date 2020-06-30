@@ -24,11 +24,8 @@ const getTags = (articles) => {
 
   const objs = []
   for (let key of tags) {
-    // console.log(key)
     objs.push({ name: key[0], counter: tags.get(key[0]) })
   }
-
-  // console.log(objs)
 
   return objs
 }
