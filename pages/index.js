@@ -7,6 +7,32 @@ import loadable from '@loadable/component'
 import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 
+const getTags = (articles) => {
+  const tags = new Map()
+
+  for (let i = 0, maxI = articles.length; i < maxI; i++) {
+    if (!!articles[i].tags && articles[i].tags.length > 0) {
+      for (let j = 0, maxJ = articles[i].tags.length; j < maxJ; j++) {
+        if (!tags.has(articles[i].tags[j].name)) {
+          tags.set(articles[i].tags[j].name, 1)
+        } else {
+          tags.set(articles[i].tags[j].name, tags.get(articles[i].tags[j].name) + 1)
+        }
+      }
+    }
+  }
+
+  const objs = []
+  for (let key of tags) {
+    // console.log(key)
+    objs.push({ name: key[0], counter: tags.get(key[0]) })
+  }
+
+  // console.log(objs)
+
+  return objs
+}
+
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
     default: Tiles,
@@ -25,7 +51,9 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const [articles, setArticles] = useState(initialArtiles)
   const [articlesCounter, setArticlesCounter] = useState(initialArtilesCounter)
   const [queryText, setQueryText] = useState('')
-  const handleChangeText = useCallback((e) => setQueryText(e.target.value), [])
+  const handleChangeText = useCallback((e) => {
+    setQueryText(e.target.value)
+  }, [])
   const handleClearText = useCallback(() => setQueryText(''), [])
   const [searchBy, setSearchBy] = useState('body')
   const [start, setStart] = useState(0)
@@ -51,37 +79,44 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
     }
   }, [])
 
-  const debouncedSetQueryText = useDebounce(queryText, 1000)
+  const debouncedQueryText = useDebounce(queryText, 1000)
   const debouncedSearchBy = useDebounce(searchBy, 1000)
   const [isFirstRender, setIsFirstRender] = useState(true)
 
-  const newFetchCb = useCallback(() => {
+  const fetchWithRestartCb = useCallback(() => {
+    if (isLoading) return
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
 
     setStart(0)
     setLoading(true)
 
     Promise.all([
-      fetchArticles({ queryText: debouncedSetQueryText, targetField: debouncedSearchBy }).then((results) => {
+      fetchArticles({ queryText: debouncedQueryText, targetField: debouncedSearchBy, start: 0 }).then((results) => {
         if (Array.isArray(results)) setArticles(results)
       }),
-      fetchArticlesCounter({ queryText: debouncedSetQueryText, targetField: searchBy }).then((res) =>
+      fetchArticlesCounter({ queryText: debouncedQueryText, targetField: debouncedSearchBy, start: 0 }).then((res) =>
         setArticlesCounter(res)
       ),
-    ]).then(() => {
-      setLoading(false)
-      setIsFirstRender(false)
-    })
-  }, [debouncedSetQueryText, debouncedSearchBy, searchBy])
-  const newFetch = useDebouncedCallback(newFetchCb, 500)
+    ])
+      .then(() => {
+        setLoading(false)
+        setIsFirstRender(false)
+      })
+      .catch(() => {
+        setLoading(false)
+        setIsFirstRender(false)
+      })
+  }, [debouncedQueryText, debouncedSearchBy, isLoading])
+  const fetchWithRestart = useDebouncedCallback(fetchWithRestartCb, 500)
 
   useEffect(() => {
-    if (!!debouncedSetQueryText || !!debouncedSearchBy) {
-      newFetch()
-    } else if (!!debouncedSearchBy) {
-      newFetch()
-    }
-  }, [debouncedSetQueryText, debouncedSearchBy])
+    console.log('EFF 1')
+    fetchWithRestart()
+  }, [debouncedQueryText])
+  useEffect(() => {
+    console.log('EFF 2')
+    fetchWithRestart()
+  }, [debouncedSearchBy])
 
   const handleStartForNextPage = useCallback(() => {
     if (!isLoading) setStart(start + LIMIT)
@@ -89,18 +124,42 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const handleStartForPrevPage = useCallback(() => {
     if (!isLoading) setStart(start - LIMIT)
   }, [isLoading, start, setStart])
+
+  const fetchNoRestartCb = useCallback(() => {
+    if (isLoading) return
+    if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
+
+    setLoading(true)
+
+    Promise.all([
+      fetchArticles({ queryText: debouncedQueryText, targetField: debouncedSearchBy, start }).then((results) => {
+        if (Array.isArray(results)) setArticles(results)
+      }),
+      fetchArticlesCounter({ queryText: debouncedQueryText, targetField: debouncedSearchBy, start }).then((res) =>
+        setArticlesCounter(res)
+      ),
+    ])
+      .then(() => {
+        setLoading(false)
+        setIsFirstRender(false)
+      })
+      .catch(() => {
+        setLoading(false)
+        setIsFirstRender(false)
+      })
+  }, [debouncedQueryText, debouncedSearchBy, start, isLoading])
+  const fetchNoRestart = useDebouncedCallback(fetchNoRestartCb, 500)
+
   useEffect(() => {
-    // console.log(++renderCounter)
+    console.log('EFF 3')
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
     if (isFirstRender) return
 
-    setLoading(true)
-    fetchArticles({ queryText, targetField: searchBy, start }).then((results) => {
-      if (Array.isArray(results)) setArticles(results)
-      setLoading(false)
-    })
-    fetchArticlesCounter({ queryText, targetField: searchBy }).then((res) => setArticlesCounter(res))
+    if (!!debouncedQueryText || !!debouncedSearchBy) {
+      fetchNoRestart()
+    }
   }, [start])
+
   const handleSearchToggler = useCallback(() => {
     setSearchBy(getNextSearchTarget({ current: searchBy }))
   }, [searchBy])
@@ -115,6 +174,11 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
       default:
         return <i className="fas fa-code"></i>
     }
+  }, [])
+
+  const handleTagClick = useCallback((name) => {
+    setQueryText(name)
+    setSearchBy('tag')
   }, [])
 
   return (
@@ -142,7 +206,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               ) : null}
             </div>
           </div>
-          {
+          {!isLoading && (
             <Tiles
               articles={articles}
               articlesCounter={articlesCounter}
@@ -152,8 +216,19 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               handleStartForPrevPage={handleStartForPrevPage}
               isLoading={isLoading}
             />
-          }
+          )}
           {isLoading && <Loader />}
+          {!isLoading && !!articles && articles.length > 0 && (
+            <div className="tags-wrapper">
+              {getTags(articles).map(({ name, counter }) => (
+                <button className="rippled-btn" key={name} onClick={() => handleTagClick(name)}>
+                  <span>
+                    {name} {counter}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </Layout>
     </>
@@ -173,7 +248,7 @@ async function getTagIDByName(name) {
 }
 async function _getQueryString({ queryText, targetField, options }) {
   let queryString = ''
-  const { limit = LIMIT, start = 0 } = options
+  const { limit = LIMIT, start } = options
 
   if (!!limit) queryString += '&_limit=' + limit
   if (!!start) queryString += '&_start=' + start
@@ -218,11 +293,11 @@ async function fetchArticles({ queryText, targetField, start }) {
     return Promise.resolve([])
   }
 }
-async function fetchArticlesCounter({ queryText, targetField }) {
+async function fetchArticlesCounter({ queryText, targetField, start }) {
   const query = await _getQueryString({
     queryText: !!queryText ? encodeURIComponent(queryText) : null,
     targetField,
-    options: { limit: LIMIT }, // TMP
+    options: { limit: LIMIT, start }, // TMP
   })
   if (!query) return Promise.resolve(0)
 

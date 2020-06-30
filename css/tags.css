@@ -1,0 +1,32 @@
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+@media (min-width: 768px) {
+  .tags-wrapper {
+    margin: 0 0 20px 0;
+  }
+}
+@media (max-width: 767px) {
+  .tags-wrapper {
+    margin: 10px 0 0 0;
+  }
+}
+.tags-wrapper button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.tags-wrapper button .badge {
+  margin-left: 10px;
+  padding: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .tags-wrapper button:not(:last-child) {
+    margin-right: 10px;
+  }
+}
