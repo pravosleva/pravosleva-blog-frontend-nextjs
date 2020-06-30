@@ -21,7 +21,7 @@
   transition: all 0.3s ease-out;
 }
 .tags-wrapper button.rippled-btn:hover {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 .tags-wrapper button {
   outline: none;

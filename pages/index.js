@@ -27,7 +27,17 @@ const getTags = (articles) => {
     objs.push({ name: key[0], counter: tags.get(key[0]) })
   }
 
-  return objs
+  return objs.sort((u1, u2) => {
+    const nameA = u1.name.toLowerCase(),
+      nameB = u2.name.toLowerCase()
+
+    if (nameA < nameB)
+      //sort string ascending
+      return -1
+    if (nameA > nameB) return 1
+
+    return 0 //default return value (no sorting)
+  })
 }
 
 const Tiles = loadable(() =>
