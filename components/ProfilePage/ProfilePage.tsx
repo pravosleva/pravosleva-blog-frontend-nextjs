@@ -35,9 +35,9 @@ export const ProfilePage: React.FC<IProps> = (props) => {
     <Container>
       <h2>Profile</h2>
       <pre>{JSON.stringify(props.userInfo, null, 2)}</pre>
-      <button className="rippled-btn" style={{ width: 'auto', background: 'gray' }} key={name} onClick={showEnvs}>
+      <button className="rippled-btn" style={{ width: 'auto', background: 'gray' }} onClick={showEnvs}>
         <span>
-          <i className="fas fa-tag" style={{ marginRight: '10px' }}></i>
+          <i className="fas fa-terminal" style={{ marginRight: '10px' }}></i>
           process.env in console
         </span>
       </button>
