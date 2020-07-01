@@ -33,6 +33,29 @@ RECAPTCHAV3_CLIENT_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxx
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 ```
 
+## Deploy
+
+### `yarn deploy:prod`
+
+`deploy-app-config.json`
+
+```
+{
+  "prod": {
+    "user": "<USER>",
+    "host": "<HOST>",
+    "port": "<PORT>",
+    "files": "./.next/*",
+    "path": "/home/path-to-dir/frontend/.next",
+    "pre-deploy-local": "yarn build",
+    "pre-deploy-remote": "pm2 stop all",
+    "post-deploy": "pm2 delete all; pm2 resurrect --update-env"
+  },
+  "dev": {},
+  "staging": {}
+}
+```
+
 ```bash
 pm2 start ecosystem.prod.config.js
 ```

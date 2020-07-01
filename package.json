@@ -9,7 +9,8 @@
     "start:pm2": "pm2 start yarn --name front-9000-prod -- start",
     "analyze": "BUNDLE_ANALYZE=both next build",
     "analyze:server": "BUNDLE_ANALYZE=server next build",
-    "analyze:browser": "BUNDLE_ANALYZE=browser next build"
+    "analyze:browser": "BUNDLE_ANALYZE=browser next build",
+    "deploy:prod": "deploy-app -d prod"
   },
   "dependencies": {
     "@loadable/component": "^5.12.0",
@@ -19,6 +20,7 @@
     "classnames": "^2.2.6",
     "cookie": "^0.4.0",
     "date-fns": "^2.8.1",
+    "deploy-app": "^1.0.3",
     "dotenv": "^8.2.0",
     "immutable": "^4.0.0-rc.12",
     "isomorphic-unfetch": "^3.0.0",
