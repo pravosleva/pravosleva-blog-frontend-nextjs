@@ -25,12 +25,16 @@ pm2 start ecosystem.dev.config.js
 
 ```
 REACT_APP_API_ENDPOINT=http://80.87.194.181/api
-REACT_APP_SOCKET_ENDPOINT=http://80.87.194.181/api
+REACT_APP_SOCKET_ENDPOINT=http://80.87.194.181
 
 GA_TRACKING_ID=UA-xxxxxxxxx-x
 YANDEX_COUNTER_ID=xxxxxxxx
 RECAPTCHAV3_CLIENT_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxx
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
+```
+
+```bash
+pm2 start ecosystem.prod.config.js
 ```
 
 ## Deploy
@@ -54,10 +58,6 @@ RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
   "dev": {},
   "staging": {}
 }
-```
-
-```bash
-pm2 start ecosystem.prod.config.js
 ```
 
 ### NGINX
