@@ -1,6 +1,10 @@
 {
-  "extends": ["react-app", "prettier"],
-  "rules": {},
+  "extends": ["react-app", "prettier", "plugin:react-hooks/recommended"],
+  "rules": {
+    "react-hooks/exhaustive-deps": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-console": "error"
+  },
   "parser": "@typescript-eslint/parser",
   "plugins": ["react", "prettier", "standard", "@typescript-eslint", "react-hooks"]
 }

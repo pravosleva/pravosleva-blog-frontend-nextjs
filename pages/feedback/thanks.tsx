@@ -1,3 +1,4 @@
+import React from 'react'
 import { Layout } from '@/components/layout'
 import styled, { StyledComponent } from 'styled-components'
 import Link from 'next/link'

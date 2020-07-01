@@ -166,3 +166,50 @@ server {
     }
 }
 ```
+
+## Precommit hook
+
+_`Install deps:`_
+
+```bash
+yarn add -D husky
+yarn add -D prettier lint-staged
+yarn add -D @typescript-eslint/eslint-plugin@latest
+yarn add -D eslint-plugin-react-hooks@latest
+yarn add -D eslint-config-react-app
+yarn add -D eslint-plugin-import@latest
+yarn add -D eslint-plugin-flowtype@latest
+yarn add -D eslint-plugin-jsx-a11y@latest
+yarn add -D eslint-plugin-react-hooks
+```
+
+_`package.json`_
+
+```js
+{
+  "lint-staged": {
+    "*.{js, jsx, ts, tsx}": [
+      "node_modules/.bin/eslint --max-warnings=0",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      // ...
+      "pre-commit": "lint-staged"
+    }
+  },
+}
+```
+
+_Unnecessary, but could be interested:_
+
+```js
+{
+  "scripts": {
+    // ...
+    "lint": "eslint --debug src/**/*.js*",
+    "lint:fix": "eslint src/**/*.ts* --fix"
+  }
+}
+```

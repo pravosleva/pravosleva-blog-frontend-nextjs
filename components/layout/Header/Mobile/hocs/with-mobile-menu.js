@@ -69,12 +69,14 @@ const Sidebar = styled.div`
   z-index: 3;
 `
 
+/*
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
   { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['authenticated'] }, // 'public', 'authenticated', 'free'
   // { path: '/login', label: 'Login', id: 2, accessForRoles: ['unauthenticated'] },
   // { path: '/graphql-sample', label: 'GraphQL', id: 3, accessForRoles: ['free'] },
 ]
+*/
 
 export const withMobileMenu = (ComposedComponent) =>
   compose(

@@ -19,7 +19,7 @@ function linkInNewTab(e) {
 
     if (!tagName) return
 
-    if (new String(tagName) === 'A') {
+    if (tagName === 'A') {
       e.preventDefault()
       const newLink = window.document.createElement('a')
 

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Recaptcha } from '@/components/RecaptchaV3-2'
 import { useInput } from '@/hooks/use-input'
@@ -35,37 +35,40 @@ const Feedback = () => {
     e.preventDefault()
     setIsRecaptchaShowed(true)
   }
-  const send = async (token: string): Promise<string> => {
-    const verifyResult = await post(
-      RECAPTCHAV3_VERIFY_URL,
-      new URLSearchParams({
-        captcha: token,
-      })
-    )
+  const send = useCallback(
+    async (token: string): Promise<string> => {
+      const verifyResult = await post(
+        RECAPTCHAV3_VERIFY_URL,
+        new URLSearchParams({
+          captcha: token,
+        })
+      )
 
-    if (verifyResult.isOk) {
-      if (verifyResult?.response.original?.score > recaptchaScoreLimit) {
-        const createNewEntryResult = await post(
-          '/entries',
-          new URLSearchParams({
-            companyName,
-            contactName,
-            comment,
-          })
-        )
+      if (verifyResult.isOk) {
+        if (verifyResult?.response.original?.score > recaptchaScoreLimit) {
+          const createNewEntryResult = await post(
+            '/entries',
+            new URLSearchParams({
+              companyName,
+              contactName,
+              comment,
+            })
+          )
 
-        if (createNewEntryResult.isOk) {
-          return Promise.resolve('New Entry created')
+          if (createNewEntryResult.isOk) {
+            return Promise.resolve('New Entry created')
+          }
+        } else {
+          return Promise.reject(
+            `Bot detected! Your score by Google ${verifyResult?.response.original?.score}. Humans limit was set to ${recaptchaScoreLimit}`
+          )
         }
-      } else {
-        return Promise.reject(
-          `Bot detected! Your score by Google ${verifyResult?.response.original?.score}. Humans limit was set to ${recaptchaScoreLimit}`
-        )
       }
-    }
 
-    return Promise.reject(verifyResult?.msg)
-  }
+      return Promise.reject(verifyResult?.msg)
+    },
+    [comment, companyName, contactName]
+  )
   const dispatch = useDispatch()
   const onResolved = useCallback(
     (token) => {
@@ -88,7 +91,7 @@ const Feedback = () => {
           router.push(`/feedback/sorry?msg=${encodeURIComponent(text)}`)
         })
     },
-    [send]
+    [dispatch, resetComment, resetContactName, router, send]
   )
   useEffect(() => {
     if (process.browser) {

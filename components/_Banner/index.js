@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import BannerAnim from 'rc-banner-anim'
 import QueueAnim from 'rc-queue-anim'
