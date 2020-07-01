@@ -6,7 +6,7 @@
 
 ## Development
 
-### pm2 start ecosystem.dev.config.js
+### `pm2 start ecosystem.dev.config.js`
 
 `.env.dev`
 
@@ -19,7 +19,7 @@ RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 
 ## Production
 
-### pm2 start ecosystem.prod.config.js
+### `pm2 start ecosystem.prod.config.js`
 
 `.env.prod`
 
