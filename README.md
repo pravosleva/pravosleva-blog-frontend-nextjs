@@ -1,10 +1,12 @@
 # pravosleva-blog-frontend-nextjs
 
-## Bundle analysis
+## Bundle size analysis
 
 ### `yarn analyze`
 
 ## Development
+
+### pm2 start ecosystem.dev.config.js
 
 `.env.dev`
 
@@ -15,11 +17,9 @@ REACT_APP_SOCKET_ENDPOINT=http://localhost:1337
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 ```
 
-```bash
-pm2 start ecosystem.dev.config.js
-```
-
 ## Production
+
+### pm2 start ecosystem.prod.config.js
 
 `.env.prod`
 
@@ -33,27 +33,38 @@ RECAPTCHAV3_CLIENT_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxx
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 ```
 
-```bash
-pm2 start ecosystem.prod.config.js
-```
-
 ## Deploy
 
-### `yarn deploy:prod`
+### `yarn deploy:prod:restart-all`
+
+_Local build then deploy and restart all current pm2 process_
+
+### `yarn deploy:prod:restart-front`
+
+_Local build then deploy and restart `pm2 restart 1`_
 
 `deploy-app-config.json`
 
 ```
 {
-  "prod": {
+  "prod:restart-all": {
     "user": "<USER>",
     "host": "<HOST>",
     "port": "<PORT>",
     "files": "./.next/*",
-    "path": "/home/path-to-dir/frontend/.next",
+    "path": "/home/path-to-dir/pravosleva-blog/frontend/.next",
     "pre-deploy-local": "yarn build",
     "pre-deploy-remote": "pm2 stop all",
     "post-deploy": "pm2 delete all; pm2 resurrect --update-env"
+  },
+  "prod:restart-front": {
+    "user": "<USER>",
+    "host": "<HOST>",
+    "port": "<PORT>",
+    "files": "./.next/*",
+    "path": "/home/path-to-dir/pravosleva-blog/frontend/.next",
+    "pre-deploy-local": "yarn build",
+    "post-deploy": "pm2 stop 1; pm2 restart 1 --update-env"
   },
   "dev": {},
   "staging": {}
