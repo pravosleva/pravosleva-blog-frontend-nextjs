@@ -10,6 +10,8 @@ import '@/css/layout.css'
 import '@/css/link-as-rippled-btn.css'
 import '@/css/rippled-btn.css'
 import { Toaster } from '@/components/Toaster'
+import { ThemeProvider } from 'styled-components'
+import { Theme } from '@/ui-kit'
 
 const gaTrackingId = process.env.GA_TRACKING_ID || 'UA-xxxxxxxxx-x'
 
@@ -37,10 +39,12 @@ class MyApp extends App<IProps> {
         <Head>
           <title>Pravosleva</title>
         </Head>
-        <Provider store={reduxStore}>
-          <Toaster />
-          <Component {...pageProps} />
-        </Provider>
+        <ThemeProvider theme={Theme}>
+          <Provider store={reduxStore}>
+            <Toaster />
+            <Component {...pageProps} />
+          </Provider>
+        </ThemeProvider>
       </>
     )
   }

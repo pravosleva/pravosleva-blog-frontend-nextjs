@@ -8,6 +8,7 @@ import { Layout } from '@/components/layout'
 import { getFormatedDate2 } from '@/utils/timeConverter'
 import Prism from 'prismjs'
 import { getImageUrl, getBgSrc, getApiUrl, isProd } from '@/utils/getApiUrl'
+import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
@@ -33,14 +34,17 @@ const Article = ({ initArticleData: article }) => {
   const [currentPackIndex, setCurrentPackIndex] = useState(0)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [viewerIsOpen, setViewerIsOpen] = useState(false)
+  const { onBlockScrollBody } = useUnscrolledBody(false)
   const openLightbox = useCallback((_, { index }) => {
     setCurrentImageIndex(index)
     setViewerIsOpen(true)
+    onBlockScrollBody(true)
   }, [])
   const closeLightbox = useCallback(() => {
     setCurrentPackIndex(0)
     setCurrentImageIndex(0)
     setViewerIsOpen(false)
+    onBlockScrollBody(false)
   }, [])
 
   const bgSrc = getBgSrc(article?.briefBackground?.url, true)
