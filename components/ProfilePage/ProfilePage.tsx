@@ -5,9 +5,14 @@ import styled from 'styled-components'
 import { IUserInfo } from '@/helpers/services/IUserInfo'
 import { AuthToken } from '@/helpers/services/AuthToken'
 import Prism from 'prismjs'
-import { ModalBase } from '@/ui-kit'
-import { ModalResult } from './ModalResult'
+import {
+  // ModalBase,
+  Modal,
+} from '@/ui-kit'
+import { FooterRow } from '@/ui-kit/molecules/Modal/FooterRow'
+// import { ModalResult } from '@/ui-kit/molecules/Modal/ModalResult'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
+import { Button } from '@/ui-kit/atoms/Button'
 
 const Container = styled('div')`
   @media (min-width: 768px) {
@@ -89,8 +94,9 @@ export const ProfilePage: React.FC<IProps> = (props) => {
           process.env
         </span>
       </button>
-      {isModalActive && (
-        <ModalBase onCloseClick={hideModal} width="600px">
+      {/* EXAMPLE 1 */}
+      {/*isModalActive && (
+        <ModalBase onCloseClick={hideModal} width="440px">
           <ModalResult
             isSuccess
             title="process.env"
@@ -109,6 +115,33 @@ export const ProfilePage: React.FC<IProps> = (props) => {
             handleButtonClick={hideModal}
           />
         </ModalBase>
+      )*/}
+      {/* EXAMPLE 2 */}
+      {isModalActive && (
+        <Modal
+          size="large"
+          modalTitle="Envs"
+          modalSubtitle="process.env"
+          closeModal={hideModal}
+          renderBodyContent={() => (
+            <div>
+              <ul style={{ textAlign: 'left' }}>
+                {envs.map((e, i) => (
+                  <li key={i}>{e}</li>
+                ))}
+              </ul>
+              <hr />
+              <p>shouldBodyUnscrolled= {String(shouldBodyUnscrolled)}</p>
+            </div>
+          )}
+          renderFooterContent={() => (
+            <FooterRow>
+              <Button typeName="blue" size="small" width="narrow" onClick={hideModal}>
+                Закрыть
+              </Button>
+            </FooterRow>
+          )}
+        />
       )}
     </Container>
   )

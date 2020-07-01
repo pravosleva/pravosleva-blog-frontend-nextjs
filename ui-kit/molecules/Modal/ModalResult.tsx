@@ -6,7 +6,16 @@ import { Button } from '@/ui-kit/atoms/Button'
 import { SuccessModalIcon } from '@/ui-kit/atoms/Icons/SuccessModalIcon'
 import { FailureModalIcon } from '@/ui-kit/atoms/Icons/FailureModalIcon'
 
-export const ModalResult = ({ isSuccess, title, text, buttonText, handleButtonClick, isMobile = true }) => {
+interface IProps {
+  isSuccess: boolean
+  title: string
+  text: string
+  buttonText: string
+  handleButtonClick: () => void
+  isMobile?: boolean
+}
+
+export const ModalResult = ({ isSuccess, title, text, buttonText, handleButtonClick, isMobile = true }: IProps) => {
   return (
     <ModalContainer>
       <IconContainer>

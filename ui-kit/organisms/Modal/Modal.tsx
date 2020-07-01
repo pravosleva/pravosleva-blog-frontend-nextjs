@@ -9,9 +9,9 @@ interface IProps {
   size: 'large' | 'small'
   modalTitle: string
   modalSubtitle: string
-  closeModal: Function
-  renderBodyContent: Function
-  renderFooterContent: Function
+  closeModal: () => void
+  renderBodyContent: () => React.ReactNode
+  renderFooterContent: () => JSX.Element
 }
 
 export const Modal = ({

@@ -1,5 +1,10 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { themeColor, themeMediaQuery } from '@/ui-kit'
+
+const fadeIn = keyframes`
+  from { opacity: 0 };
+  to { opacity: 1 };
+`
 
 export const ModalContainer = styled('div')`
   position: fixed;
@@ -21,4 +26,5 @@ export const ModalContainer = styled('div')`
     padding: 0;
     width: 100%;
   }
+  animation: ${fadeIn} 0.3s ease-in-out;
 `

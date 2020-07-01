@@ -1,6 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types';
-// import { themeColor } from '@/ui-kit/Theme';
+// import { themeColor } from '@/ui-kit';
 import { Icon } from '@/ui-kit/atoms/Icon'
 import { ModalHeaderContainer } from './components/ModalHeaderContainer'
 import { ModalTitle } from './components/ModalTitle'

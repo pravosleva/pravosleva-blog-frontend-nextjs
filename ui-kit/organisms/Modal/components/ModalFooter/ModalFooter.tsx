@@ -3,7 +3,7 @@ import { ModalFooterContainer } from './components/ModalFooterContainer'
 import { ModalFooterDivider } from './components/ModalFooterDivider'
 
 interface IProps {
-  children: React.Component
+  children: JSX.Element
 }
 
 export const ModalFooter = ({ children }: IProps) => (
