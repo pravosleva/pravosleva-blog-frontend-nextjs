@@ -6,16 +6,18 @@ import { getNormalizedInputs } from '@/utils/strapi/getNormalizedInputs'
 import { apiErrorHandler, ResponseLocal } from '@/utils/errors/api'
 import { httpErrorHandler } from '@/utils/errors/http/axios'
 import { axiosUniversalCatch } from '@/utils/errors/axiosUniversalCatch'
+// import { makeCounter } from '@/utils/make-counter'
 
+// const counter = makeCounter()
 const apiUrl = getApiUrl()
 
-const post0 = async (url: string, data: URLSearchParams): Promise<any> => {
+const post0 = async (url: string, data?: URLSearchParams): Promise<any> => {
   return axios.post(url, data, baseConfig)
 }
 
 export const postLogin = async (inputs: TLoginInputs): Promise<string> => {
   const data = new URLSearchParams(getNormalizedInputs(inputs))
-  let result: ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any
+  let result: ResponseLocal.IResult
 
   try {
     result = await post0('/auth/local', data)
@@ -62,10 +64,7 @@ const baseConfig: AxiosRequestConfig = {
   // },
 }
 
-export const post = async (
-  url: string,
-  data: URLSearchParams
-): Promise<ResponseLocal.IResultSuccess | ResponseLocal.IResultError | any> => {
+export const post = async (url: string, data: URLSearchParams): Promise<ResponseLocal.IResult> => {
   return axios
     .post(url, data, baseConfig)
     .then(httpErrorHandler) // res -> res.data
@@ -77,10 +76,7 @@ export const post = async (
     .catch(axiosUniversalCatch)
 }
 
-export const get = async (
-  url: string,
-  config: AxiosRequestConfig = {}
-): Promise<ResponseLocal.IResultSuccess | ResponseLocal.IResultError> => {
+export const get = async (url: string, config: AxiosRequestConfig = {}): Promise<ResponseLocal.IResult> => {
   const axiosConfig = {
     ...baseConfig,
     ...config,
@@ -94,4 +90,18 @@ export const get = async (
       response: data,
     }))
     .catch(axiosUniversalCatch)
+}
+
+export const getMe = async (authorizationString: string): Promise<ResponseLocal.IResult> => {
+  const result: ResponseLocal.IResult = await get('/users/me', {
+    headers: {
+      Authorization: authorizationString,
+    },
+  })
+
+  // console.log('=== COUNTER')
+  // counter.inc()
+  // console.log(counter.get())
+
+  return result
 }

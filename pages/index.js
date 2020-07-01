@@ -117,11 +117,9 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const fetchWithRestart = useDebouncedCallback(fetchWithRestartCb, 500)
 
   useEffect(() => {
-    console.log('EFF 1')
     fetchWithRestart()
   }, [debouncedQueryText])
   useEffect(() => {
-    console.log('EFF 2')
     fetchWithRestart()
   }, [debouncedSearchBy])
 
@@ -158,7 +156,6 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const fetchNoRestart = useDebouncedCallback(fetchNoRestartCb, 500)
 
   useEffect(() => {
-    console.log('EFF 3')
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
     if (isFirstRender) return
 

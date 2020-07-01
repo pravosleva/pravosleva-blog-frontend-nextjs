@@ -23,11 +23,6 @@
 .tags-wrapper button.rippled-btn:hover {
   opacity: 0.6;
 }
-.tags-wrapper button {
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
 .tags-wrapper button .badge {
   margin-left: 10px;
   padding: 5px;
