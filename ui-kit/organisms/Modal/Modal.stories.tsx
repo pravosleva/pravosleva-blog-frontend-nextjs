@@ -62,7 +62,7 @@ const renderModal = ({
           <Modal
             size={size}
             modalTitle={!!modalTitle ? modalTitle : buttonLabel}
-            modalSubtitle={!!modalSubtitle ? modalTitle : 'Subtitle'}
+            modalSubtitle={!!modalSubtitle ? modalSubtitle : 'Subtitle'}
             closeModal={handleCloseModal}
             renderBodyContent={renderBodyContent}
             renderFooterContent={renderFooterContent}
