@@ -33,5 +33,5 @@ export default create({
 
   brandTitle: 'My custom storybook',
   brandUrl: 'https://example.com',
-  brandImage: 'https://uremont.com/static/img/logo-uremont-black.svg',
+  // brandImage: 'https://uremont.com/static/img/logo-uremont-black.svg',
 })

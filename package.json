@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "deploy:prod:restart-all": "deploy-app -d prod:restart-all",
+    "deploy:prod:restart-front": "deploy-app -d prod:restart-front",
+    "deploy:prod:update-storybook": "deploy-app -d prod:update-storybook",
     "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start -p 9000",
@@ -10,8 +13,6 @@
     "analyze": "BUNDLE_ANALYZE=both next build",
     "analyze:server": "BUNDLE_ANALYZE=server next build",
     "analyze:browser": "BUNDLE_ANALYZE=browser next build",
-    "deploy:prod:restart-all": "deploy-app -d prod:restart-all",
-    "deploy:prod:restart-front": "deploy-app -d prod:restart-front",
     "lint": "eslint --debug 'pages/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint 'pages/**/*.{js,jsx,ts,tsx}' --fix",
     "storybook": "start-storybook -p 6006 -c .storybook",
