@@ -5,11 +5,7 @@ import { Modal } from './Modal'
 import { ThemeProvider } from 'styled-components'
 import { Theme } from '@/ui-kit'
 import { action } from '@storybook/addon-actions'
-import {
-  withKnobs,
-  text,
-  // boolean, number
-} from '@storybook/addon-knobs'
+import { withKnobs, text } from '@storybook/addon-knobs'
 import styled from 'styled-components'
 
 export default {
@@ -74,7 +70,6 @@ const renderModal = ({
 }
 
 const modalPacks = () => {
-  // const disabled = boolean('Responsive Button Disabled', false)
   const titleText = text('Modal title text', '')
   const subtitleText = text('Modal subtitle text', '')
 

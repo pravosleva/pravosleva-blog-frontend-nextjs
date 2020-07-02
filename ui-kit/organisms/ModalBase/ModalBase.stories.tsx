@@ -5,12 +5,7 @@ import { ModalBase } from './ModalBase'
 import { ThemeProvider } from 'styled-components'
 import { Theme } from '@/ui-kit'
 import { action } from '@storybook/addon-actions'
-import {
-  withKnobs,
-  text,
-  boolean,
-  // number
-} from '@storybook/addon-knobs'
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import styled from 'styled-components'
 import { ModalResult } from '@/ui-kit/molecules/Modal/ModalResult'
 
@@ -36,24 +31,12 @@ const Container = styled('div')`
 interface IProps {
   size?: 'small' | 'large'
   width: string
-  // modalTitle,
-  // modalSubtitle,
   renderBodyContent: () => React.ReactNode
-  // renderFooterContent,
   buttonWidth: TWidth
   buttonLabel: string
 }
 
-const renderModal = ({
-  size = 'small',
-  width,
-  // modalTitle,
-  // modalSubtitle,
-  renderBodyContent,
-  // renderFooterContent,
-  buttonWidth,
-  buttonLabel,
-}: IProps) => {
+const renderModal = ({ size = 'small', width, renderBodyContent, buttonWidth, buttonLabel }: IProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false)
   const handleOpenModal = () => {
@@ -86,13 +69,11 @@ const modalPacks = () => {
   const isSuccess = boolean('isSuccess', false)
   const modalTitleText = text('Modal title text', '')
   const modalBodyText = text('Modal body text', '')
-
   const modalButtonText = text('Modal button text', '')
 
   return (
     <ColumnContainer>
       {renderModal({
-        // size: 'small',
         width: '440px',
         renderBodyContent: () => (
           <ModalResult
@@ -103,12 +84,10 @@ const modalPacks = () => {
             handleButtonClick={action('click')}
           />
         ),
-        // renderFooterContent: () => <div>Footer content</div>,
         buttonWidth: 'wide',
         buttonLabel: 'Small modal as result',
       })}
       {renderModal({
-        // size: 'large',
         width: '500px',
         renderBodyContent: () => (
           <ModalResult
@@ -119,15 +98,11 @@ const modalPacks = () => {
             handleButtonClick={action('click')}
           />
         ),
-        // renderFooterContent: () => <div>Footer content</div>,
         buttonWidth: 'wide',
         buttonLabel: 'Large modal as result',
       })}
       {renderModal({
-        // size: 'large',
         width: '500px',
-        // modalTitle: modalBodyText,
-        // modalSubtitle: subtitleText,
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
@@ -164,7 +139,6 @@ curabitur gravida arcu ac.`}
             handleButtonClick={action('click')}
           />
         ),
-        // renderFooterContent: () => <div>Footer content</div>,
         buttonWidth: 'wide',
         buttonLabel: 'Big body content',
       })}
