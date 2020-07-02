@@ -55,7 +55,7 @@ const renderButtonPack = ({ typeName, size, disabled, label }: IProps) => (
 )
 
 const buttonPacks = () => {
-  const disabled = boolean('Responsive Button Disabled', false)
+  const disabled = boolean('Responsive Button disabled', false)
   const label = text('Responsive Button Label', '')
 
   return (

@@ -75,8 +75,8 @@ const renderModal = ({
 
 const modalPacks = () => {
   // const disabled = boolean('Responsive Button Disabled', false)
-  const titleText = text('Modal Title text', '')
-  const subtitleText = text('Modal Subtitle text', '')
+  const titleText = text('Modal title text', '')
+  const subtitleText = text('Modal subtitle text', '')
 
   return (
     <ColumnContainer>

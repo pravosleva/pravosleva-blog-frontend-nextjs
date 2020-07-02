@@ -84,9 +84,10 @@ const renderModal = ({
 
 const modalPacks = () => {
   const isSuccess = boolean('isSuccess', false)
-  const bodyText = text('Modal Body text', '')
-  const titleText = text('Modal Title text', '')
-  const buttonText = text('Modal Button text', '')
+  const modalTitleText = text('Modal title text', '')
+  const modalBodyText = text('Modal body text', '')
+
+  const modalButtonText = text('Modal button text', '')
 
   return (
     <ColumnContainer>
@@ -96,9 +97,9 @@ const modalPacks = () => {
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
-            title={!!titleText ? titleText : '440px'}
-            text={bodyText}
-            buttonText={!!buttonText ? buttonText : 'Ok'}
+            title={!!modalTitleText ? modalTitleText : '440px'}
+            text={!!modalBodyText ? modalBodyText : 'Modal body text'}
+            buttonText={!!modalButtonText ? modalButtonText : 'Ok'}
             handleButtonClick={action('click')}
           />
         ),
@@ -112,9 +113,9 @@ const modalPacks = () => {
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
-            title={!!titleText ? titleText : '500px'}
-            text={bodyText}
-            buttonText={!!buttonText ? buttonText : 'Ok'}
+            title={!!modalTitleText ? modalTitleText : '500px'}
+            text={!!modalBodyText ? modalBodyText : 'Modal body text'}
+            buttonText={!!modalButtonText ? modalButtonText : 'Ok'}
             handleButtonClick={action('click')}
           />
         ),
@@ -125,13 +126,15 @@ const modalPacks = () => {
       {renderModal({
         // size: 'large',
         width: '500px',
-        // modalTitle: bodyText,
+        // modalTitle: modalBodyText,
         // modalSubtitle: subtitleText,
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
-            title={!!titleText ? titleText : '500px'}
-            text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            title={!!modalTitleText ? modalTitleText : '500px'}
+            text={`Not changeable body text!
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
 dolore magna aliqua. Pharetra massa massa ultricies mi. Sed elementum tempus egestas sed sed. Gravida cum
 sociis natoque penatibus et magnis dis parturient. Arcu non sodales neque sodales. Porttitor rhoncus dolor
 purus non enim. Sit amet risus nullam eget felis. Augue ut lectus arcu bibendum at varius vel pharetra. Ac
@@ -157,7 +160,7 @@ vitae sapien pellentesque habitant morbi tristique senectus et. Pellentesque eli
 natoque penatibus et. Tristique senectus et netus et malesuada fames ac. Id neque aliquam vestibulum morbi
 blandit cursus risus. Volutpat blandit aliquam etiam erat velit scelerisque in dictum non. Laoreet non
 curabitur gravida arcu ac.`}
-            buttonText={!!buttonText ? buttonText : 'Ok'}
+            buttonText={!!modalButtonText ? modalButtonText : 'Ok'}
             handleButtonClick={action('click')}
           />
         ),
