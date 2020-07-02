@@ -14,7 +14,8 @@
     "deploy:prod:restart-front": "deploy-app -d prod:restart-front",
     "lint": "eslint --debug 'pages/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint 'pages/**/*.{js,jsx,ts,tsx}' --fix",
-    "storybook": "start-storybook -p 6006 -c .storybook"
+    "storybook": "start-storybook -p 6006 -c .storybook",
+    "build-storybook": "build-storybook -c .storybook -o .next/storybook"
   },
   "lint-staged": {
     "*.{js, jsx, ts, tsx} !.storybook/*": [

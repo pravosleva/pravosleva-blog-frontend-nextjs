@@ -17,9 +17,13 @@ RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 
 _Run storybook_
 
+### `yarn build-storybook`
+
+_Build storybook to `.next/storybook/` as static_
+
 ### `yarn analyze`
 
-_Generate bundle size analysis to `.next/analyze/`_
+_Generate bundle size analysis to `.next/analyze/` as static_
 
 ## Production
 
