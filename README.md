@@ -15,7 +15,7 @@ RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 
 ### `yarn storybook`
 
-_Run storybook_
+_Run storybook on [localhost:6006](http://localhost:6006)_
 
 ### `yarn build-storybook`
 
