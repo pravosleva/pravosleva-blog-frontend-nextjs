@@ -95,8 +95,8 @@ const modalPacks = () => {
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
-            title="process.env"
-            text="Body content"
+            title="440px"
+            text="Press Ok to close"
             buttonText="Ok"
             handleButtonClick={action('click')}
           />
@@ -111,8 +111,8 @@ const modalPacks = () => {
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
-            title="process.env"
-            text="Body content"
+            title="500px"
+            text="Press Ok to close"
             buttonText="Ok"
             handleButtonClick={action('click')}
           />
@@ -129,7 +129,7 @@ const modalPacks = () => {
         renderBodyContent: () => (
           <ModalResult
             isSuccess={isSuccess}
-            title="process.env"
+            title="500px"
             text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
 dolore magna aliqua. Pharetra massa massa ultricies mi. Sed elementum tempus egestas sed sed. Gravida cum
 sociis natoque penatibus et magnis dis parturient. Arcu non sodales neque sodales. Porttitor rhoncus dolor
