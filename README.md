@@ -155,6 +155,11 @@ server {
     location /static {
       root /home/pravosleva/pravosleva-blog/frontend/public;
     }
+    location /storybook {
+      rewrite ^/storybook/(.*)$ /$1 break;
+      root /home/pravosleva/pravosleva-blog/frontend/.next/storybook;
+      # expires 1d;
+    }
 
     # All /api rqs should be redirected to Strapi powered backend:
 
@@ -209,6 +214,8 @@ _`package.json`_
 {
   "lint-staged": {
     "*.{js, jsx, ts, tsx}": [
+    // With Storybook in project:
+    // "*.{js, jsx, ts, tsx} !.storybook/*": [
       "node_modules/.bin/eslint --max-warnings=0",
       "prettier --write"
     ]
