@@ -1,9 +1,5 @@
 # pravosleva-blog-frontend-nextjs
 
-## Bundle size analysis
-
-### `yarn analyze`
-
 ## Development
 
 ### `pm2 start ecosystem.dev.config.js`
@@ -16,6 +12,14 @@ REACT_APP_SOCKET_ENDPOINT=http://localhost:1337
 
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 ```
+
+### `yarn storybook`
+
+_Run storybook_
+
+### `yarn analyze`
+
+_Generate bundle size analysis to `.next/analyze/`_
 
 ## Production
 

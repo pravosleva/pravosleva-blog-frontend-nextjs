@@ -100,10 +100,10 @@ const getDisabledStyles = () => css`
     cursor: default;
   }
 `
-type TType = 'blue' | 'secondary' | 'orange' | ''
-type TWidth = 'narrow' | 'medium' | 'wide' | 'responsive' | ''
-type TSize = 'xsmall' | 'small' | 'medium' | 'large' | ''
-type TAttached = 'right' | 'left' | ''
+export type TType = 'blue' | 'secondary' | 'orange' | ''
+export type TWidth = 'narrow' | 'medium' | 'wide' | 'responsive' | ''
+export type TSize = 'xsmall' | 'small' | 'medium' | 'large' | ''
+export type TAttached = 'right' | 'left' | ''
 
 const getTypeStyles = (type: TType) => types[type]
 const getWidthStyles = (width: TWidth) => widths[width]
