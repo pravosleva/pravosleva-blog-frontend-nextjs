@@ -5,7 +5,7 @@ import { ModalBody } from './components/ModalBody'
 import { ModalContainer } from './components/ModalContainer'
 import { ModalContent } from './components/ModalContent'
 
-interface IProps {
+export interface IModalProps {
   size: 'large' | 'small'
   modalTitle: string
   modalSubtitle: string
@@ -21,7 +21,7 @@ export const Modal = ({
   closeModal,
   renderBodyContent,
   renderFooterContent,
-}: IProps) => (
+}: IModalProps) => (
   <ModalContainer>
     <ModalContent size={size}>
       <ModalHeader modalTitle={modalTitle} modalSubtitle={modalSubtitle} closeModal={closeModal} />

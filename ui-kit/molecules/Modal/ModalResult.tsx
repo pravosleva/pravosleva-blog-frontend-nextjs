@@ -56,14 +56,20 @@ const Title = styled('div')`
 
 const Text = styled('div')`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
   text-align: center;
   padding: 0 44px;
   ${themeTextStyle('14Medium Sub')}
   color: ${themeColor('Dark Black')};
   margin-bottom: 20px;
+
+  word-break: break-word;
+  white-space: pre-wrap;
+
+  max-height: 300px;
+  overflow-y: auto;
 `
 
 const ButtonContainer = styled('div')`
@@ -83,6 +89,10 @@ const fadeIn = keyframes`
 `
 
 const ModalContainer = styled('div')`
+  box-sizing: border-box;
+  > * {
+    box-sizing: border-box;
+  }
   padding: 28px 20px;
   width: 100%;
   background: ${themeColor('White')};

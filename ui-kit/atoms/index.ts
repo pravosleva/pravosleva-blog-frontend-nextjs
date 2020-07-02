@@ -1,3 +1,5 @@
+export * from './Button'
+export * from './CloseButton'
 export * from './Dimmer'
 export * from './Divider'
 export * from './Icon'

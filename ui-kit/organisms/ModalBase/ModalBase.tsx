@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 // import PropTypes from 'prop-types';
-import { keys } from 'ramda'
-import styled, { css } from 'styled-components'
+// import { keys } from 'ramda'
+// import styled, { css } from 'styled-components'
 // import ScrollLock, { TouchScrollable } from 'react-scrolllock';
 import { ModalWindow } from './components/ModalWindow'
 import { CloseBtnContainer } from './components/CloseBtnContainer'
-import { themeColor, themeShadow, themeMediaQuery } from '@/ui-kit/Theme'
+// import { themeColor, themeShadow, themeMediaQuery } from '@/ui-kit/Theme'
 import { Dimmer } from '@/ui-kit/atoms'
 import { CloseButton } from '@/ui-kit/atoms/CloseButton'
 
@@ -17,7 +17,7 @@ import { CloseButton } from '@/ui-kit/atoms/CloseButton'
 
 interface IProps {
   size?: 'large' | 'small'
-  width: string
+  width: string // '440px' for example
   onCloseClick: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) &
     ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
   children: React.ReactNode
