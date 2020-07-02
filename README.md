@@ -51,9 +51,11 @@ _Local build then deploy and restart all current pm2 process_
 
 _Local build then deploy and restart `pm2 restart 1`_
 
-`deploy-app-config.json`
-
 ### `yarn deploy:prod:update-storybook`
+
+_Local build new storybook then deploy [http://pravosleva.ru/storybook/index.html](http://pravosleva.ru/storybook/index.html)_
+
+`deploy-app-config.json`
 
 ```
 {
