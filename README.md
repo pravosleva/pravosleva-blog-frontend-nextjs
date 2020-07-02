@@ -53,6 +53,8 @@ _Local build then deploy and restart `pm2 restart 1`_
 
 `deploy-app-config.json`
 
+### `yarn deploy:prod:update-storybook`
+
 ```
 {
   "prod:restart-all": {
@@ -73,6 +75,14 @@ _Local build then deploy and restart `pm2 restart 1`_
     "path": "/home/path-to-dir/pravosleva-blog/frontend/.next",
     "pre-deploy-local": "yarn build",
     "post-deploy": "pm2 stop 1; pm2 restart 1 --update-env"
+  },
+  "prod:update-storybook": {
+    "user": "<USER>",
+    "host": "<HOST>",
+    "port": "<PORT>",
+    "files": "./.next/storybook/*",
+    "path": "/home/path-to-dir/pravosleva-blog/frontend/.next/storybook",
+    "pre-deploy-local": "yarn build-storybook"
   },
   "dev": {},
   "staging": {}
