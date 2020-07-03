@@ -1,6 +1,6 @@
 import { configure } from '@storybook/react'
 
-const req = require.context('../ui-kit', true, /.stories.tsx$/)
+const req = require.context('../ui-kit', true, /.stories.(t|j)sx$/)
 function loadStories() {
   req.keys().forEach((filename) => req(filename))
 }

@@ -10,7 +10,7 @@ import { CloseButton } from './components/CloseButton'
 export const ModalHeader = ({ modalTitle, modalSubtitle, closeModal }) => (
   <ModalHeaderContainer>
     <ModalTitle>{modalTitle}</ModalTitle>
-    <ModalSubtitle>{modalSubtitle}</ModalSubtitle>
+    {!!modalSubtitle && <ModalSubtitle>{modalSubtitle}</ModalSubtitle>}
     <ModalHeaderDivider />
     <CloseButton onClick={closeModal}>
       <Icon name="x-close" sizeVariation="32px" defaultColor="Gray-blue" />

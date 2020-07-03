@@ -85,7 +85,7 @@ const modalPacks = () => {
           />
         ),
         buttonWidth: 'wide',
-        buttonLabel: 'Small modal as result',
+        buttonLabel: 'Result of anything',
       })}
       {renderModal({
         width: '500px',
@@ -99,7 +99,7 @@ const modalPacks = () => {
           />
         ),
         buttonWidth: 'wide',
-        buttonLabel: 'Large modal as result',
+        buttonLabel: 'Result of anything',
       })}
       {renderModal({
         width: '500px',

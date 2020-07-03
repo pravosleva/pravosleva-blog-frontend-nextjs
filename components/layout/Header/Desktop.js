@@ -12,6 +12,9 @@ import { COOKIES } from '@/helpers/services/loginService'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { getGeoDataStr } from '@/utils/geo/getGeoDataStr'
+import { Button } from '@/ui-kit/atoms'
+import { MenuModal } from './components/MenuModal'
+import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 
 const Nav = styled('div')`
   font-size: 16px;
@@ -55,6 +58,12 @@ const Nav = styled('div')`
     display: none;
   }
 `
+const MenuFlexWrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`
 
 const getIPs = (items) =>
   items.map(({ ip, geo }) => `${ip}${getGeoDataStr(geo)}`).join(`
@@ -86,45 +95,65 @@ const DesktopHeader = () => {
     handleLogoutCb()
   }, 500)
   const isCurrentPathCb = useCallback(isCurrentPath, [])
+  const [isMenuOpened, setIsMenuOpened] = useState(false)
+  const { onBlockScrollBody } = useUnscrolledBody(false)
+  const handleMenuOpen = useCallback(() => {
+    onBlockScrollBody(true)
+    setIsMenuOpened(true)
+  }, [])
+  const handleMenuClose = useCallback(() => {
+    onBlockScrollBody(false)
+    setIsMenuOpened(false)
+  }, [])
 
   return (
-    <Headroom style={{ zIndex: 5 }}>
-      <header style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}>
-        <Nav>
-          <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
-            <li style={{ marginLeft: '20px', marginBottom: '0px' }}>
-              <Link href="/" as="/">
-                <a
-                  style={{
-                    color: `white`,
-                    textDecoration: `none`,
-                  }}
-                >
-                  Pravosleva
-                </a>
-              </Link>
-            </li>
-            <li style={{ margin: '0 auto 0 0' }} className="muted">
-              <span title={getIPs(usersConnected)}>
-                <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>Online: {usersConnected.length}
-              </span>
-            </li>
-            {isLoaded && !isAuthenticated && (
-              <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
-                <Link href="/auth/login" as="/auth/login">
-                  <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
+    <>
+      <Headroom style={{ zIndex: 5 }}>
+        <header style={{ boxShadow: '0 0 4px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)' }}>
+          <Nav>
+            <ul style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}>
+              <li style={{ marginLeft: '20px', marginBottom: '0px' }}>
+                <Link href="/" as="/">
+                  <a
+                    style={{
+                      color: `white`,
+                      textDecoration: `none`,
+                    }}
+                  >
+                    Pravosleva
+                  </a>
                 </Link>
               </li>
-            )}
-            {isLoaded && isAuthenticated && (
-              <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
-                <a href="#">Logout</a>
+              <li style={{ margin: '0 auto 0 0' }} className="muted">
+                <span title={getIPs(usersConnected)}>
+                  <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>Online: {usersConnected.length}
+                </span>
               </li>
-            )}
-          </ul>
-        </Nav>
-      </header>
-    </Headroom>
+              {isLoaded && !isAuthenticated && (
+                <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
+                  <Link href="/auth/login" as="/auth/login">
+                    <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
+                  </Link>
+                </li>
+              )}
+              {isLoaded && isAuthenticated && (
+                <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
+                  <a href="#">Logout</a>
+                </li>
+              )}
+              <li style={{ marginRight: '20px', marginBottom: '0px' }}>
+                <MenuFlexWrapper>
+                  <Button onClick={handleMenuOpen} typeName="orange" width="narrow" size="xsmall">
+                    Menu
+                  </Button>
+                </MenuFlexWrapper>
+              </li>
+            </ul>
+          </Nav>
+        </header>
+      </Headroom>
+      <MenuModal isOpened={isMenuOpened} onHideModal={handleMenuClose} isAuthenticated={isAuthenticated} />
+    </>
   )
 }
 

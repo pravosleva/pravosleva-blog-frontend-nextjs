@@ -8,10 +8,10 @@ import { ModalContent } from './components/ModalContent'
 export interface IModalProps {
   size: 'large' | 'small'
   modalTitle: string
-  modalSubtitle: string
+  modalSubtitle?: string
   closeModal: () => void
   renderBodyContent: () => React.ReactNode
-  renderFooterContent: () => JSX.Element
+  renderFooterContent?: () => JSX.Element
 }
 
 export const Modal = ({
@@ -26,7 +26,8 @@ export const Modal = ({
     <ModalContent size={size}>
       <ModalHeader modalTitle={modalTitle} modalSubtitle={modalSubtitle} closeModal={closeModal} />
       <ModalBody>{renderBodyContent()}</ModalBody>
-      <ModalFooter>{renderFooterContent()}</ModalFooter>
+      {!!renderFooterContent && <ModalFooter>{renderFooterContent()}</ModalFooter>}
+      {!renderFooterContent && <div style={{ marginTop: '10px' }}></div>}
     </ModalContent>
   </ModalContainer>
 )

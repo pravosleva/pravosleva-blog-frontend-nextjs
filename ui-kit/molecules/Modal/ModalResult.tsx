@@ -9,7 +9,7 @@ import { FailureModalIcon } from '@/ui-kit/atoms/Icons/FailureModalIcon'
 interface IProps {
   isSuccess: boolean
   title: string
-  text: string
+  text: string | React.ReactNode
   buttonText: string
   handleButtonClick: () => void
   isMobile?: boolean

@@ -1,0 +1,15 @@
+export const getEscapedRegexpChars = (str: string): string =>
+  str
+    .replace(/\\/g, '\\\\')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)')
+    .replace(/\[/g, '\\[')
+    .replace(/\]/g, '\\]')
+    .replace(/\*/g, '\\*')
+    .replace(/\+/g, '\\+')
+    .replace(/\./g, '\\.')
+    .replace(/\$/g, '\\$')
+    .replace(/\^/g, '\\^')
+    .replace(/\?/g, '\\?')
+    .replace(/\{/g, '\\{')
+    .replace(/\}/g, '\\}')
