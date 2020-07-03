@@ -85,6 +85,8 @@ const LayoutConnected = ({ children }) => {
       // 1.
       const articleBody = document.querySelector('.article-body')
       if (!!articleBody) articleBody.addEventListener('click', linkInNewTab)
+      const galleriesWrapper = document.querySelector('.galleries-wrapper')
+      if (!!galleriesWrapper) galleriesWrapper.addEventListener('click', linkInNewTab)
 
       // 2.
       const clickListenedSpace = document.querySelector('.universal-container')
@@ -93,10 +95,8 @@ const LayoutConnected = ({ children }) => {
 
       return () => {
         if (isBrowser) {
-          const articleBody = document.querySelector('.article-body')
-          const clickListenedSpace = document.querySelector('.universal-container')
-
           if (!!articleBody) articleBody.removeEventListener('click', linkInNewTab)
+          if (!!galleriesWrapper) galleriesWrapper.removeEventListener('click', linkInNewTab)
           if (!!clickListenedSpace) clickListenedSpace.removeEventListener('click', rippleEffect)
         }
       }
