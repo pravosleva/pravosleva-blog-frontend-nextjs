@@ -137,10 +137,12 @@ const MobileHeader = ({
             >
               <Link href="/">
                 <a style={{ lineHeight: '40px' }}>
-                  Pravo$leva{' '}
-                  <span className="muted">
-                    <i className="fas fa-globe"></i> {usersConnected.length}
-                  </span>
+                  Pravo$leva
+                  {usersConnected.length > 0 && (
+                    <span className="muted" style={{ marginLeft: '10px' }}>
+                      <i className="fas fa-globe"></i> {usersConnected.length}
+                    </span>
+                  )}
                 </a>
               </Link>
             </li>
@@ -156,6 +158,7 @@ const MobileHeader = ({
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
                 }}
+                className="fade-in-effect"
               >
                 <Link href="/auth/login">
                   <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
@@ -173,6 +176,7 @@ const MobileHeader = ({
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
                 }}
+                className="fade-in-effect"
                 onClick={handleLogout}
               >
                 <a href="#">Logout</a>

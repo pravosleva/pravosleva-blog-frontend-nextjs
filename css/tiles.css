@@ -254,6 +254,10 @@
   font-size: 0.9em;
   letter-spacing: 0.05em;
 }
+.tiles-grid-item__brief > * {
+  margin: 0;
+  font-style: italic;
+}
 .tiles-grid-item-in-article {
   background-color: rgba(0, 64, 130, 0.75);
   background-blend-mode: overlay, normal;

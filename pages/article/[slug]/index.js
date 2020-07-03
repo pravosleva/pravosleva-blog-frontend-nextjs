@@ -129,7 +129,11 @@ const Article = ({ initArticleData: article }) => {
                       onClick={() => setCurrentPackIndex(i)}
                     >
                       {name && <h2>{name}</h2>}
-                      {description && <p>{description}</p>}
+                      {description && (
+                        <p>
+                          <ReactMarkdown source={description} />
+                        </p>
+                      )}
                       <Gallery
                         photos={images.map(({ src }) => ({
                           src,
@@ -225,9 +229,13 @@ const Article = ({ initArticleData: article }) => {
             flex-direction: column;
             justify-content: space-between;
           }
+          .article-wrapper__big-image-as-container > * {
+            margin: 0;
+          }
           .article-wrapper__big-image-as-container__title {
             margin-bottom: 30px;
             font-family: Montserrat;
+            font-style: italic;
           }
           .article-wrapper__big-image-as-container__date {
             text-align: right;

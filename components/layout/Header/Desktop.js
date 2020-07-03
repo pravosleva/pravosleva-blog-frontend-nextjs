@@ -125,12 +125,14 @@ const DesktopHeader = () => {
                 </Link>
               </li>
               <li style={{ margin: '0 auto 0 0' }} className="muted">
-                <span title={getIPs(usersConnected)}>
-                  <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>Online: {usersConnected.length}
-                </span>
+                {usersConnected.length > 0 && (
+                  <span title={getIPs(usersConnected)}>
+                    <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>Online: {usersConnected.length}
+                  </span>
+                )}
               </li>
               {isLoaded && !isAuthenticated && (
-                <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
+                <li className="fade-in-effect" style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
                   <Link href="/auth/login" as="/auth/login">
                     <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
                   </Link>

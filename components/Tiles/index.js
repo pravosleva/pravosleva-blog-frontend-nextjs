@@ -50,9 +50,9 @@ const Grid = ({
                 }}
               >
                 <span className="tiles-grid-item__title">{title}</span>
-                <em className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>
-                  {brief}
-                </em>
+                <div className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>
+                  <em>{brief}</em>
+                </div>
                 <span
                   style={{
                     textAlign: 'left',
