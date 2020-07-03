@@ -57,7 +57,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
 
 `deploy-app-config.json`
 
-```
+```json
 {
   "prod:restart-all": {
     "user": "<USER>",
@@ -65,7 +65,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
     "port": "<PORT>",
     "files": "./.next/*",
     "path": "/home/path-to-dir/pravosleva-blog/frontend/.next",
-    "pre-deploy-local": "yarn build",
+    "pre-deploy-local": "yarn; yarn build",
     "pre-deploy-remote": "pm2 stop all",
     "post-deploy": "pm2 delete all; pm2 resurrect --update-env"
   },
@@ -75,7 +75,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
     "port": "<PORT>",
     "files": "./.next/*",
     "path": "/home/path-to-dir/pravosleva-blog/frontend/.next",
-    "pre-deploy-local": "yarn build",
+    "pre-deploy-local": "yarn; yarn build",
     "post-deploy": "pm2 stop 1; pm2 restart 1 --update-env"
   },
   "prod:update-storybook": {
