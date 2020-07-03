@@ -4,7 +4,7 @@
     font-size: 2em;
     font-weight: bold;
     letter-spacing: 0.1em;
-    line-height: 1em;
+    line-height: 1.2em;
   }
 }
 @media (min-width: 768px) {
@@ -13,7 +13,7 @@
     font-size: 2em;
     font-weight: bold;
     letter-spacing: 0.1em;
-    line-height: 1em;
+    line-height: 1.2em;
   }
 }
 .article-page-title > * {
@@ -23,5 +23,6 @@
   text-transform: none !important;
 }
 .article-wrapper__big-image-as-container__brief > * {
+  line-height: 1.2em;
   margin: 0;
 }
