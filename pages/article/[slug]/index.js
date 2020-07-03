@@ -9,6 +9,7 @@ import { getFormatedDate2 } from '@/utils/timeConverter'
 import Prism from 'prismjs'
 import { getImageUrl, getBgSrc, getApiUrl, isProd } from '@/utils/getApiUrl'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
+import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
@@ -59,14 +60,14 @@ const Article = ({ initArticleData: article }) => {
   return (
     <>
       <Head>
-        <title>{`Pravosleva | ${article?.title || 'No title'}`}</title>
-        {!!article.brief && <meta name="description" content={article.brief} />}
-        {!!article.brief && <meta property="og:description" content={article.brief} />}
+        <title>{`Pravosleva${article?.title ? ` | ${convertToPlainText(article?.title)}` : 'No title'}`}</title>
+        {!!article.brief && <meta name="description" content={convertToPlainText(article.brief)} />}
+        {!!article.brief && <meta property="og:description" content={convertToPlainText(article.brief)} />}
         {!!bgSrc && <meta property="vk:image" content={bgSrc} />}
         {!!bgSrc && <meta property="twitter:image" content={bgSrc} />}
         <meta property="og:image:width" content="600" />
         <meta property="og:image:height" content="315" />
-        <meta property="og:title" content={article.title} />
+        <meta property="og:title" content={convertToPlainText(article.title)} />
         <meta property="og:image" content={bgSrc} />
         <meta property="og:type" content="article" />
         {isProd && <meta property="og:url" content={thisPageUrl} />}
@@ -86,17 +87,23 @@ const Article = ({ initArticleData: article }) => {
                   </Link>
                 </li>
                 <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
-                  <span>{article?.title?.length > 30 ? `${article.title.substring(0, 30)}...` : article.title}</span>
+                  <span>
+                    {article?.title?.length > 30
+                      ? `${article.title.substring(0, 30).replace(/`/g, '')}...`
+                      : article.title.replace(/`/g, '')}
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="article-wrapper">
               <div className="fade-in-effect tiles-grid-item-in-article white article-wrapper__big-image-as-container">
-                <h1 className="article-page-title">{article.title || 'No title'}</h1>
+                <h1 className="article-page-title">
+                  {!!article.title ? <ReactMarkdown source={article.title} /> : 'No title'}
+                </h1>
                 {article?.brief && (
-                  <div className="fade-in-effect article-wrapper__big-image-as-container__title">
-                    <em>{article.brief}</em>
+                  <div className="fade-in-effect article-wrapper__big-image-as-container__brief">
+                    <ReactMarkdown source={article.brief} />
                   </div>
                 )}
                 <small className="inactive article-wrapper__big-image-as-container__date">
@@ -183,22 +190,6 @@ const Article = ({ initArticleData: article }) => {
           </Link>
         </div>
         <style jsx>{`
-          @media (max-width: 767px) {
-            .article-page-title {
-              text-transform: uppercase;
-              font-size: 2em;
-              font-weight: bold;
-              letter-spacing: 0.1em;
-            }
-          }
-          @media (min-width: 768px) {
-            .article-page-title {
-              text-transform: uppercase;
-              font-size: 2em;
-              /* font-weight: bold; */
-              /* letter-spacing: 0.1em; */
-            }
-          }
           .article-wrapper {
             width: 100%;
             background: linear-gradient(rgba(255, 255, 255, 1), transparent);
@@ -232,8 +223,9 @@ const Article = ({ initArticleData: article }) => {
           .article-wrapper__big-image-as-container > * {
             margin: 0;
           }
-          .article-wrapper__big-image-as-container__title {
+          .article-wrapper__big-image-as-container__brief {
             margin-bottom: 30px;
+            line-height: 1em;
             font-family: Montserrat;
             font-style: italic;
           }

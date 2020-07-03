@@ -250,6 +250,13 @@
   font-weight: bold;
   letter-spacing: 0.1em;
 }
+.tiles-grid-item__title > p > code {
+  text-transform: none;
+  text-shadow: none;
+}
+.tiles-grid-item__title > * {
+  margin: 0;
+}
 .tiles-grid-item__brief {
   font-size: 0.9em;
   letter-spacing: 0.05em;

@@ -416,6 +416,15 @@ p {
   padding-top: 0;
   margin-bottom: 1.45rem;
 }
+.article-page-title > * {
+  margin-bottom: 0;
+}
+.article-page-title > p > * {
+  text-transform: none !important;
+}
+.article-wrapper__big-image-as-container__title > * {
+  margin: 0;
+}
 figure {
   margin-left: 0;
   margin-right: 0;

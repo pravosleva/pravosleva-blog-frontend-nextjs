@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Map } from 'immutable'
 import { getFormatedDate2 } from '@/utils/timeConverter'
 import { getBgSrc } from '@/utils/getApiUrl'
+import ReactMarkdown from 'react-markdown' // <ReactMarkdown source={article.brief} />
+// import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
 
 const Grid = ({
   articles,
@@ -49,9 +51,12 @@ const Grid = ({
                   backgroundImage: `url(${bgSrc})`,
                 }}
               >
-                <span className="tiles-grid-item__title">{title}</span>
+                <span className="tiles-grid-item__title">
+                  <ReactMarkdown source={title} />
+                </span>
                 <div className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>
-                  <em>{brief}</em>
+                  {/* <em>{brief}</em> */}
+                  <ReactMarkdown source={brief} />
                 </div>
                 <span
                   style={{
