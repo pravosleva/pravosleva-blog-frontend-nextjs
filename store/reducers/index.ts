@@ -9,6 +9,7 @@ import {
 import { userInfo, initialState as userInfoInitialState } from './user-info'
 import { users, initialState as usersInitialState } from './users'
 import { toaster, initialState as toasterInitialState } from './toaster'
+import { globalTheme, initialState as globalThemeState } from './global-theme'
 
 const reducer = combineReducers({
   counter,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   users,
   form: formReducer,
   toaster,
+  globalTheme,
   // Others...
 })
 
@@ -29,6 +31,7 @@ export const rootInitialState = {
   users: usersInitialState,
   form: null,
   toaster: toasterInitialState,
+  globalTheme: globalThemeState,
   // Others...
 }
 

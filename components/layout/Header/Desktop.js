@@ -15,6 +15,7 @@ import { getGeoDataStr } from '@/utils/geo/getGeoDataStr'
 import { Button } from '@/ui-kit/atoms'
 import { MenuModal } from './components/MenuModal'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
+import { useGlobalTheming } from '@/hooks/use-global-theming'
 
 const Nav = styled('div')`
   font-size: 16px;
@@ -68,8 +69,20 @@ const MenuFlexWrapper = styled('div')`
 const getIPs = (items) =>
   items.map(({ ip, geo }) => `${ip}${getGeoDataStr(geo)}`).join(`
 `)
+const getThemeIcon = (currentTheme) => {
+  switch (currentTheme) {
+    case 'dark':
+      return 'fas fa-moon'
+    case 'gray':
+      return 'fas fa-adjust'
+    case 'light':
+    default:
+      return 'fas fa-lightbulb'
+  }
+}
 
 const DesktopHeader = () => {
+  const { currentTheme, onSetNextTheme } = useGlobalTheming(false)
   const usersConnected = useSelector((state) => state.users?.items)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -131,15 +144,24 @@ const DesktopHeader = () => {
                   </span>
                 )}
               </li>
+              <li
+                onClick={onSetNextTheme}
+                style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', cursor: 'pointer' }}
+                className="muted no-muted-on-hover"
+              >
+                <span>
+                  <i className={getThemeIcon(currentTheme)} style={{ marginLeft: '15px', marginRight: '15px' }}></i>
+                </span>
+              </li>
               {isLoaded && !isAuthenticated && (
-                <li className="fade-in-effect" style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }}>
+                <li className="fade-in-effect" style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }}>
                   <Link href="/auth/login" as="/auth/login">
                     <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
                   </Link>
                 </li>
               )}
               {isLoaded && isAuthenticated && (
-                <li style={{ marginLeft: '20px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
+                <li style={{ marginLeft: '20px', marginRight: '0px', marginBottom: '0px' }} onClick={handleLogout}>
                   <a href="#">Logout</a>
                 </li>
               )}

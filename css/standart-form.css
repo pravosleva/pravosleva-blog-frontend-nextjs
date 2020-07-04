@@ -177,3 +177,23 @@
   border-bottom-color: #f44336;
 }
 */
+
+/* GLOBAL THEMING */
+/* 1. LIGHT: by default */
+/* 2. GRAY */
+body.gray .box .inputBox input,
+body.gray .box .inputBox textarea {
+  border-bottom: 2px solid #708090;
+}
+body.gray .box form .inputBox label {
+  color: #708090;
+}
+body.gray .box button[type='button'] {
+  background: gray;
+  color: #fff;
+}
+/* 3. DARK */
+body.dark .box button[type='button'] {
+  background: gray;
+  color: #fff;
+}
