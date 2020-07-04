@@ -59,7 +59,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
 
 ```json
 {
-  "prod:restart-all": {
+  "prod:update-restart-all": {
     "user": "<USER>",
     "host": "<HOST>",
     "port": "<PORT>",
@@ -69,7 +69,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
     "pre-deploy-remote": "pm2 stop all",
     "post-deploy": "pm2 delete all; pm2 resurrect --update-env"
   },
-  "prod:restart-front": {
+  "prod:update-restart-front": {
     "user": "<USER>",
     "host": "<HOST>",
     "port": "<PORT>",
