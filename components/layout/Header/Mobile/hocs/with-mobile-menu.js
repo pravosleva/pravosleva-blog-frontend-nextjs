@@ -52,7 +52,7 @@ const Sidebar = styled.div`
       letter-spacing: 0.1em;
     }
     > ul > li > a.active {
-      color: yellow;
+      color: #ff781e;
     }
 
     ${(p) =>

@@ -263,8 +263,8 @@ body.hard-gray #searchPanel > span#bodySearchToggler:hover {
 /* 4. DARK */
 
 body.dark #searchPanel > input#searchText {
-  color: #fff;
-  caret-color: #fff;
+  color: #ff9000;
+  caret-color: #ff9000;
 }
 body.dark #searchPanel > input#searchText::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -282,13 +282,16 @@ body.dark #searchPanel > input#searchText:-moz-placeholder {
   /* Firefox 18- */
   color: rgba(255, 255, 255, 0.5);
 }
+body.dark #searchPanel > input#searchText {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
 body.dark #searchPanel > input#searchText:focus {
   border: 2px solid #fff;
 }
 /* SEARCHING TOOL 1 */
 body.dark #searchPanel > span#clearSearchText {
-  color: #fff;
-  border: 1px solid #fff;
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 body.dark #searchPanel > span#clearSearchText:hover {
   /* color: #005170; rgba(0, 81, 112, 0.8) */
@@ -297,8 +300,8 @@ body.dark #searchPanel > span#clearSearchText:hover {
 }
 /* SEARCHING TOOL 2 */
 body.dark #searchPanel > span#bodySearchToggler {
-  color: #fff;
-  border: 1px solid #fff;
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 body.dark #searchPanel > span#bodySearchToggler:hover {
   color: #fff;

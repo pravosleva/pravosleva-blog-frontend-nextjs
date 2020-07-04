@@ -6,6 +6,8 @@ import useDebounce from '@/hooks/use-debounce'
 import loadable from '@loadable/component'
 import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+import { getLoaderColorByThemeName } from '@/utils/globalTheme/getLoaderColorByThemeName'
+import { useGlobalTheming } from '@/hooks/use-global-theming'
 
 const getTags = (articles) => {
   const tags = new Map()
@@ -48,11 +50,15 @@ const Tiles = loadable(() =>
 const LIMIT = 5
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })
-const Loader = () => (
-  <div className="fade-in-effect loader-wrapper">
-    <PulseLoader size={15} margin={5} color="#0162c8" loading={true} />
-  </div>
-)
+const Loader = () => {
+  const { currentTheme } = useGlobalTheming()
+
+  return (
+    <div className="fade-in-effect loader-wrapper">
+      <PulseLoader size={15} margin={5} color={getLoaderColorByThemeName(currentTheme)} loading={true} />
+    </div>
+  )
+}
 const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const [isLoading, setLoading] = useState(false)
   const [articles, setArticles] = useState(initialArtiles)

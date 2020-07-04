@@ -136,7 +136,7 @@ const DesktopHeader = () => {
               {isLoaded && !isAuthenticated && (
                 <li className="fade-in-effect" style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }}>
                   <Link href="/auth/login" as="/auth/login">
-                    <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
+                    <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? '#ff781e' : '#FFF' }}>Login</a>
                   </Link>
                 </li>
               )}

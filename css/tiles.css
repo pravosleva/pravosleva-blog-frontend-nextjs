@@ -28,6 +28,14 @@
     background-color: #0162c8;
     color: white;
   }
+  body.dark .tiles-external-wrapper--mobile-arrow {
+    background-color: #fff;
+    color: #ff781e;
+  }
+  body.dark .tiles-external-wrapper--mobile-arrow:hover {
+    background-color: #ff781e;
+    color: white;
+  }
   .tiles-external-wrapper--mobile-arrow:hover {
     cursor: pointer;
   }
@@ -101,6 +109,14 @@
   }
   .tiles-external-wrapper--desktop-arrow:hover {
     background-color: #0162c8;
+    color: white;
+  }
+  body.dark .tiles-external-wrapper--desktop-arrow {
+    background-color: #fff;
+    color: #ff781e;
+  }
+  body.dark .tiles-external-wrapper--desktop-arrow:hover {
+    background-color: #ff781e;
     color: white;
   }
   .tiles-external-wrapper--desktop-arrow:hover {

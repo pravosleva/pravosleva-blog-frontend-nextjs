@@ -40,6 +40,7 @@ export const useGlobalTheming = () => {
   }, [])
 
   return {
+    currentTheme,
     onSetNextTheme: () => {
       if (!!window?.document) {
         const nextTheme = getNextTheme(currentTheme)

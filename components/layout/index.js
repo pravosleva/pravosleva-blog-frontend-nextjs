@@ -14,6 +14,7 @@ import '@/css/search-panel.css'
 import { withSocketApi } from '@/hocs/with-socket-api'
 import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
+import { useGlobalTheming } from '@/hooks/use-global-theming'
 
 // 1. From each link in article to new browser tab:
 function linkInNewTab(e) {
@@ -74,6 +75,7 @@ const LayoutConnected = ({ children }) => {
   const [showScroll, setShowScroll] = useState(false)
   const isBrowser = useMemo(() => typeof window !== 'undefined', [typeof window])
   const scroll = useScroll()
+  const { currentTheme } = useGlobalTheming()
 
   useEffect(() => {
     if (scroll.y > 200) {
@@ -122,7 +124,7 @@ const LayoutConnected = ({ children }) => {
           <span style={{ margin: '0 20px 0 20px' }}>© {fullYear}</span>
         </div>
       </footer>
-      <ScrollTopBtn onClick={scrollTop} isShowed={showScroll}>
+      <ScrollTopBtn onClick={scrollTop} isShowed={showScroll} themeName={currentTheme}>
         <i className="fas fa-arrow-up"></i>
       </ScrollTopBtn>
     </>

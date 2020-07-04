@@ -41,6 +41,14 @@ body.gray .tiles-grid-item-in-article {
 
 /* HARD-GRAY */
 
+body.hard-gray .article-body a,
+body.hard-gray .galleries-wrapper a:hover {
+  color: #67a4e3;
+}
+body.hard-gray .article-body a:hover,
+body.hard-gray .galleries-wrapper a:hover {
+  color: #39e5ac;
+}
 body.hard-gray .bx_breadcrumbs > ul > li > a,
 body.hard-gray .bx_breadcrumbs > ul > li > span {
   color: rgba(255, 255, 255, 0.5);
@@ -87,14 +95,24 @@ body.hard-gray .tiles-grid-item:hover {
 }
 body.hard-gray button.rippled-btn {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #fff;
 }
 body.hard-gray button.rippled-btn:hover {
   opacity: 1;
+  border: 1px solid #fff;
   box-shadow: 0 0 4px 0 rgba(255, 255, 255, 1);
 }
 
 /* DARK */
 
+body.dark .article-body a,
+body.dark .galleries-wrapper a {
+  color: #ff781e;
+}
+body.dark .article-body a:hover,
+body.dark .galleries-wrapper a:hover {
+  color: #39e5ac;
+}
 body.dark {
   background-color: #000;
   color: #d0d0d0;
