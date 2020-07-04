@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Cookie from 'js-cookie'
 import { globalThemeActions } from '@/store/reducers/global-theme'
+import { IRootState } from '@/store/reducers/IRootState'
 
 const themes = ['light', 'gray', 'dark']
 const getNextTheme = (currentTheme: string) => {
@@ -19,32 +20,28 @@ const getNextTheme = (currentTheme: string) => {
 }
 
 export const useGlobalTheming = () => {
-  const [currentTheme, setCurrentTheme] = useState<string>('light')
+  const currentTheme = useSelector((state: IRootState) => state.globalTheme.theme)
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!!window?.document) {
       const theme = Cookie.get('theme')
 
-      if (!!theme) setCurrentTheme(theme)
+      if (!!theme) dispatch(globalThemeActions.setTheme(theme))
     }
   }, [])
 
-  useEffect(() => {
-    if (!!window?.document) {
-      const toRemove = themes.filter((t) => t !== currentTheme)
-
-      document.body.classList.remove(...toRemove)
-      document.body.classList.add(currentTheme)
-      dispatch(globalThemeActions.setTheme(currentTheme))
-      Cookie.set('theme', currentTheme)
-    }
-  }, [currentTheme])
-
   return {
-    currentTheme,
     onSetNextTheme: () => {
-      setCurrentTheme(getNextTheme(currentTheme))
+      if (!!window?.document) {
+        const nextTheme = getNextTheme(currentTheme)
+        const toRemove = themes.filter((t) => t !== nextTheme)
+
+        document.body.classList.remove(...toRemove)
+        document.body.classList.add(nextTheme)
+        dispatch(globalThemeActions.setTheme(nextTheme))
+        Cookie.set('theme', nextTheme)
+      }
     },
   }
 }

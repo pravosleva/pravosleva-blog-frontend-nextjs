@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Headroom from 'react-headroom'
 import styled, { keyframes, css } from 'styled-components'
 import Link from 'next/link'
@@ -13,6 +12,7 @@ import { logout } from '@/helpers/services/restService'
 import { useRouter } from 'next/router'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
+import { ThemeToggler } from '../../ThemeToggler'
 
 // Could be used if !ssr
 export const MobileHeaderLoader = styled.div`
@@ -146,7 +146,7 @@ const MobileHeader = ({
                 </a>
               </Link>
             </li>
-
+            <ThemeToggler />
             {isLoaded && !isAuthenticated && (
               <li
                 style={{
