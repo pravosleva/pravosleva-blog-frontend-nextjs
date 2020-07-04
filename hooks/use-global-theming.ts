@@ -4,7 +4,7 @@ import Cookie from 'js-cookie'
 import { globalThemeActions } from '@/store/reducers/global-theme'
 import { IRootState } from '@/store/reducers/IRootState'
 
-const themes = ['light', 'gray', 'dark']
+const themes = ['light', 'gray', 'hard-gray', 'dark']
 const getNextTheme = (currentTheme: string) => {
   const prevIndex = themes.findIndex((t) => t === currentTheme)
 

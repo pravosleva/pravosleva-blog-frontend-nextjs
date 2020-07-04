@@ -192,7 +192,19 @@ body.gray .box button[type='button'] {
   background: gray;
   color: #fff;
 }
-/* 3. DARK */
+/* 3. HARD-GRAY */
+body.hard-gray .box .inputBox input,
+body.hard-gray .box .inputBox textarea {
+  border-bottom: 2px solid #fff;
+}
+body.hard-gray .box form .inputBox label {
+  color: #fff;
+}
+body.hard-gray .box button[type='button'] {
+  background: gray;
+  color: #fff;
+}
+/* 4. DARK */
 body.dark .box button[type='button'] {
   background: gray;
   color: #fff;

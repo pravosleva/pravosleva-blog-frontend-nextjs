@@ -160,7 +160,7 @@ body.light #searchPanel > span#bodySearchToggler:hover {
 
 /* 2. GRAY */
 
-#searchPanel > input#searchText {
+body.gray #searchPanel > input#searchText {
   border: 2px solid #fff;
 }
 body.gray #searchPanel > input#searchText {
@@ -211,7 +211,56 @@ body.gray #searchPanel > span#bodySearchToggler:hover {
   border: 1px solid #708090;
 }
 
-/* 3. DARK */
+/* 3. HARD-GRAY */
+
+body.hard-gray #searchPanel > input#searchText {
+  border: 2px solid #fff;
+}
+body.hard-gray #searchPanel > input#searchText {
+  color: #fff;
+  caret-color: #fff;
+}
+body.hard-gray #searchPanel > input#searchText::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgba(255, 255, 255, 0.5);
+}
+body.hard-gray #searchPanel > input#searchText::-moz-placeholder {
+  /* Firefox 19+ */
+  color: rgba(255, 255, 255, 0.5);
+}
+body.hard-gray #searchPanel > input#searchText:-ms-input-placeholder {
+  /* IE 10+ */
+  color: rgba(255, 255, 255, 0.5);
+}
+body.hard-gray #searchPanel > input#searchText:-moz-placeholder {
+  /* Firefox 18- */
+  color: rgba(255, 255, 255, 0.5);
+}
+body.hard-gray #searchPanel > input#searchText:focus {
+  border: 2px solid #ff9000;
+}
+/* SEARCHING TOOL 1 */
+body.hard-gray #searchPanel > span#clearSearchText {
+  color: #fff;
+  border: 1px solid #fff;
+}
+body.hard-gray #searchPanel > span#clearSearchText:hover {
+  color: #fff;
+  border: 1px solid #fff;
+}
+/* SEARCHING TOOL 2 */
+body.hard-gray #searchPanel > span#bodySearchToggler {
+  color: #fff;
+  border: 1px solid #fff;
+}
+body.hard-gray #searchPanel > span#bodySearchToggler:hover {
+  /* color: #683434;
+  border: 1px solid #683434; */
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+/* 4. DARK */
 
 body.dark #searchPanel > input#searchText {
   color: #fff;

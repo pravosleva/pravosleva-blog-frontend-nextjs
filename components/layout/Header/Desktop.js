@@ -141,7 +141,7 @@ const DesktopHeader = () => {
                 </li>
               )}
               {isLoaded && isAuthenticated && (
-                <li style={{ marginLeft: '20px', marginRight: '0px', marginBottom: '0px' }} onClick={handleLogout}>
+                <li style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
                   <a href="#">Logout</a>
                 </li>
               )}

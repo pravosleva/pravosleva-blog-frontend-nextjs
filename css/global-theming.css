@@ -31,6 +31,67 @@ body.gray footer {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
 }
+/* Article */
+body.gray .article-wrapper {
+  background: linear-gradient(rgba(255, 255, 255, 1), transparent);
+}
+body.gray .tiles-grid-item-in-article {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+/* HARD-GRAY */
+
+body.hard-gray .bx_breadcrumbs > ul > li > a,
+body.hard-gray .bx_breadcrumbs > ul > li > span {
+  color: rgba(255, 255, 255, 0.5);
+}
+body.hard-gray {
+  background-color: #666;
+  color: #fff;
+}
+body.hard-gray input,
+body.hard-gray select,
+body.hard-gray textarea {
+  color: #fff;
+}
+body.hard-gray div.article-body > blockquote {
+  padding: 0 1em;
+  color: #fff;
+  border-left: 0.25em solid #888;
+  margin-left: 0;
+}
+body.hard-gray footer {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+/* Article */
+body.hard-gray .article-wrapper {
+  background: linear-gradient(rgba(255, 255, 255, 1), transparent);
+}
+body.hard-gray .tiles-grid-item-in-article {
+  /* background-color: rgba(90, 99, 108, 0.75); */
+  /* background-color: rgba(1, 98, 200, 0.75); */
+  background-color: rgba(0, 0, 0, 0.75);
+}
+body.hard-gray .tiles-grid-item {
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #fff;
+}
+body.hard-gray .tiles-grid-item:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  /* box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px; */
+  /* border: 2px solid rgba(0, 0, 0, 0.5); */
+  /* box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.7); */
+  /* animation: bgReview 80s infinite; */
+}
+body.hard-gray button.rippled-btn {
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+body.hard-gray button.rippled-btn:hover {
+  opacity: 1;
+  box-shadow: 0 0 4px 0 rgba(255, 255, 255, 1);
+}
 
 /* DARK */
 
@@ -52,4 +113,14 @@ body.dark div.article-body > blockquote {
 body.dark footer {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
+}
+body.dark .tiles-grid-item-in-article {
+  /* background-color: rgba(90, 99, 108, 0.75); */
+  /* background-color: rgba(1, 98, 200, 0.75); */
+  background-color: rgba(0, 0, 0, 0.85);
+}
+body.dark button.rippled-btn:hover {
+  opacity: 1;
+  /* box-shadow: 0 2px 0 0 rgba(255, 144, 0, 1); */
+  background: linear-gradient(90deg, #ff781e, rgba(255, 144, 0, 0.2));
 }
