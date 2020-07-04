@@ -21,7 +21,8 @@ const getSize = (size: string) => sizes[size]
 export const ModalContent = styled('div')`
   display: flex;
   flex-direction: column;
-  background: #FFFFFF;
+  background: #FFF;
+  color: #000;
   border-radius: 6px;
   padding: 0;
   margin: auto;

@@ -10,7 +10,7 @@ export const ModalBody = styled('div')`
     overflow-y: auto;
     overflow-x: auto;
     height: 100%;
-    background: #ffffff;
+    background: #fff;
     padding: 15px 15px;
   }
   @media (max-width: 425px) {

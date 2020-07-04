@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "local:cleanup": "bash local-cleanup.sh",
     "deploy:prod:update-restart-all": "deploy-app -d prod:update-restart-all",
     "deploy:prod:update-restart-front": "deploy-app -d prod:update-restart-front",
     "deploy:prod:update-storybook": "deploy-app -d prod:update-storybook",
