@@ -45,11 +45,11 @@ RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 
 ## Deploy
 
-### `yarn deploy:prod:restart-all`
+### `yarn deploy:prod:update-restart-all`
 
 _Local build then deploy and restart all current pm2 process_
 
-### `yarn deploy:prod:restart-front`
+### `yarn deploy:prod:update-restart-front`
 
 _Local build then deploy and restart `pm2 restart 1`_
 
