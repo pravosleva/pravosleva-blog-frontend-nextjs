@@ -15,6 +15,7 @@ import { withSocketApi } from '@/hocs/with-socket-api'
 import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
+import { CookiePolicyOffer } from './CookiePolicyOffer'
 
 // 1. From each link in article to new browser tab:
 function linkInNewTab(e) {
@@ -119,14 +120,15 @@ const LayoutConnected = ({ children }) => {
       <div className="universal-container">
         <main style={{ padding: '20px 0 20px 0' }}>{children}</main>
       </div>
-      <footer>
-        <div style={{ margin: '0 auto', maxWidth: 960 + 40, lineHeight: '50px' }}>
+      <footer style={{ minHeight: '70px' }}>
+        <div style={{ margin: '0 auto', maxWidth: 960 + 40, lineHeight: '70px' }}>
           <span style={{ margin: '0 20px 0 20px' }}>© {fullYear}</span>
         </div>
       </footer>
       <ScrollTopBtn onClick={scrollTop} isShowed={showScroll} themeName={currentTheme}>
         <i className="fas fa-arrow-up"></i>
       </ScrollTopBtn>
+      <CookiePolicyOffer />
     </>
   )
 }

@@ -106,11 +106,13 @@ body.hard-gray button.rippled-btn:hover {
 /* DARK */
 
 body.dark .article-body a,
-body.dark .galleries-wrapper a {
+body.dark .galleries-wrapper a,
+body.dark a.cookie-policy-offer {
   color: #ff781e;
 }
 body.dark .article-body a:hover,
-body.dark .galleries-wrapper a:hover {
+body.dark .galleries-wrapper a:hover,
+body.dark a.cookie-policy-offer:hover {
   color: #39e5ac;
 }
 body.dark {

@@ -45,7 +45,7 @@ export const ScrollTopBtn = styled('div')`
   outline: none;
 
   transform: translateX(100px);
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
   ${(p) =>
     p.isShowed &&
     css`
