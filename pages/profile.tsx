@@ -4,11 +4,13 @@ import { Layout } from '@/components/layout'
 import { ProfilePage } from '@/components/ProfilePage'
 import { IUserInfo } from '@/helpers/services/IUserInfo'
 import { AuthToken } from '@/helpers/services/AuthToken'
+import { withTranslator } from '@/hocs/with-translator'
 
 interface IProps {
   auth: AuthToken
   userInfo: IUserInfo | null
   query: any
+  t: (text: string) => string
 }
 
 function Page(props: IProps): React.ReactNode {
@@ -19,4 +21,4 @@ function Page(props: IProps): React.ReactNode {
   )
 }
 
-export default privateRouteHOC(Page)
+export default privateRouteHOC(withTranslator(Page))

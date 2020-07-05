@@ -13,7 +13,6 @@ import { FooterRow } from '@/ui-kit/molecules/Modal/FooterRow'
 // import { ModalResult } from '@/ui-kit/molecules/Modal/ModalResult'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 import { Button } from '@/ui-kit/atoms/Button'
-import { withTranslator } from '@/hocs/with-translator'
 
 const Container = styled('div')`
   @media (min-width: 768px) {
@@ -31,7 +30,7 @@ interface IProps {
   t: Function
 }
 
-export const ProfilePage: React.FC = withTranslator((props: IProps) => {
+export const ProfilePage: React.FC<IProps> = (props) => {
   // WAY 2: And also you can get userInfo from Redux
   // const userInfo = useSelector((state: IRootState) => state.userInfo.fromServer)
 
@@ -147,4 +146,4 @@ export const ProfilePage: React.FC = withTranslator((props: IProps) => {
       )}
     </Container>
   )
-})
+}

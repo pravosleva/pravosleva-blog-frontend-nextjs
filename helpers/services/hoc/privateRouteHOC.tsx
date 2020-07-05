@@ -14,6 +14,7 @@ type TAuthProps = {
   auth: AuthToken
   userInfo: IUserInfo | null
   dispatch: Function
+  t: Function
 }
 
 export function privateRouteHOC(WrappedComponent: any) {
