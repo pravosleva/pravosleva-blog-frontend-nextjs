@@ -9,7 +9,6 @@ import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { getLoaderColorByThemeName } from '@/utils/globalTheme/getLoaderColorByThemeName'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
 import { withTranslator } from '@/hocs/with-translator'
-import NoSSR from 'react-no-ssr'
 
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
@@ -62,7 +61,8 @@ const Loader = () => {
     </div>
   )
 }
-const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t }) => {
+
+const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, currentLang }) => {
   const [isLoading, setLoading] = useState(false)
   const [isLoadingPaging, setLoadingPaging] = useState(false)
   const [articles, setArticles] = useState(initialArtiles)
@@ -88,11 +88,11 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t }) 
   }, [])
 
   const debouncedQueryText = useDebounce(queryText, 1000)
-  const debouncedSearchBy = useDebounce(searchBy, 1000)
-  const [isFirstRender, setIsFirstRender] = useState(true)
-
+  const debouncedSearchBy = useDebounce(searchBy, 500)
   const memoizedSearchBy = useMemo(() => debouncedSearchBy, [debouncedSearchBy])
   const memoizedQueryText = useMemo(() => debouncedQueryText, [debouncedQueryText])
+
+  const [isFirstRender, setIsFirstRender] = useState(true)
   const fetchWithRestartCb = useCallback(() => {
     if (isLoading || isFirstRender || !debouncedSearchBy) return
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
@@ -165,7 +165,8 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t }) 
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
     if (isFirstRender) return
 
-    if (!!memoizedQueryText) fetchNoRestart()
+    if (!!memoizedQueryText && start !== 0) return
+    fetchNoRestart()
   }, [start])
 
   const handleSearchToggler = useCallback(() => {
@@ -200,34 +201,37 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t }) 
         return t('SEATCH_INPUT_PLACEHOLDER')
     }
   }, [])
+  const memoizedPlaceholder = useMemo(() => getSearchTextTemplate(memoizedSearchBy), [currentLang, memoizedSearchBy])
 
   return (
     <>
       <Layout>
         <div className="homepage-wrapper">
-          <div className="searchPanel-wrapper">
-            <div id="searchPanel">
-              <span id="bodySearchToggler" className="unselectable" onClick={handleSearchToggler}>
-                {getIconByCritery(searchBy)}
-              </span>
-              <NoSSR>
+          {t('HOME')} {getSearchTextTemplate(searchBy)}
+          {!!typeof window && (
+            <div className="searchPanel-wrapper">
+              <div id="searchPanel">
+                <span id="bodySearchToggler" className="unselectable" onClick={handleSearchToggler}>
+                  {getIconByCritery(searchBy)}
+                </span>
                 <input
                   id="searchText"
                   type="text"
                   value={queryText}
                   onChange={handleChangeText}
-                  placeholder={getSearchTextTemplate(searchBy)}
+                  placeholder={`${memoizedPlaceholder}${isFirstRender ? ' ' : ''}`}
+                  title={memoizedPlaceholder}
                   className="unselectable"
                   style={{ maxWidth: queryText ? '100%' : '350px' }}
                 />
-              </NoSSR>
-              {queryText ? (
-                <span id="clearSearchText" className="unselectable fade-in-effect" onClick={handleClearText}>
-                  <i className="fas fa-times"></i>
-                </span>
-              ) : null}
+                {!!queryText ? (
+                  <span id="clearSearchText" className="unselectable fade-in-effect" onClick={handleClearText}>
+                    <i className="fas fa-times"></i>
+                  </span>
+                ) : null}
+              </div>
             </div>
-          </div>
+          )}
           {!isLoading && !isLoadingPaging && (
             <Tiles
               isFirstRender={isFirstRender}

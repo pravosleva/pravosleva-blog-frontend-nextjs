@@ -16,16 +16,18 @@ export const withTranslator = (WrappedComponent: any) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-      const fromCookie = Cookie.get('lang')
+      if (process.browser) {
+        const fromCookie = Cookie.get('lang')
 
-      if (!!fromCookie) dispatch(langActions.set(fromCookie))
+        if (!!fromCookie) dispatch(langActions.set(fromCookie))
+      }
     }, [process.browser])
 
     const handleSetLang = useCallback((key: string) => {
       dispatch(langActions.set(key))
       Cookie.set('lang', key, { expires: langCookieExpiresDays })
     }, [])
-    const getTranslatedText = useCallback((str: string, opts: any) => intl.get(str, opts), [])
+    const getTranslatedText = useCallback((str: string, opts: any) => intl.get(str, opts), [current])
 
     return (
       <WrappedComponent
