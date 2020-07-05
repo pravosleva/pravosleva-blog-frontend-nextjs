@@ -71,6 +71,7 @@ const getIPs = (items) =>
 `)
 
 const DesktopHeader = ({
+  // Translator:
   t,
   setLang,
   suppoerLocales, // Array like this: [{ label, name, value }]

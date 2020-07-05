@@ -6,8 +6,6 @@ import styled, { css } from 'styled-components'
 import Link from 'next/link'
 import { scrollDisablingComponentsActions } from '@/store/reducers/scroll-disabling-components'
 import { withScrollDisabler } from '@/hocs/body-scroll-disabler'
-// import Cookie from 'js-cookie'
-// import { COOKIES } from '@/helpers/services/loginService'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { logout } from '@/helpers/services/restService'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
@@ -74,7 +72,7 @@ const Sidebar = styled.div`
   z-index: 3;
 `
 
-/*
+/* TODO:
 const items = [
   // { path: '/cabinet', label: 'Личный кабинет', id: 0, accessForRoles: ['public', 'authenticated'] },
   { path: '/profile', label: 'Profile', id: 1, accessForRoles: ['authenticated'] }, // 'public', 'authenticated', 'free'
@@ -132,7 +130,6 @@ export const withMobileMenu = (ComposedComponent) =>
       const handleLogoutCb = useCallback(async () => {
         const result = await logout()
           .then(() => {
-            // dispatch(showAsyncToast({ text: t('LOGOUT'), delay: 3000, type: 'success' }))
             router.push('/auth/login')
           })
           .catch((text) => {
@@ -158,9 +155,6 @@ export const withMobileMenu = (ComposedComponent) =>
         dispatch,
         topDocRef,
       ])
-
-      // const [isLoaded, setIsLoaded] = useState(false)
-      // const [isAuthenticated, setIsAuthenticated] = useState(false)
 
       const router = useRouter()
       const isCurrentPathCb = useCallback(isCurrentPath, [])

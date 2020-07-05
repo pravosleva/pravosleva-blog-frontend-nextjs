@@ -21,21 +21,18 @@ export const withTranslator = (WrappedComponent: any) => {
       if (!!fromCookie) dispatch(langActions.set(fromCookie))
     }, [])
 
-    // useEffect(() => {
-    //   Cookie.set('lang', current, { expires: langCookieExpiresDays })
-    // }, [current])
-
     const handleSetLang = useCallback((key: string) => {
       dispatch(langActions.set(key))
       Cookie.set('lang', key, { expires: langCookieExpiresDays })
     }, [])
+    const getTranslatedText = useCallback((str: string, opts: any) => intl.get(str, opts), [])
 
     return (
       <WrappedComponent
         {...props}
         setLang={handleSetLang}
         currentLang={current}
-        t={(str: string, opts: any) => intl.get(str, opts)}
+        t={getTranslatedText}
         suppoerLocales={suppoerLocales}
       />
     )

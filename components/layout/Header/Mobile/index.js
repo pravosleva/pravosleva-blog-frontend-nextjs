@@ -1,12 +1,10 @@
 import React, { useCallback } from 'react'
 import Headroom from 'react-headroom'
-import styled, { keyframes, css } from 'styled-components'
+import styled, { css } from 'styled-components'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { withMobileMenu } from './hocs/with-mobile-menu'
 import { HamburgerIcon, CrossCloseIcon } from './components'
-// import Cookie from 'js-cookie'
-// import { COOKIES } from '@/helpers/services/loginService'
 import { showAsyncToast } from '@/actions'
 import { logout } from '@/helpers/services/restService'
 import { useRouter } from 'next/router'
@@ -32,7 +30,6 @@ const HamburgerButton = styled.button`
   align-items: center;
   border: none;
   outline: none;
-  // width: 32px;
   height: 100%;
   background: transparent;
   ${(p) =>
@@ -41,15 +38,13 @@ const HamburgerButton = styled.button`
       margin-right: 0;
     `}
 `
-const slideDownEffect = keyframes`
-  0%{transform:translateY(-60px)}90%{transform:translateY(0)}100%{transform:translateY(0)}
-`
+// const slideDownEffect = keyframes`
+//   0%{transform:translateY(-60px)}90%{transform:translateY(0)}100%{transform:translateY(0)}
+// `
 const Nav = styled('div')`
   padding: 0;
   color: #fff;
-  // background-color: #007bff;
   background-color: #0162c8;
-  // background-color: #d24136;
   > ul {
     display: flex;
     list-style: none;
@@ -76,10 +71,9 @@ const Nav = styled('div')`
     color: #fff;
     background-color: transparent;
   }
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     display: none;
   }
-  // animation:${slideDownEffect} 1s 1;
 `
 
 // const getSlicedText = ({ text, limit = 7 }) => {
@@ -96,7 +90,7 @@ const MobileHeader = ({
   sidebarOpened,
   topDocRef,
 
-  // Translator:
+  // withTranslator:
   t,
   setLang,
   suppoerLocales, // Array like this: [{ label, name, value }]
@@ -105,19 +99,9 @@ const MobileHeader = ({
   const isAuthenticated = !!useSelector((state) => state.userInfo?.fromServer?.id)
   const dispatch = useDispatch()
   const router = useRouter()
-
-  // const [isLoaded, setIsLoaded] = useState(false)
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
-  // useEffect(() => {
-  //   const token = Cookie.get(COOKIES.authToken)
-
-  //   if (!!token) setIsAuthenticated(true)
-  //   setIsLoaded(true)
-  // }, [])
   const handleLogoutCb = useCallback(async () => {
     await logout()
       .then(() => {
-        // dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
         router.push('/auth/login')
       })
       .catch((msg) => {
@@ -149,7 +133,6 @@ const MobileHeader = ({
                 marginRight: 'auto',
                 marginBottom: '0px',
                 fontFamily: 'Montserrat',
-                // fontWeight: '500',
                 fontSize: '0.8em',
               }}
               onClick={() => sidebarToggler(false)}
@@ -165,7 +148,6 @@ const MobileHeader = ({
                   key={lang.label}
                   style={{
                     minWidth: '45px',
-                    // marginLeft: '15px', marginRight: '15px',
                     marginBottom: '0px',
                     cursor: 'pointer',
                     display: 'flex',
@@ -191,9 +173,6 @@ const MobileHeader = ({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-
-                  // marginLeft: '10px',
-                  // marginRight: '10px',
                   minWidth: '40px',
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
@@ -221,7 +200,6 @@ const MobileHeader = ({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  // marginLeft: '15px',
                   minWidth: '40px',
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',

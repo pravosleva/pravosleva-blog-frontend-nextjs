@@ -44,8 +44,6 @@ const CookiePolicyOfferTranslated = ({
 }: IProps) => {
   const [isOfferEnabled, setIsOfferEnabled] = useState(false)
   const handleConfirm = useCallback(() => {
-    // eslint-disable-next-line no-console
-    console.log('Confirm')
     Cookie.set('cookie-confirmed', '1')
     setIsOfferEnabled(false)
   }, [])

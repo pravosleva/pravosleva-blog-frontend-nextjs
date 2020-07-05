@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import styled from 'styled-components'
-// import { useSelector } from 'react-redux'
-// import { IRootState } from '@/store/reducers/IRootState'
 import { IUserInfo } from '@/helpers/services/IUserInfo'
 import { AuthToken } from '@/helpers/services/AuthToken'
 import Prism from 'prismjs'
@@ -10,7 +8,6 @@ import {
   Modal,
 } from '@/ui-kit'
 import { FooterRow } from '@/ui-kit/molecules/Modal/FooterRow'
-// import { ModalResult } from '@/ui-kit/molecules/Modal/ModalResult'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 import { Button } from '@/ui-kit/atoms/Button'
 

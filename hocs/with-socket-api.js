@@ -20,41 +20,26 @@ export const withSocketApi = (WrappedComponent) => {
         client.on('HELLO', (payload) => {
           const { users } = payload
 
-          console.log(payload)
-
-          if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)))
-          }
+          if (!!users) dispatch(usersActions.set(getUsersArr(users)))
         })
         client.on('ARTICLE_UPDATED', (payload) => {
-          console.log(payload)
           // TODO: dispatch could be used...
           dispatch(showAsyncToast({ text: `Updated: ${payload.id}`, delay: 7000, type: 'info' }))
         })
         client.on('SOMEBODY_CONNECTED', (payload) => {
           const { users } = payload
 
-          console.log(payload)
-
-          if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)))
-          }
+          if (!!users) dispatch(usersActions.set(getUsersArr(users)))
         })
         client.on('SOMEBODY_RECONNECTED', (payload) => {
           const { users } = payload
 
-          if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)))
-          }
+          if (!!users) dispatch(usersActions.set(getUsersArr(users)))
         })
         client.on('SOMEBODY_DISCONNECTED', (payload) => {
           const { users } = payload
 
-          console.log(payload)
-
-          if (!!users) {
-            dispatch(usersActions.set(getUsersArr(users)))
-          }
+          if (!!users) dispatch(usersActions.set(getUsersArr(users)))
         })
         /*
         client.on('ORDER_UPDATED', payload => {
