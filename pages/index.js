@@ -207,30 +207,28 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
     <>
       <Layout>
         <div className="homepage-wrapper">
-          {!!typeof window && (
-            <div className="searchPanel-wrapper">
-              <div id="searchPanel">
-                <span id="bodySearchToggler" className="unselectable" onClick={handleSearchToggler}>
-                  {getIconByCritery(searchBy)}
+          <div className="searchPanel-wrapper">
+            <div id="searchPanel">
+              <span id="bodySearchToggler" className="unselectable" onClick={handleSearchToggler}>
+                {getIconByCritery(searchBy)}
+              </span>
+              <input
+                id="searchText"
+                type="text"
+                value={queryText}
+                onChange={handleChangeText}
+                placeholder={`${memoizedPlaceholder}${isFirstRender ? ' ' : ''}`}
+                title={memoizedPlaceholder}
+                className="unselectable"
+                style={{ maxWidth: queryText ? '100%' : '350px' }}
+              />
+              {!!queryText ? (
+                <span id="clearSearchText" className="unselectable fade-in-effect" onClick={handleClearText}>
+                  <i className="fas fa-times"></i>
                 </span>
-                <input
-                  id="searchText"
-                  type="text"
-                  value={queryText}
-                  onChange={handleChangeText}
-                  placeholder={`${memoizedPlaceholder}${isFirstRender ? ' ' : ''}`}
-                  title={memoizedPlaceholder}
-                  className="unselectable"
-                  style={{ maxWidth: queryText ? '100%' : '350px' }}
-                />
-                {!!queryText ? (
-                  <span id="clearSearchText" className="unselectable fade-in-effect" onClick={handleClearText}>
-                    <i className="fas fa-times"></i>
-                  </span>
-                ) : null}
-              </div>
+              ) : null}
             </div>
-          )}
+          </div>
           {!isLoading && !isLoadingPaging && (
             <Tiles
               isFirstRender={isFirstRender}
