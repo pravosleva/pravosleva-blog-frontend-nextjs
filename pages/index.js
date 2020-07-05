@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import axios from 'axios'
 import { PulseLoader } from 'react-spinners'
 import { Layout } from '@/components/layout'
@@ -96,8 +96,10 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const debouncedSearchBy = useDebounce(searchBy, 1000)
   const [isFirstRender, setIsFirstRender] = useState(true)
 
+  const memoizedSearchBy = useMemo(() => debouncedSearchBy, [debouncedSearchBy])
+  const memoizedQueryText = useMemo(() => debouncedQueryText, [debouncedQueryText])
   const fetchWithRestartCb = useCallback(() => {
-    if (isLoading) return
+    if (isLoading || isFirstRender || !debouncedSearchBy) return
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
 
     setStart(0)
@@ -126,8 +128,11 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
     fetchWithRestart()
   }, [debouncedQueryText])
   useEffect(() => {
-    fetchWithRestart()
+    if (!!memoizedQueryText) fetchWithRestart()
   }, [debouncedSearchBy])
+  useEffect(() => {
+    setIsFirstRender(false)
+  }, [])
 
   const handleStartForNextPage = useCallback(() => {
     if (!isLoading) setStart(start + LIMIT)
@@ -137,16 +142,16 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   }, [isLoading, start, setStart])
 
   const fetchNoRestartCb = useCallback(() => {
-    if (isLoading) return
+    if (isLoading || isFirstRender) return
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
 
     setLoading(true)
 
     Promise.all([
-      fetchArticles({ queryText: debouncedQueryText, targetField: debouncedSearchBy, start }).then((results) => {
+      fetchArticles({ queryText: memoizedQueryText, targetField: memoizedSearchBy, start }).then((results) => {
         if (Array.isArray(results)) setArticles(results)
       }),
-      fetchArticlesCounter({ queryText: debouncedQueryText, targetField: debouncedSearchBy, start }).then((res) =>
+      fetchArticlesCounter({ queryText: memoizedQueryText, targetField: memoizedSearchBy, start }).then((res) =>
         setArticlesCounter(res)
       ),
     ])
@@ -158,14 +163,14 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
         setLoading(false)
         setIsFirstRender(false)
       })
-  }, [debouncedQueryText, debouncedSearchBy, start, isLoading])
+  }, [start, isLoading])
   const fetchNoRestart = useDebouncedCallback(fetchNoRestartCb, 500)
 
   useEffect(() => {
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
     if (isFirstRender) return
 
-    if (!!debouncedQueryText || !!debouncedSearchBy) {
+    if (!!memoizedQueryText || !!memoizedSearchBy) {
       fetchNoRestart()
     }
   }, [start])
@@ -325,19 +330,19 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
   }
 }
 
-IndexPage.getInitialProps = async (ctx) => {
-  // const articles = await fetchArticles({
-  //   queryText: '',
-  //   targetField: 'body',
-  //   start: 0,
-  // })
-  // const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
+IndexPage.getInitialProps = async (_ctx) => {
+  const articles = await fetchArticles({
+    queryText: '',
+    targetField: 'body',
+    start: 0,
+  })
+  const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
 
   return {
-    // initialArtilesCounter: articlesCounter,
-    // initialArtiles: articles,
-    initialArtilesCounter: 0,
-    initialArtiles: [],
+    initialArtilesCounter: articlesCounter,
+    initialArtiles: articles,
+    // initialArtilesCounter: 0,
+    // initialArtiles: [],
   }
 }
 
