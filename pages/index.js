@@ -173,9 +173,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
     if (isFirstRender) return
 
-    if (!!memoizedQueryText || !!memoizedSearchBy) {
-      fetchNoRestart()
-    }
+    if (!!memoizedQueryText) fetchNoRestart()
   }, [start])
 
   const handleSearchToggler = useCallback(() => {
