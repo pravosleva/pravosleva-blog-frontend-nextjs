@@ -1,3 +1,9 @@
+.tiles-grid-item-bg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .tiles-grid-wrapper {
   font-family: Montserrat;
 

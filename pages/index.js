@@ -8,6 +8,13 @@ import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { getLoaderColorByThemeName } from '@/utils/globalTheme/getLoaderColorByThemeName'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
+// import { Tiles } from '@/components/Tiles'
+
+const Tiles = loadable(() =>
+  import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
+    default: Tiles,
+  }))
+)
 
 const getTags = (articles) => {
   const tags = new Map()
@@ -42,11 +49,6 @@ const getTags = (articles) => {
   })
 }
 
-const Tiles = loadable(() =>
-  import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
-    default: Tiles,
-  }))
-)
 const LIMIT = 5
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })
@@ -61,6 +63,7 @@ const Loader = () => {
 }
 const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   const [isLoading, setLoading] = useState(false)
+  const [isLoadingPaging, setLoadingPaging] = useState(false)
   const [articles, setArticles] = useState(initialArtiles)
   const [articlesCounter, setArticlesCounter] = useState(initialArtilesCounter)
   const [queryText, setQueryText] = useState('')
@@ -135,17 +138,17 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
   }, [])
 
   const handleStartForNextPage = useCallback(() => {
-    if (!isLoading) setStart(start + LIMIT)
+    if (!isLoadingPaging) setStart(start + LIMIT)
   }, [isLoading, start, setStart])
   const handleStartForPrevPage = useCallback(() => {
-    if (!isLoading) setStart(start - LIMIT)
+    if (!isLoadingPaging) setStart(start - LIMIT)
   }, [isLoading, start, setStart])
 
   const fetchNoRestartCb = useCallback(() => {
-    if (isLoading || isFirstRender) return
+    if (isLoading || isLoadingPaging || isFirstRender) return
     if (!!window) window.scrollTo({ top: 0, behavior: 'auto' })
 
-    setLoading(true)
+    setLoadingPaging(true)
 
     Promise.all([
       fetchArticles({ queryText: memoizedQueryText, targetField: memoizedSearchBy, start }).then((results) => {
@@ -156,11 +159,11 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
       ),
     ])
       .then(() => {
-        setLoading(false)
+        setLoadingPaging(false)
         setIsFirstRender(false)
       })
       .catch(() => {
-        setLoading(false)
+        setLoadingPaging(false)
         setIsFirstRender(false)
       })
   }, [start, isLoading])
@@ -221,7 +224,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               ) : null}
             </div>
           </div>
-          {!isLoading && (
+          {!isLoading && !isLoadingPaging && (
             <Tiles
               isFirstRender={isFirstRender}
               articles={articles}
@@ -230,11 +233,11 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               currentLimit={LIMIT}
               handleStartForNextPage={handleStartForNextPage}
               handleStartForPrevPage={handleStartForPrevPage}
-              isLoading={isLoading}
+              isLoading={isLoadingPaging}
             />
           )}
-          {isLoading && <Loader />}
-          {!isLoading && !!articles && articles.length > 0 && (
+          {(isLoading || isLoadingPaging) && <Loader />}
+          {!isLoading && !isLoadingPaging && !!articles && articles.length > 0 && (
             <div className="tags-wrapper">
               {getTags(articles).map(({ name, counter }) => (
                 <button className="rippled-btn" key={name} onClick={() => handleTagClick(name)}>
