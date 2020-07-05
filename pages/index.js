@@ -207,7 +207,6 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
     <>
       <Layout>
         <div className="homepage-wrapper">
-          {t('HOME')} {getSearchTextTemplate(searchBy)}
           {!!typeof window && (
             <div className="searchPanel-wrapper">
               <div id="searchPanel">
@@ -338,7 +337,7 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
   if (Number.isInteger(result)) {
     return Promise.resolve(result)
   } else {
-    return Promise.reject('Ответ не является целым числом')
+    return Promise.reject('Ответ не является целым числом', typeof result, JSON.stringify(result))
   }
 }
 
