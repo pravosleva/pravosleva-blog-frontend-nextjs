@@ -53,9 +53,6 @@ const Nav = styled('div')`
     line-height: 40px;
     font-size: 16px;
   }
-  > ul > li {
-    // margin-right: 1rem;
-  }
   > ul > li:first-child {
     margin-left: auto;
   }
@@ -68,7 +65,6 @@ const Nav = styled('div')`
   }
   > ul > li > .login-btn-m {
     text-decoration: none;
-    color: #fff;
     background-color: transparent;
   }
   @media (min-width: 768px) {
@@ -184,6 +180,8 @@ const MobileHeader = ({
                     style={{
                       color: isCurrentPathCb(router.pathname, '/auth/login') ? '#ff781e' : '#FFF',
                       height: '100%',
+                      width: '100%',
+                      textAlign: 'center',
                     }}
                     className={`${!isCurrentPathCb(router.pathname, '/auth/login') ? ' muted no-muted-on-hover' : ''}`}
                   >

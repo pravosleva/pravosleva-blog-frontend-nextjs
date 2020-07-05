@@ -8,7 +8,8 @@ import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { getLoaderColorByThemeName } from '@/utils/globalTheme/getLoaderColorByThemeName'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
-// import { Tiles } from '@/components/Tiles'
+import { withTranslator } from '@/hocs/with-translator'
+import NoSSR from 'react-no-ssr'
 
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
@@ -61,7 +62,7 @@ const Loader = () => {
     </div>
   )
 }
-const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
+const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t }) => {
   const [isLoading, setLoading] = useState(false)
   const [isLoadingPaging, setLoadingPaging] = useState(false)
   const [articles, setArticles] = useState(initialArtiles)
@@ -84,15 +85,6 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
     }
 
     return targets[nextIndex]
-  }, [])
-  const getPrefix = useCallback((name) => {
-    switch (name) {
-      case 'body':
-      case 'title':
-        return 'in'
-      default:
-        return 'by'
-    }
   }, [])
 
   const debouncedQueryText = useDebounce(queryText, 1000)
@@ -196,6 +188,18 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
     setQueryText(name)
     setSearchBy('tag')
   }, [])
+  const getSearchTextTemplate = useCallback((name) => {
+    switch (name) {
+      case 'body':
+        return t('SEATCH_INPUT_PLACEHOLDER--BODY')
+      case 'title':
+        return t('SEATCH_INPUT_PLACEHOLDER--TITLE')
+      case 'tag':
+        return t('SEATCH_INPUT_PLACEHOLDER--TAG')
+      default:
+        return t('SEATCH_INPUT_PLACEHOLDER')
+    }
+  }, [])
 
   return (
     <>
@@ -206,15 +210,17 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
               <span id="bodySearchToggler" className="unselectable" onClick={handleSearchToggler}>
                 {getIconByCritery(searchBy)}
               </span>
-              <input
-                id="searchText"
-                type="text"
-                value={queryText}
-                onChange={handleChangeText}
-                placeholder={`Search ${getPrefix(searchBy)} ${searchBy}...`}
-                className="unselectable"
-                style={{ maxWidth: queryText ? '100%' : '350px' }}
-              />
+              <NoSSR>
+                <input
+                  id="searchText"
+                  type="text"
+                  value={queryText}
+                  onChange={handleChangeText}
+                  placeholder={getSearchTextTemplate(searchBy)}
+                  className="unselectable"
+                  style={{ maxWidth: queryText ? '100%' : '350px' }}
+                />
+              </NoSSR>
               {queryText ? (
                 <span id="clearSearchText" className="unselectable fade-in-effect" onClick={handleClearText}>
                   <i className="fas fa-times"></i>
@@ -252,7 +258,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
       </Layout>
     </>
   )
-}
+})
 
 // API search function
 async function getTagIDByName(name) {

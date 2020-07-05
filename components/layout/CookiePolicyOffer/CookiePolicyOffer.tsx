@@ -7,7 +7,7 @@ import { withTranslator } from '@/hocs/with-translator'
 const CookiePolicyOfferWrapper = styled('div')`
   z-index: 1000001;
   width: 100%;
-  height: 70px;
+  min-height: 70px;
 
   display: flex;
   align-items: center;
@@ -20,7 +20,7 @@ const CookiePolicyOfferWrapper = styled('div')`
 const CookiePolicyOfferContent = styled('div')`
   width: 100%;
   max-width: 1000px;
-  padding: 0 20px 0 20px;
+  padding: 10px 20px 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;

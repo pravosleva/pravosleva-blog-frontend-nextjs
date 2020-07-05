@@ -19,7 +19,7 @@ export const withTranslator = (WrappedComponent: any) => {
       const fromCookie = Cookie.get('lang')
 
       if (!!fromCookie) dispatch(langActions.set(fromCookie))
-    }, [])
+    }, [process.browser])
 
     const handleSetLang = useCallback((key: string) => {
       dispatch(langActions.set(key))

@@ -164,7 +164,7 @@ export const withMobileMenu = (ComposedComponent) =>
           <Sidebar opened={sidebarOpened}>
             <ul className="bold">
               <li>
-                <span className="muted" style={{ fontSize: '0.9em', fontWeight: '500' }}>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9em', fontWeight: '500' }}>
                   <span>ONLINE</span>
                   <i className="fas fa-globe" style={{ marginLeft: '15px', marginRight: '15px' }}></i>
                   {usersConnected?.length}
