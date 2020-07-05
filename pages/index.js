@@ -223,6 +223,7 @@ const IndexPage = ({ initialArtiles, initialArtilesCounter }) => {
           </div>
           {!isLoading && (
             <Tiles
+              isFirstRender={isFirstRender}
               articles={articles}
               articlesCounter={articlesCounter}
               currentStart={start}

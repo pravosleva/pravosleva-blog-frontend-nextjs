@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown' // <ReactMarkdown source={article.bri
 // import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
 
 const Grid = ({
+  isFirstRender,
   articles,
   articlesCounter,
   currentStart,
@@ -37,7 +38,7 @@ const Grid = ({
         </div>
       ) : null}
       {articles.length > 0 ? (
-        <div className="tiles-grid-wrapper fade-in-effect">
+        <div className={`tiles-grid-wrapper${!isFirstRender ? ' fade-in-effect' : ''}`}>
           {articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, _i) => {
             const bgSrc = getBgSrc(briefBackground?.url, true)
 
