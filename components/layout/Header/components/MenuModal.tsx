@@ -6,11 +6,13 @@ import Link from 'next/link'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { withTranslator } from '@/hocs/with-translator'
 
 interface IProps {
   isOpened: boolean
   onHideModal: () => void
   isAuthenticated: boolean
+  t: (text: string) => string
 }
 
 const Wrapper = styled('div')`
@@ -18,11 +20,16 @@ const Wrapper = styled('div')`
   flex-direction: column;
 `
 
-const menuItems = ({ isCurrentPathCb, isAuthenticated }) => (
+const menuItems = ({ isCurrentPathCb, isAuthenticated, t }) => (
   <Wrapper>
     {!isCurrentPathCb('/') && (
       <Link href="/" as="/">
-        <a>Home</a>
+        <a>{t('HOME')}</a>
+      </Link>
+    )}
+    {!isAuthenticated && !isCurrentPathCb('/auth/login') && (
+      <Link href="/auth/login" as="/auth/login">
+        <a>{t('LOGIN')}</a>
       </Link>
     )}
     {!isCurrentPathCb('/feedback') && (
@@ -30,14 +37,9 @@ const menuItems = ({ isCurrentPathCb, isAuthenticated }) => (
         <a>reCAPTCHA v3 test</a>
       </Link>
     )}
-    {!isAuthenticated && !isCurrentPathCb('/auth/login') && (
-      <Link href="/auth/login" as="/auth/login">
-        <a>Login</a>
-      </Link>
-    )}
     {isAuthenticated && !isCurrentPathCb('/profile') && (
       <Link href="/profile" as="/profile">
-        <a>Profile</a>
+        <a>{t('PROFILE')}</a>
       </Link>
     )}
     <a href="http://pravosleva.ru/storybook/index.html" rel="noreferrer" target="_blank">
@@ -46,7 +48,7 @@ const menuItems = ({ isCurrentPathCb, isAuthenticated }) => (
   </Wrapper>
 )
 
-export const MenuModal = ({ isOpened, onHideModal, isAuthenticated }: IProps) => {
+export const MenuModal = withTranslator(({ isOpened, onHideModal, isAuthenticated, t }: IProps) => {
   const router = useRouter()
   const isCurrentPathCb = useCallback((path) => isCurrentPath(router.pathname, path), [router.pathname])
 
@@ -55,10 +57,10 @@ export const MenuModal = ({ isOpened, onHideModal, isAuthenticated }: IProps) =>
       {isOpened && (
         <Modal
           size="small"
-          modalTitle="Menu"
+          modalTitle={t('MENU')}
           // modalSubtitle="process.env"
           closeModal={onHideModal}
-          renderBodyContent={() => menuItems({ isCurrentPathCb, isAuthenticated })}
+          renderBodyContent={() => menuItems({ isCurrentPathCb, isAuthenticated, t })}
           // renderFooterContent={() => (
           //   <FooterRow>
           //     <Button typeName="blue" size="small" width="narrow" onClick={onHideModal}>
@@ -70,4 +72,4 @@ export const MenuModal = ({ isOpened, onHideModal, isAuthenticated }: IProps) =>
       )}
     </>
   )
-}
+})

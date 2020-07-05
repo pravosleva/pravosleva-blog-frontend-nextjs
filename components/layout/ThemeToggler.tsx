@@ -35,7 +35,7 @@ export const ThemeToggler = () => {
         }
         @media (max-width: 767px) {
           .min-width-span {
-            min-width: 35px;
+            min-width: 40px;
           }
           .theme-toggler: {
             margin-left: 10px;

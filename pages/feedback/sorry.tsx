@@ -3,6 +3,7 @@ import { Layout } from '@/components/layout'
 import styled, { StyledComponent } from 'styled-components'
 import Link from 'next/link'
 import { NextPage, NextPageContext } from 'next'
+import { withTranslator } from '@/hocs/with-translator'
 
 const Container: StyledComponent<'div', any, {}, never> = styled('div')`
   @media (min-width: 768px) {
@@ -22,9 +23,10 @@ const Container: StyledComponent<'div', any, {}, never> = styled('div')`
 
 interface IProps {
   msg: string | string[]
+  t?: (text: string) => string
 }
 
-const Sorry: NextPage<IProps> = ({ msg }) => {
+const Sorry: NextPage<IProps> = withTranslator(({ msg, t }) => {
   const getMsg = useCallback(() => {
     if (Array.isArray(msg)) {
       return (
@@ -41,24 +43,24 @@ const Sorry: NextPage<IProps> = ({ msg }) => {
   return (
     <Layout>
       <Container className="box">
-        <h2 className="error">Sorry</h2>
+        <h2 className="error">{t('SORRY')}</h2>
         <p>
           {getMsg()}
           <br />
-          <b>Thanks for reCAPTHCA v3 testing</b>
+          <b>{t('THANKS_FOR_RECAPTHCA_V3_TESTING')}</b>
         </p>
         <div className="special-link-wrapper fade-in-effect unselectable">
           <Link href="/" as="/">
             <a className="link-as-rippled-btn">
               <i className="fas fa-arrow-left"></i>
-              <span style={{ marginLeft: '10px' }}>Go back to the homepage</span>
+              <span style={{ marginLeft: '10px' }}>{t('GO_BACK_TO_THE_HOMEPAGE')}</span>
             </a>
           </Link>
         </div>
       </Container>
     </Layout>
   )
-}
+})
 
 Sorry.getInitialProps = async ({ query }: NextPageContext): Promise<IProps> => {
   const { msg } = query

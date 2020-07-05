@@ -1,18 +1,21 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import Headroom from 'react-headroom'
 import styled, { keyframes, css } from 'styled-components'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { withMobileMenu } from './hocs/with-mobile-menu'
 import { HamburgerIcon, CrossCloseIcon } from './components'
-import Cookie from 'js-cookie'
-import { COOKIES } from '@/helpers/services/loginService'
+// import Cookie from 'js-cookie'
+// import { COOKIES } from '@/helpers/services/loginService'
 import { showAsyncToast } from '@/actions'
 import { logout } from '@/helpers/services/restService'
 import { useRouter } from 'next/router'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { ThemeToggler } from '../../ThemeToggler'
+import { withTranslator } from '@/hocs/with-translator'
+import { LangLink } from '../components/LangLink'
+import { userInfoActions } from '@/store/reducers/user-info'
 
 // Could be used if !ssr
 export const MobileHeaderLoader = styled.div`
@@ -92,23 +95,29 @@ const MobileHeader = ({
   sidebarToggler,
   sidebarOpened,
   topDocRef,
+
+  // Translator:
+  t,
+  setLang,
+  suppoerLocales, // Array like this: [{ label, name, value }]
+  currentLang,
 }) => {
-  const usersConnected = useSelector((state) => state.users.items)
+  const isAuthenticated = !!useSelector((state) => state.userInfo?.fromServer?.id)
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  useEffect(() => {
-    const token = Cookie.get(COOKIES.authToken)
+  // const [isLoaded, setIsLoaded] = useState(false)
+  // const [isAuthenticated, setIsAuthenticated] = useState(false)
+  // useEffect(() => {
+  //   const token = Cookie.get(COOKIES.authToken)
 
-    if (!!token) setIsAuthenticated(true)
-    setIsLoaded(true)
-  }, [])
+  //   if (!!token) setIsAuthenticated(true)
+  //   setIsLoaded(true)
+  // }, [])
   const handleLogoutCb = useCallback(async () => {
     await logout()
       .then(() => {
-        dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
+        // dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
         router.push('/auth/login')
       })
       .catch((msg) => {
@@ -116,9 +125,18 @@ const MobileHeader = ({
       })
   }, [dispatch, showAsyncToast])
   const handleLogout = useDebouncedCallback(() => {
-    handleLogoutCb()
+    handleLogoutCb().then(() => {
+      dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
+    })
   }, 500)
   const isCurrentPathCb = useCallback(isCurrentPath, [])
+  const handleSetLang = useCallback(
+    (value) => (e) => {
+      e.preventDefault()
+      setLang(value)
+    },
+    []
+  )
 
   return (
     <Headroom>
@@ -131,55 +149,89 @@ const MobileHeader = ({
                 marginRight: 'auto',
                 marginBottom: '0px',
                 fontFamily: 'Montserrat',
-                fontWeight: '500',
+                // fontWeight: '500',
+                fontSize: '0.8em',
               }}
               onClick={() => sidebarToggler(false)}
             >
-              <Link href="/">
-                <a style={{ lineHeight: '40px' }}>
-                  Pravo$leva
-                  {usersConnected.length > 0 && (
-                    <span className="muted" style={{ marginLeft: '10px' }}>
-                      <i className="fas fa-globe"></i> {usersConnected.length}
-                    </span>
-                  )}
-                </a>
+              <Link href="/" as="/">
+                <a style={{ lineHeight: '40px' }}>Pravo$leva</a>
               </Link>
             </li>
+            {!!suppoerLocales &&
+              suppoerLocales.length > 0 &&
+              suppoerLocales.map((lang) => (
+                <li
+                  key={lang.label}
+                  style={{
+                    minWidth: '45px',
+                    // marginLeft: '15px', marginRight: '15px',
+                    marginBottom: '0px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontWeight: '500',
+                  }}
+                >
+                  <Link href="/">
+                    <LangLink
+                      isCurrentSelection={lang.value === currentLang}
+                      onClick={handleSetLang(lang.value)}
+                      title={lang.name}
+                    >
+                      {lang.label}
+                    </LangLink>
+                  </Link>
+                </li>
+              ))}
             <ThemeToggler />
-            {isLoaded && !isAuthenticated && (
+            {!isAuthenticated && (
               <li
                 style={{
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
 
-                  // TMP: For centering (no burger menu):
-                  // marginRight: '20px',
+                  // marginLeft: '10px',
+                  // marginRight: '10px',
+                  minWidth: '40px',
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
                 }}
                 className="fade-in-effect"
               >
                 <Link href="/auth/login">
-                  <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? 'yellow' : '#FFF' }}>Login</a>
+                  <a
+                    style={{
+                      color: isCurrentPathCb(router.pathname, '/auth/login') ? '#ff781e' : '#FFF',
+                      height: '100%',
+                    }}
+                    className={`${!isCurrentPathCb(router.pathname, '/auth/login') ? ' muted no-muted-on-hover' : ''}`}
+                  >
+                    <span style={{ height: '100%' }}>
+                      <i className="fas fa-fingerprint"></i>
+                    </span>
+                  </a>
                 </Link>
               </li>
             )}
-            {isLoaded && isAuthenticated && (
+            {isAuthenticated && (
               <li
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-
-                  // TMP: For centering (no burger menu):
-                  // marginRight: '20px',
+                  justifyContent: 'center',
+                  // marginLeft: '15px',
+                  minWidth: '40px',
                   marginBottom: '0px',
                   fontFamily: 'Montserrat',
                 }}
                 className="fade-in-effect"
                 onClick={handleLogout}
               >
-                <a href="#">Logout</a>
+                <a href="#">
+                  <i class="fas fa-sign-out-alt"></i>
+                </a>
               </li>
             )}
             <li
@@ -201,4 +253,4 @@ const MobileHeader = ({
   )
 }
 
-export default withMobileMenu(MobileHeader)
+export default withMobileMenu(withTranslator(MobileHeader))

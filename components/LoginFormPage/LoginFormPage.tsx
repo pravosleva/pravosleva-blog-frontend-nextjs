@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import styled, { StyledComponent } from 'styled-components'
+import { withTranslator } from '@/hocs/with-translator'
 
 interface ILoginFormPage {
   onSubmit: () => void
@@ -9,6 +10,7 @@ interface ILoginFormPage {
   reset: () => void
   submitting: boolean
   children?: any
+  t: (text: string) => string
 }
 
 const Container: StyledComponent<'div', any, {}, never> = styled('div')`
@@ -22,34 +24,34 @@ const Container: StyledComponent<'div', any, {}, never> = styled('div')`
   }
 `
 
-const LoginFormConnected: React.FC = (props: ILoginFormPage) => {
-  const { handleSubmit, pristine, reset, submitting } = props
+const LoginFormConnected: React.FC = withTranslator((props: ILoginFormPage) => {
+  const { handleSubmit, pristine, reset, submitting, t } = props
   return (
     <Container className="box">
       <form onSubmit={handleSubmit}>
-        <h2 className="gradient-animate-effect">Login</h2>
+        <h2 className="gradient-animate-effect">{t('LOGIN')}</h2>
         <div className="inputBox">
           <Field name="email" component="input" type="email" placeholder="Email" required />
           <label>Email</label>
         </div>
         <div className="inputBox">
           <Field name="password" component="input" type="password" placeholder="Password" required />
-          <label>Password</label>
+          <label>{t('PASSWORD')}</label>
         </div>
         <div className="inputBox inputBox--btns">
           {reset && (
             <button className="rippled-btn" type="button" disabled={pristine || submitting} onClick={reset}>
-              Clear
+              {t('CLEAR')}
             </button>
           )}
           <button className="rippled-btn" type="submit" disabled={pristine || submitting}>
-            Submit
+            {t('SUBMIT')}
           </button>
         </div>
       </form>
     </Container>
   )
-}
+})
 
 export const LoginFormPage = reduxForm({
   form: 'login', // a unique identifier for this form

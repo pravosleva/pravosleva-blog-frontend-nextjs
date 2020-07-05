@@ -46,7 +46,7 @@ const translateFnInit = (lang) => {
       // For example: initDone -> true
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err)
     })
   return (str) => intl.get(str)
 }

@@ -9,6 +9,7 @@
 ```
 REACT_APP_API_ENDPOINT=http://localhost:1337
 REACT_APP_SOCKET_ENDPOINT=http://localhost:1337
+REACT_APP_LANG_COOKIE_EXPIRES_DAYS=1
 
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 ```
@@ -34,6 +35,7 @@ _Generate bundle size analysis to `.next/analyze/` as static_
 ```
 REACT_APP_API_ENDPOINT=http://80.87.194.181/api
 REACT_APP_SOCKET_ENDPOINT=http://80.87.194.181
+REACT_APP_LANG_COOKIE_EXPIRES_DAYS=1
 
 GA_TRACKING_ID=UA-xxxxxxxxx-x
 YANDEX_COUNTER_ID=xxxxxxxx

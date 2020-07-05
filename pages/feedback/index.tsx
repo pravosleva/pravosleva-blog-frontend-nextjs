@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { loadReCaptcha } from 'react-recaptcha-v3'
 import { post } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
+import { withTranslator } from '@/hocs/with-translator'
 
 const RECAPTCHAV3_CLIENT_KEY = process.env.RECAPTCHAV3_CLIENT_KEY
 const RECAPTCHAV3_VERIFY_URL = process.env.RECAPTCHAV3_VERIFY_URL
@@ -24,7 +25,7 @@ const Container: StyledComponent<'div', any, {}, never> = styled('div')`
   }
 `
 
-const Feedback = () => {
+const Feedback = ({ t }) => {
   const router = useRouter()
   const [wasSent, setWasSent] = useState(false)
   const [isRecaptchaShowed, setIsRecaptchaShowed] = useState(false)
@@ -110,22 +111,22 @@ const Feedback = () => {
       <Container className="box">
         {!wasSent && (
           <form onSubmit={showRecaptcha}>
-            <h2 className="gradient-animate-effect">Feedback</h2>
+            <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
             <div className="inputBox">
               <input name="companyName" placeholder="invisible" {...bindCompanyName} required />
-              <label>Company name</label>
+              <label>{t('COMPANY_NAME')}</label>
             </div>
             <div className="inputBox">
               <input name="contactName" placeholder="invisible" {...bindContactName} required />
-              <label>Your name</label>
+              <label>{t('YOUR_NAME')}</label>
             </div>
             <div className="inputBox">
               <textarea name="comment" placeholder="invisible" {...bindComment} required />
-              <label>Comment</label>
+              <label>{t('COMMENT')}</label>
             </div>
             <div className="special-link-wrapper fade-in-effect unselectable">
               <button className="rippled-btn" type="submit">
-                Submit
+                {t('SUBMIT')}
               </button>
               {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
             </div>
@@ -136,4 +137,4 @@ const Feedback = () => {
   )
 }
 
-export default Feedback
+export default withTranslator(Feedback)

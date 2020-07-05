@@ -10,6 +10,7 @@ import Prism from 'prismjs'
 import { getImageUrl, getBgSrc, getApiUrl, isProd } from '@/utils/getApiUrl'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
+import { withTranslator } from '@/hocs/with-translator'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
@@ -28,7 +29,7 @@ function columns(containerWidth) {
   return columns
 }
 
-const Article = ({ initArticleData: article }) => {
+const Article = withTranslator(({ t, initArticleData: article }) => {
   // const router = useRouter()
   // const { id } = router.query
   // GALLERY:
@@ -82,7 +83,7 @@ const Article = ({ initArticleData: article }) => {
                 <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
                   <Link href="/" as="/">
                     <a title="Pravosleva.ru" itemProp="item">
-                      Главная
+                      {t('HOME')}
                     </a>
                   </Link>
                 </li>
@@ -185,7 +186,7 @@ const Article = ({ initArticleData: article }) => {
           <Link href="/" as="/">
             <a className="link-as-rippled-btn">
               <i className="fas fa-arrow-left"></i>
-              <span style={{ marginLeft: '10px' }}>Go back to the homepage</span>
+              <span style={{ marginLeft: '10px' }}>{t('GO_BACK_TO_THE_HOMEPAGE')}</span>
             </a>
           </Link>
         </div>
@@ -236,7 +237,7 @@ const Article = ({ initArticleData: article }) => {
       </Layout>
     </>
   )
-}
+})
 
 Article.getInitialProps = async (ctx) => {
   const { query } = ctx

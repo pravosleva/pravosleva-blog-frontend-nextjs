@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
 import Link from 'next/link'
@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import { logout } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
-import Cookie from 'js-cookie'
-import { COOKIES } from '@/helpers/services/loginService'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { getGeoDataStr } from '@/utils/geo/getGeoDataStr'
@@ -16,6 +14,9 @@ import { Button } from '@/ui-kit/atoms'
 import { MenuModal } from './components/MenuModal'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 import { ThemeToggler } from '../ThemeToggler'
+import { withTranslator } from '@/hocs/with-translator'
+import { LangLink } from './components/LangLink'
+import { userInfoActions } from '@/store/reducers/user-info'
 
 const Nav = styled('div')`
   font-size: 16px;
@@ -47,7 +48,7 @@ const Nav = styled('div')`
     height: 100%;
   }
   > ul > li.active > a {
-    color: yellow;
+    color: #ff781e;
     // color: #FFDF64;
   }
   > ul > li > a.selected {
@@ -65,35 +66,35 @@ const MenuFlexWrapper = styled('div')`
   align-items: center;
   height: 100%;
 `
-
 const getIPs = (items) =>
   items.map(({ ip, geo }) => `${ip}${getGeoDataStr(geo)}`).join(`
 `)
 
-const DesktopHeader = () => {
+const DesktopHeader = ({
+  t,
+  setLang,
+  suppoerLocales, // Array like this: [{ label, name, value }]
+  currentLang,
+}) => {
   const usersConnected = useSelector((state) => state.users?.items)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const isAuthenticated = !!useSelector((state) => state.userInfo?.fromServer?.id)
   const router = useRouter()
   const dispatch = useDispatch()
-  useEffect(() => {
-    const token = Cookie.get(COOKIES.authToken)
-
-    if (!!token) setIsAuthenticated(true)
-    setIsLoaded(true)
-  }, [])
   const handleLogoutCb = useCallback(async () => {
-    await logout()
+    const result = await logout()
       .then(() => {
-        dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
+        // dispatch(showAsyncToast({ text: 'LOGOUT', delay: 3000, type: 'success' }))
         router.push('/auth/login')
       })
       .catch((msg) => {
         dispatch(showAsyncToast({ text: msg, delay: 20000, type: 'error' }))
       })
+    return result
   }, [dispatch, showAsyncToast])
   const handleLogout = useDebouncedCallback(() => {
-    handleLogoutCb()
+    handleLogoutCb().then(() => {
+      dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
+    })
   }, 500)
   const isCurrentPathCb = useCallback(isCurrentPath, [])
   const [isMenuOpened, setIsMenuOpened] = useState(false)
@@ -106,6 +107,13 @@ const DesktopHeader = () => {
     onBlockScrollBody(false)
     setIsMenuOpened(false)
   }, [])
+  const handleSetLang = useCallback(
+    (value) => (e) => {
+      e.preventDefault()
+      setLang(value)
+    },
+    []
+  )
 
   return (
     <>
@@ -132,23 +140,41 @@ const DesktopHeader = () => {
                   </span>
                 )}
               </li>
+              {suppoerLocales.map((lang) => (
+                <li
+                  key={lang.label}
+                  style={{ marginLeft: '15px', marginRight: '0px', marginBottom: '0px', cursor: 'pointer' }}
+                >
+                  <Link href="/">
+                    <LangLink
+                      isCurrentSelection={lang.value === currentLang}
+                      onClick={handleSetLang(lang.value)}
+                      title={lang.name}
+                    >
+                      {lang.label}
+                    </LangLink>
+                  </Link>
+                </li>
+              ))}
               <ThemeToggler />
-              {isLoaded && !isAuthenticated && (
+              {!isAuthenticated && (
                 <li className="fade-in-effect" style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }}>
                   <Link href="/auth/login" as="/auth/login">
-                    <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? '#ff781e' : '#FFF' }}>Login</a>
+                    <a style={{ color: isCurrentPathCb(router.pathname, '/auth/login') ? '#ff781e' : '#FFF' }}>
+                      {t('LOGIN')}
+                    </a>
                   </Link>
                 </li>
               )}
-              {isLoaded && isAuthenticated && (
+              {isAuthenticated && (
                 <li style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
-                  <a href="#">Logout</a>
+                  <a href="#">{t('LOGOUT')}</a>
                 </li>
               )}
               <li style={{ marginRight: '20px', marginBottom: '0px' }}>
                 <MenuFlexWrapper>
                   <Button onClick={handleMenuOpen} typeName="orange" width="narrow" size="xsmall">
-                    Menu
+                    {t('MENU')}
                   </Button>
                 </MenuFlexWrapper>
               </li>
@@ -161,4 +187,4 @@ const DesktopHeader = () => {
   )
 }
 
-export default DesktopHeader
+export default withTranslator(DesktopHeader)

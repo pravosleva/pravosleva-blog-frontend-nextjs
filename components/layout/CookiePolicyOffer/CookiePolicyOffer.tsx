@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '@/ui-kit/atoms'
 import Cookie from 'js-cookie'
+import { withTranslator } from '@/hocs/with-translator'
 
 const CookiePolicyOfferWrapper = styled('div')`
   z-index: 1000001;
@@ -33,7 +34,14 @@ const CookiePolicyOfferContent = styled('div')`
   }
 `
 
-export const CookiePolicyOffer = () => {
+interface IProps {
+  t: (text: string) => string
+}
+
+const CookiePolicyOfferTranslated = ({
+  // Translator:
+  t,
+}: IProps) => {
   const [isOfferEnabled, setIsOfferEnabled] = useState(false)
   const handleConfirm = useCallback(() => {
     // eslint-disable-next-line no-console
@@ -54,20 +62,20 @@ export const CookiePolicyOffer = () => {
         <CookiePolicyOfferWrapper>
           <CookiePolicyOfferContent>
             <div>
-              <span>By using the site, you agree to our cookie policy.</span>{' '}
+              <span>{t('COOKIE_POLICY_TEXT')}.</span>{' '}
               <a
                 className="cookie-policy-offer"
                 target="_blank"
                 rel="noreferrer"
                 href="https://legal.my.com/us/general/cookie/"
               >
-                Read more here
+                {t('READ_MORE_HERE')}
               </a>
               .
             </div>
             <div>
               <Button onClick={handleConfirm} typeName="orange" width="narrow" size="xsmall">
-                I Agree
+                {t('I_AGREE')}
               </Button>
             </div>
           </CookiePolicyOfferContent>
@@ -76,3 +84,5 @@ export const CookiePolicyOffer = () => {
     </>
   )
 }
+
+export const CookiePolicyOffer = withTranslator(CookiePolicyOfferTranslated)

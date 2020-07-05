@@ -694,6 +694,9 @@ pre tt:after {
 label {
   font-family: 'Montserrat';
 }
+.bold {
+  font-weight: 500;
+}
 
 /* SPECIAL LINKS */
 .special-link,

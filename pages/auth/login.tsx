@@ -52,9 +52,9 @@ const Login: React.FC<{}> = () => {
     }
 
     await postLogin({ email, password })
-      .then((username) => {
+      .then((_username) => {
         router.push('/profile')
-        dispatch(showAsyncToast({ text: `Logged as ${username}`, delay: 3000, type: 'success' }))
+        // dispatch(showAsyncToast({ text: `Logged as ${username}`, delay: 3000, type: 'success' }))
       })
       .catch((msg) => {
         dispatch(showAsyncToast({ text: msg, delay: 20000, type: 'error' }))

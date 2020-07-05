@@ -1,14 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { compose, withStateHandlers, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
 import { scrollDisablingComponentsActions } from '@/store/reducers/scroll-disabling-components'
 import { withScrollDisabler } from '@/hocs/body-scroll-disabler'
-import Cookie from 'js-cookie'
-import { COOKIES } from '@/helpers/services/loginService'
+// import Cookie from 'js-cookie'
+// import { COOKIES } from '@/helpers/services/loginService'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
+import { logout } from '@/helpers/services/restService'
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+import { showAsyncToast } from '@/actions'
+import { withTranslator } from '@/hocs/with-translator'
+import { userInfoActions } from '@/store/reducers/user-info'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -80,6 +85,7 @@ const items = [
 
 export const withMobileMenu = (ComposedComponent) =>
   compose(
+    withTranslator,
     withProps({
       topDocRef: React.createRef(),
     }),
@@ -112,9 +118,33 @@ export const withMobileMenu = (ComposedComponent) =>
       // Scroll disabler hoc (topDocRef used there):
       scrollToRef,
 
+      // Translator:
+      t,
+      setLang,
+      suppoerLocales, // Array like this: [{ label, name, value }]
+      currentLang,
+
       ...props
     }) => {
+      const usersConnected = useSelector((state) => state.users?.items)
+      const isAuthenticated = !!useSelector((state) => state.userInfo?.fromServer?.id)
       const dispatch = useDispatch()
+      const handleLogoutCb = useCallback(async () => {
+        const result = await logout()
+          .then(() => {
+            // dispatch(showAsyncToast({ text: t('LOGOUT'), delay: 3000, type: 'success' }))
+            router.push('/auth/login')
+          })
+          .catch((text) => {
+            dispatch(showAsyncToast({ text, delay: 20000, type: 'error' }))
+          })
+        return result
+      }, [dispatch, showAsyncToast])
+      const handleLogout = useDebouncedCallback(() => {
+        handleLogoutCb().then(() => {
+          dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
+        })
+      }, 500)
 
       useEffect(() => {
         if (sidebarOpened) {
@@ -129,14 +159,8 @@ export const withMobileMenu = (ComposedComponent) =>
         topDocRef,
       ])
 
-      const [isLoaded, setIsLoaded] = useState(false)
-      const [isAuthenticated, setIsAuthenticated] = useState(false)
-      useEffect(() => {
-        const token = Cookie.get(COOKIES.authToken)
-
-        if (!!token) setIsAuthenticated(true)
-        setIsLoaded(true)
-      }, [])
+      // const [isLoaded, setIsLoaded] = useState(false)
+      // const [isAuthenticated, setIsAuthenticated] = useState(false)
 
       const router = useRouter()
       const isCurrentPathCb = useCallback(isCurrentPath, [])
@@ -144,19 +168,43 @@ export const withMobileMenu = (ComposedComponent) =>
       return (
         <Wrapper opened={sidebarOpened}>
           <Sidebar opened={sidebarOpened}>
-            <ul>
-              {isLoaded && isAuthenticated && (
+            <ul className="bold">
+              <li>
+                <span className="muted" style={{ fontSize: '0.9em', fontWeight: '500' }}>
+                  <span>ONLINE</span>
+                  <i className="fas fa-globe" style={{ marginLeft: '15px', marginRight: '15px' }}></i>
+                  {usersConnected?.length}
+                </span>
+              </li>
+              {!isAuthenticated && (
+                <li>
+                  <Link href="/auth/login" as="/auth/login">
+                    <a className={isCurrentPathCb(router.pathname, '/auth/login') ? 'active' : ''}>{t('LOGIN')}</a>
+                  </Link>
+                </li>
+              )}
+              {isAuthenticated && (
                 <li>
                   <Link href="/profile" as="/profile">
-                    <a className={isCurrentPathCb(router.pathname, '/profile') ? 'active' : ''}>Profile</a>
+                    <a className={isCurrentPathCb(router.pathname, '/profile') ? 'active' : ''}>{t('PROFILE')}</a>
                   </Link>
                 </li>
               )}
               <li>
                 <Link href="/feedback">
-                  <a className={isCurrentPathCb(router.pathname, '/feedback') ? 'active' : ''}>Feedback</a>
+                  <a className={isCurrentPathCb(router.pathname, '/feedback') ? 'active' : ''}>{t('FEEDBACK')}</a>
                 </Link>
               </li>
+              {isAuthenticated && (
+                <li onClick={handleLogout}>
+                  <a
+                    className={isCurrentPathCb(router.pathname, '/auth/login') ? 'active' : ''}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {t('LOGOUT')}
+                  </a>
+                </li>
+              )}
             </ul>
           </Sidebar>
           <ComposedComponent
