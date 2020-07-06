@@ -1,6 +1,8 @@
 {
   "CLEAR": "Clear",
   "CLOSE": "Close",
+  "CHANGE_SEARCH_MODE": "Change search mode",
+  "CURRENT_THEME_IS": "Current theme is {theme}",
   "COMPANY_NAME": "Company name",
   "COMMENT": "Comment",
   "HOME": "Home",

@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
 import { getThemeIcon } from '@/utils/globalTheme/getThemeIcon'
 import { IRootState } from '@/store/reducers/IRootState'
+import { withTranslator } from '@/hocs/with-translator'
+import { getStringWithUpperCaseFirstChar } from '@/utils/getStringWithUpperCaseFirstChar'
 
-export const ThemeToggler = () => {
+export const ThemeToggler = withTranslator(({ t }) => {
   const { onSetNextTheme } = useGlobalTheming()
   const currentTheme = useSelector((state: IRootState) => state.globalTheme.theme)
   const themeIcon = useMemo(() => getThemeIcon(currentTheme), [currentTheme])
@@ -15,6 +17,7 @@ export const ThemeToggler = () => {
         onClick={onSetNextTheme}
         style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', cursor: 'pointer' }}
         className="muted no-muted-on-hover"
+        title={t('CURRENT_THEME_IS', { theme: getStringWithUpperCaseFirstChar(currentTheme) })}
       >
         <span
           className="min-width-span"
@@ -45,4 +48,4 @@ export const ThemeToggler = () => {
       `}</style>
     </>
   )
-}
+})

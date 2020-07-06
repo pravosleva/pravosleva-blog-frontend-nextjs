@@ -5,6 +5,7 @@ import { getFormatedDate2 } from '@/utils/timeConverter'
 import { getBgSrc } from '@/utils/getApiUrl'
 import ReactMarkdown from 'react-markdown' // <ReactMarkdown source={article.brief} />
 // import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
+// import { useDeviceWidth } from '@/hooks/use-device-width'
 
 const Grid = ({
   isFirstRender,
@@ -16,47 +17,50 @@ const Grid = ({
   handleStartForPrevPage,
   isLoading,
 }) => {
-  const renderArticles = useCallback((articles) => {
-    return articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, _i) => {
-      const bgSrc = getBgSrc(briefBackground?.url, true)
+  // const { width: deviceWidth } = useDeviceWidth()
+  const renderArticles = useCallback(
+    (articles) => {
+      return articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, _i) => {
+        const bgSrc = getBgSrc(briefBackground?.url, true)
 
-      return (
-        <div
-          className="tiles-grid-item tiles-grid-item-bg white"
-          key={id}
-          style={{
-            // backgroundImage: `linear-gradient(#FFF, transparent, #FFF), url(${bgSrc})`,
-            // backgroundImage: `radial-gradient(ellipse closest-side, rgba(15, 14, 22, 0.5), #100e17), url(${bgSrc})`,
-            backgroundImage: `url(${bgSrc})`,
-          }}
-        >
-          <span className="tiles-grid-item__title">
-            <ReactMarkdown source={title} />
-          </span>
-          <div className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>
-            {/* <em>{brief}</em> */}
-            <ReactMarkdown source={brief} />
-          </div>
-          <span
+        return (
+          <div
+            className="tiles-grid-item tiles-grid-item-bg white"
+            key={id}
             style={{
-              textAlign: 'left',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              // backgroundImage: `linear-gradient(#FFF, transparent, #FFF), url(${bgSrc})`,
+              // backgroundImage: `radial-gradient(ellipse closest-side, rgba(15, 14, 22, 0.5), #100e17), url(${bgSrc})`,
+              backgroundImage: `url(${bgSrc})`,
             }}
           >
-            <Link href="/article/[slug]" as={`/article/${slug}`}>
-              <a className="special-link inactive-without-hover white unselectable">
-                READ MORE<i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
-              </a>
-            </Link>
-            <small className="inactive">{getFormatedDate2(new Date(createdAt))}</small>
-          </span>
-        </div>
-      )
-    })
-  }, [])
+            <span className="tiles-grid-item__title">
+              <ReactMarkdown source={title} />
+            </span>
+            <div className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>
+              <ReactMarkdown source={brief} />
+            </div>
+            <span
+              style={{
+                textAlign: 'left',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Link href="/article/[slug]" as={`/article/${slug}`}>
+                <a className="special-link inactive-without-hover white unselectable">
+                  READ MORE<i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
+                </a>
+              </Link>
+              <small className="inactive">{getFormatedDate2(new Date(createdAt))}</small>
+            </span>
+          </div>
+        )
+      })
+    },
+    [] // deviceWidth
+  )
 
   return (
     <>

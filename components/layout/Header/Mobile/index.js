@@ -153,9 +153,9 @@ const MobileHeader = ({
                 >
                   <Link href="/">
                     <LangLink
+                      title={lang.name}
                       isCurrentSelection={lang.value === currentLang}
                       onClick={handleSetLang(lang.value)}
-                      title={lang.name}
                     >
                       {lang.label}
                     </LangLink>
@@ -174,6 +174,7 @@ const MobileHeader = ({
                   fontFamily: 'Montserrat',
                 }}
                 className="fade-in-effect"
+                title="Login"
               >
                 <Link href="/auth/login">
                   <a
@@ -204,6 +205,7 @@ const MobileHeader = ({
                 }}
                 className="fade-in-effect"
                 onClick={handleLogout}
+                title="Logout"
               >
                 <a href="#">
                   <i class="fas fa-sign-out-alt"></i>

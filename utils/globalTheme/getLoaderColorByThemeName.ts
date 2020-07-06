@@ -4,7 +4,7 @@ export const getLoaderColorByThemeName = (themeName: string) => {
     case 'hard-gray':
       return '#fff'
     case 'dark':
-      return '#ff9000'
+      return '#ff9000' // ff781e
     case 'light':
     default:
       return '#0162c8'

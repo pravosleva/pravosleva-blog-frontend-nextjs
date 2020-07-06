@@ -9,6 +9,7 @@ import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { getLoaderColorByThemeName } from '@/utils/globalTheme/getLoaderColorByThemeName'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
 import { withTranslator } from '@/hocs/with-translator'
+// import { useDeviceWidth } from '@/hooks/use-device-width'
 
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
@@ -175,7 +176,7 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
   const getIconByCritery = useCallback((searchBy) => {
     switch (searchBy) {
       case 'body':
-        return <i className="fas fa-code"></i>
+        return <i className="fas fa-search"></i>
       case 'title':
         return <i className="fas fa-heading"></i>
       case 'tag':
@@ -202,6 +203,7 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
     }
   }, [])
   const memoizedPlaceholder = useMemo(() => getSearchTextTemplate(memoizedSearchBy), [currentLang, memoizedSearchBy])
+  const memoizedSearchModeTogglerDescription = useMemo(() => t('CHANGE_SEARCH_MODE'), [currentLang, memoizedSearchBy])
 
   return (
     <>
@@ -209,7 +211,12 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
         <div className="homepage-wrapper">
           <div className="searchPanel-wrapper">
             <div id="searchPanel">
-              <span id="bodySearchToggler" className="unselectable" onClick={handleSearchToggler}>
+              <span
+                title={`${memoizedSearchModeTogglerDescription}${isFirstRender ? ' ' : ''}`}
+                id="bodySearchToggler"
+                className="unselectable"
+                onClick={handleSearchToggler}
+              >
                 {getIconByCritery(searchBy)}
               </span>
               <input
@@ -220,10 +227,10 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
                 placeholder={`${memoizedPlaceholder}${isFirstRender ? ' ' : ''}`}
                 title={memoizedPlaceholder}
                 className="unselectable"
-                style={{ maxWidth: queryText ? '100%' : '350px' }}
+                style={{ maxWidth: queryText ? '100%' : '305px' }}
               />
               {!!queryText ? (
-                <span id="clearSearchText" className="unselectable fade-in-effect" onClick={handleClearText}>
+                <span id="clearSearchText" className="unselectable slide-down-effect" onClick={handleClearText}>
                   <i className="fas fa-times"></i>
                 </span>
               ) : null}

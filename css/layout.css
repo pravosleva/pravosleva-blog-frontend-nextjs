@@ -788,6 +788,28 @@ div.article-body > blockquote {
     opacity: 1;
   }
 }
+.slide-down-effect {
+  animation: slideDown 1s 1;
+}
+@keyframes slideDown {
+  0% {
+    transform: translateY(-500px);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+.slide-up-effect {
+  animation: slideUp 1s 1;
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(-500px);
+  }
+}
 
 /* TAGS */
 .the-tag {

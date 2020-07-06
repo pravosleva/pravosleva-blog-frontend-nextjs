@@ -6,12 +6,13 @@
 
 `.env.dev`
 
-```
+```bash
 REACT_APP_API_ENDPOINT=http://localhost:1337
 REACT_APP_SOCKET_ENDPOINT=http://localhost:1337
 REACT_APP_LANG_COOKIE_EXPIRES_DAYS=1
 
 RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
+LOCAL_NGINX_IS_ENABLED=1
 ```
 
 ### `yarn storybook`

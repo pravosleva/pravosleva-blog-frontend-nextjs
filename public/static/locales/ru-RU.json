@@ -1,6 +1,8 @@
 {
   "CLEAR": "Очистить",
   "CLOSE": "Закрыть",
+  "CHANGE_SEARCH_MODE": "Изменить критерий поиска",
+  "CURRENT_THEME_IS": "Текущая тема {theme}",
   "COMPANY_NAME": "Наименование компании",
   "COMMENT": "Комментарий",
   "HOME": "Главная",
