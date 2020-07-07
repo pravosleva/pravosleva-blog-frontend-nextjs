@@ -2128,6 +2128,13 @@
     "@babel/runtime" "^7.7.7"
     hoist-non-react-statics "^3.3.1"
 
+"@lxsmnsyc/react-image@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@lxsmnsyc/react-image/-/react-image-0.3.1.tgz#aafe9da935f69a3998f6c7438df708e7e495519a"
+  integrity sha512-gTCvCPceRZFgBof3d78ahmyB6vQc6XyG6MkBcNkJ/AmJrODfw3CkeNHM0RZkrQ0v+SdXsiJarCO7Yd/9Tm2BSg==
+  dependencies:
+    prop-types "^15.7.2"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"

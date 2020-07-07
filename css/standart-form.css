@@ -235,3 +235,7 @@ body.dark .box button[type='button'] {
   background: gray;
   color: #fff;
 }
+.box .inputBox input:invalid ~ label,
+.box .inputBox textarea:invalid ~ label {
+  color: #ff9000;
+}

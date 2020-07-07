@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import axios from 'axios'
-import { PulseLoader } from 'react-spinners'
 import { Layout } from '@/components/layout'
 import useDebounce from '@/hooks/use-debounce'
 import loadable from '@loadable/component'
 import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
-import { getLoaderColorByThemeName } from '@/utils/globalTheme/getLoaderColorByThemeName'
-import { useGlobalTheming } from '@/hooks/use-global-theming'
 import { withTranslator } from '@/hocs/with-translator'
-// import { useDeviceWidth } from '@/hooks/use-device-width'
+import { Loader } from '@/components/Loader'
 
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
@@ -53,15 +50,6 @@ const getTags = (articles) => {
 const LIMIT = 5
 const baseURL = getApiUrl()
 const api = axios.create({ baseURL })
-const Loader = () => {
-  const { currentTheme } = useGlobalTheming()
-
-  return (
-    <div className="fade-in-effect loader-wrapper">
-      <PulseLoader size={15} margin={5} color={getLoaderColorByThemeName(currentTheme)} loading={true} />
-    </div>
-  )
-}
 
 const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, currentLang }) => {
   const [isLoading, setLoading] = useState(false)
@@ -225,7 +213,7 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
                 value={queryText}
                 onChange={handleChangeText}
                 placeholder={`${memoizedPlaceholder}${isFirstRender ? ' ' : ''}`}
-                title={memoizedPlaceholder}
+                // title={memoizedPlaceholder}
                 className="unselectable"
                 style={{ maxWidth: queryText ? '100%' : '305px' }}
               />
@@ -248,7 +236,7 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
               isLoading={isLoadingPaging}
             />
           )}
-          {(isLoading || isLoadingPaging) && <Loader />}
+          {(isLoading || isLoadingPaging) && <Loader isForImage />}
           {!isLoading && !isLoadingPaging && !!articles && articles.length > 0 && (
             <div className="tags-wrapper">
               {getTags(articles).map(({ name, counter }) => (

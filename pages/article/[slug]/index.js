@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
@@ -11,22 +11,58 @@ import { getImageUrl, getBgSrc, getApiUrl, isProd } from '@/utils/getApiUrl'
 import { useUnscrolledBody } from '@/hooks/use-unscrolled-body'
 import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
 import { withTranslator } from '@/hocs/with-translator'
+import Img from '@lxsmnsyc/react-image'
+import { Loader } from '@/components/Loader'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
-const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
-  ssr: false,
-})
+// const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
+//   ssr: false,
+// })
 
 const api = axios.create({ baseURL: getApiUrl() })
 
-function columns(containerWidth) {
-  let columns = 1
+// function columns(containerWidth) {
+//   let columns = 1
+//   if (containerWidth >= 500) columns = 2
+//   if (containerWidth >= 900) columns = 3
+//   if (containerWidth >= 1500) columns = 4
+//   return columns
+// }
 
-  if (containerWidth >= 500) columns = 2
-  if (containerWidth >= 900) columns = 3
-  if (containerWidth >= 1500) columns = 4
+const ImageContainer = ({ src, onItemClick }) => {
+  const containerRef = useRef({})
 
-  return columns
+  return (
+    <div ref={containerRef} className="custom-gallery-wrapper_item">
+      <Img
+        onClick={onItemClick}
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        src={src}
+        fallback={<Loader isForImage />}
+        containerRef={containerRef}
+        alt="img"
+        sources={[
+          {
+            source: src,
+            media: '(orientation: portrait)',
+          },
+          {
+            source: src,
+            media: '(orientation: landscape)',
+          },
+        ]}
+      />
+    </div>
+  )
+}
+const Gallery = ({ images, onItemClick }, i) => {
+  return (
+    <div key={i} className="custom-gallery-wrapper">
+      {images.map(({ src }, j) => (
+        <ImageContainer key={src} src={src} onItemClick={() => onItemClick(j)} />
+      ))}
+    </div>
+  )
 }
 
 const Article = withTranslator(({ t, initArticleData: article }) => {
@@ -37,7 +73,14 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [viewerIsOpen, setViewerIsOpen] = useState(false)
   const { onBlockScrollBody } = useUnscrolledBody(false)
-  const openLightbox = useCallback((_, { index }) => {
+  // WAY 1: react-photo-gallery
+  // const openLightbox = useCallback((_, { index }) => {
+  //   setCurrentImageIndex(index)
+  //   setViewerIsOpen(true)
+  //   onBlockScrollBody(true)
+  // }, [])
+  // WAY 2: Custom gallery
+  const openLightbox = useCallback((index) => {
     setCurrentImageIndex(index)
     setViewerIsOpen(true)
     onBlockScrollBody(true)
@@ -137,11 +180,9 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                       onClick={() => setCurrentPackIndex(i)}
                     >
                       {name && <h2>{name}</h2>}
-                      {description && (
-                        <p>
-                          <ReactMarkdown source={description} />
-                        </p>
-                      )}
+                      {description && <ReactMarkdown source={description} />}
+                      {/* WAY 1: */}
+                      {/*
                       <Gallery
                         photos={images.map(({ src }) => ({
                           src,
@@ -152,6 +193,9 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                         direction="column"
                         columns={columns}
                       />
+                      */}
+                      {/* WAY 2: */}
+                      <Gallery images={images} key={typeof window} onItemClick={openLightbox} />
                       {viewerIsOpen && currentPackIndex === i && images[currentImageIndex] ? (
                         <Lightbox
                           imageTitle={`${!!name ? `${name}: ` : ''}${currentImageIndex + 1} / ${images.length}`}

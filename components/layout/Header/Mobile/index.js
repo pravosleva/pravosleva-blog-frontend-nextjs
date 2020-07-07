@@ -207,7 +207,7 @@ const MobileHeader = ({
                 onClick={handleLogout}
                 title="Logout"
               >
-                <a href="#">
+                <a href="#" style={{ width: '100%', textAlign: 'center' }}>
                   <i class="fas fa-sign-out-alt"></i>
                 </a>
               </li>
