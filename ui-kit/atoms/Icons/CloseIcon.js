@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types';
 
-import { getThemeColor, themeColorsNames } from '@/ui-kit/Theme'
+import { getThemeColor } from '@/ui-kit/Theme'
 
 export const CloseIcon = ({ size, color }) => {
   const fillColor = getThemeColor(color)

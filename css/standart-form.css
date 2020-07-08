@@ -235,8 +235,8 @@ body.dark .box button[type='button'] {
   background: gray;
   color: #fff;
 }
-.box .inputBox input:invalid ~ label,
-.box .inputBox textarea:invalid ~ label {
+body.dark .box .inputBox input:invalid ~ label,
+body.dark .box .inputBox textarea:invalid ~ label {
   color: #ff781e;
 }
 body.dark .box h2.gradient-animate-effect {

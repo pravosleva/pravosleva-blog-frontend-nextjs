@@ -9,6 +9,7 @@ export const initialState = {
 export const toaster = (state = initialState, action: any) => {
   var targetItemIndex: number
   var newItems: IToast[]
+
   switch (action.type) {
     case SHOW_TOAST_START:
       return {
@@ -21,6 +22,8 @@ export const toaster = (state = initialState, action: any) => {
             status: 'show-started',
             delay: action.payload.delay,
             type: action.payload.type || 'default',
+            actions: action.payload.actions,
+            isClosable: action.payload.isClosable,
           },
         ],
       }

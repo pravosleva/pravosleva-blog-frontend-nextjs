@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { themeColorsNames } from '@/ui-kit'
+// import { themeColorsNames } from '@/ui-kit'
 import { CloseIcon } from '@/ui-kit/atoms/Icons/CloseIcon'
 
 interface IProps {
   size?: number
   onClick: Function
-  color?: typeof themeColorsNames
+  color?: string
 }
 interface IContainerProps {
   size?: number

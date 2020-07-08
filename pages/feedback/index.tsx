@@ -97,12 +97,46 @@ const Feedback = ({ t }) => {
   useEffect(() => {
     if (process.browser) {
       loadReCaptcha(RECAPTCHAV3_CLIENT_KEY)
-      dispatch(showAsyncToast({ text: t('FEEDBACK_PAGE_IN_PROGRESS'), delay: 60000, type: 'info' }))
+      dispatch(
+        showAsyncToast({
+          text: t('FEEDBACK_PAGE_IN_PROGRESS'),
+          delay: 60000,
+          type: 'info',
+          isClosable: true,
+          actions: [
+            {
+              label: t('GO_BACK_TO_THE_HOMEPAGE'),
+              linkParams: {
+                asButton: true,
+                btnTypeName: 'orange',
+                path: '/',
+                isInternalLink: true,
+              },
+            },
+            // {
+            //   label: t('GO_BACK_TO_THE_HOMEPAGE'),
+            //   buttonParams: {
+            //     cb: () => console.log('text'),
+            //   },
+            // },
+            // {
+            //   label: 'yandex',
+            //   linkParams: {
+            //     asButton: true,
+            //     path: 'https://yandex.ru',
+            //     isInternalLink: false,
+            //   },
+            // },
+          ],
+        })
+      )
     }
     return () => {
       if (process.browser) {
         // Derty hack =)
-        document.querySelector('.grecaptcha-badge').parentElement.remove()
+        if (!!document.querySelector('.grecaptcha-badge')) {
+          document.querySelector('.grecaptcha-badge').parentElement.remove()
+        }
       }
     }
   }, [])

@@ -15,7 +15,13 @@ export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 export function* asyncToastWorker({ payload }: any) {
   const id = Math.random()
 
-  yield put({ type: SHOW_TOAST_START, payload: { text: payload.text, id, type: payload.type } })
+  // eslint-disable-next-line no-console
+  console.log(payload)
+
+  yield put({
+    type: SHOW_TOAST_START,
+    payload: { text: payload.text, id, type: payload.type, actions: payload.actions, isClosable: payload.isClosable },
+  })
   yield call(delay, 100)
   yield put({ type: SHOW_TOAST_FINISH, payload: id })
   yield call(delay, payload.delay)

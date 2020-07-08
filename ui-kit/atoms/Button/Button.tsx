@@ -1,5 +1,7 @@
+import React from 'react'
 import styled, { css } from 'styled-components'
 import { themeColor, themeTextStyle } from '@/ui-kit'
+import Link from 'next/link'
 
 const types = {
   blue: css`
@@ -143,6 +145,23 @@ const getButtonStyles = (_p: IProps) => css`
 export const Button = styled.button<IProps>`
   ${(p) => getButtonStyles(p)}
 `
+
+// const StyledLink = styled(Button)``
+
+export const NextLinkButton = ({ href, name, onClick, ...props }) => (
+  <Link href={href} as={href}>
+    <Button onClick={onClick} {...props}>
+      {name}
+    </Button>
+  </Link>
+)
+export const ExternalLinkButton = ({ href, name, onClick, ...props }) => (
+  <a href={href} style={{ textDecoration: 'none' }}>
+    <Button onClick={onClick} {...props}>
+      {name}
+    </Button>
+  </a>
+)
 
 // Button.defaultProps = {
 //   type: '',
