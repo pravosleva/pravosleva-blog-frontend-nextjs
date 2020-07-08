@@ -97,6 +97,7 @@ const Feedback = ({ t }) => {
   useEffect(() => {
     if (process.browser) {
       loadReCaptcha(RECAPTCHAV3_CLIENT_KEY)
+      dispatch(showAsyncToast({ text: t('FEEDBACK_PAGE_IN_PROGRESS'), delay: 60000, type: 'info' }))
     }
     return () => {
       if (process.browser) {
