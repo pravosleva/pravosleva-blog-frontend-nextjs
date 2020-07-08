@@ -335,18 +335,18 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
 }
 
 IndexPage.getInitialProps = async (_ctx) => {
-  // const articles = await fetchArticles({
-  //   queryText: '',
-  //   targetField: 'body',
-  //   start: 0,
-  // })
-  // const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
+  const articles = await fetchArticles({
+    queryText: '',
+    targetField: 'body',
+    start: 0,
+  })
+  const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
 
   return {
-    // initialArtilesCounter: articlesCounter,
-    // initialArtiles: articles,
-    initialArtilesCounter: 0,
-    initialArtiles: [],
+    initialArtilesCounter: articlesCounter,
+    initialArtiles: articles,
+    // initialArtilesCounter: 0,
+    // initialArtiles: [],
   }
 }
 

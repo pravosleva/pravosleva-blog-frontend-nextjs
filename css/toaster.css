@@ -224,7 +224,11 @@
 .buttonsWrapper {
   display: flex;
 }
-.buttonsWrapper > button:not(:last-child) {
+.buttonsWrapper > a {
+  width: 100%;
+}
+.buttonsWrapper > button:not(:last-child),
+.buttonsWrapper > a:not(:last-child) {
   margin-right: 15px;
 }
 

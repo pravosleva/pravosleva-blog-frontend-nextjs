@@ -17,7 +17,7 @@ import { ThemeToggler } from '../ThemeToggler'
 import { withTranslator } from '@/hocs/with-translator'
 import { LangLink } from './components/LangLink'
 import { userInfoActions } from '@/store/reducers/user-info'
-import Identicon from 'react-hooks-identicons'
+// import Identicon from 'react-hooks-identicons'
 
 const Nav = styled('div')`
   font-size: 16px;
@@ -80,7 +80,7 @@ const DesktopHeader = ({
 }) => {
   const usersConnected = useSelector((state) => state.users?.items)
   const isAuthenticated = !!useSelector((state) => state.userInfo?.fromServer?.id)
-  const userInfo = !!useSelector((state) => state.userInfo?.fromServer)
+  // const userInfo = !!useSelector((state) => state.userInfo?.fromServer)
   const router = useRouter()
   const dispatch = useDispatch()
   const handleLogoutCb = useCallback(async () => {
@@ -170,18 +170,15 @@ const DesktopHeader = ({
                 </li>
               )}
               {isAuthenticated && (
-                <>
-                  <li style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
-                    <a href="#">{t('LOGOUT')}</a>
-                  </li>
-                  <li
-                    style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }}
-                    className="avatar-wrapper"
-                  >
-                    <Identicon string={userInfo.email} size={30} bg="transparent" fg="#fff" count={5} padding={1} />
-                  </li>
-                </>
+                <li style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }} onClick={handleLogout}>
+                  <a href="#">{t('LOGOUT')}</a>
+                </li>
               )}
+              {/* isAuthenticated && process.browser && (
+                <li style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }} className="avatar-wrapper">
+                  <Identicon string={userInfo.email} size={30} bg="transparent" fg="#fff" count={5} padding={1} />
+                </li>
+              ) */}
               <li style={{ marginRight: '20px', marginBottom: '0px' }}>
                 <MenuFlexWrapper>
                   <Button onClick={handleMenuOpen} typeName="orange" width="narrow" size="xsmall">

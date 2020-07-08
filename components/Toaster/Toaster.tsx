@@ -65,7 +65,7 @@ export const Toaster: React.FC = () => {
                             href={linkParams.path}
                             name={label}
                             onClick={handleRemove.bind(null, id)}
-                            typeName={linkParams.btnTypeName}
+                            typeName={linkParams.btnTypeName || 'blue'}
                             width="responsive"
                             size="xsmall"
                           />
@@ -74,7 +74,7 @@ export const Toaster: React.FC = () => {
                             href={linkParams.path}
                             name={label}
                             onClick={handleRemove.bind(null, id)}
-                            typeName="blue"
+                            typeName={linkParams.btnTypeName || 'blue'}
                             width="responsive"
                             size="xsmall"
                           />
@@ -84,7 +84,12 @@ export const Toaster: React.FC = () => {
                       )
                     ) : null}
                     {!!buttonParams && (
-                      <Button typeName="blue" width="responsive" size="xsmall" onClick={buttonParams.cb}>
+                      <Button
+                        typeName={buttonParams.btnTypeName || 'blue'}
+                        width="responsive"
+                        size="xsmall"
+                        onClick={buttonParams.cb}
+                      >
                         {label}
                       </Button>
                     )}

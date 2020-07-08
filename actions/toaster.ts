@@ -16,6 +16,7 @@ export interface IAction {
   }
   buttonParams?: {
     cb: () => void
+    btnTypeName?: ButtonTType
   }
 }
 export interface IToast {
