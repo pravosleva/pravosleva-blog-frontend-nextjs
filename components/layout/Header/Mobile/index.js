@@ -208,7 +208,7 @@ const MobileHeader = ({
                 title="Logout"
               >
                 <a href="#" style={{ width: '100%', textAlign: 'center' }}>
-                  <i class="fas fa-sign-out-alt"></i>
+                  <i className="fas fa-sign-out-alt"></i>
                 </a>
               </li>
             )}
