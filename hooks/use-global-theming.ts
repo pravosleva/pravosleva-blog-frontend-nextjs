@@ -4,6 +4,10 @@ import Cookie from 'js-cookie'
 import { globalThemeActions } from '@/store/reducers/global-theme'
 import { IRootState } from '@/store/reducers/IRootState'
 
+const themeCookieExpiresDays = process.env.REACT_APP_THEME_COOKIE_EXPIRES_IN_DAYS
+  ? Number(process.env.REACT_APP_THEME_COOKIE_EXPIRES_IN_DAYS)
+  : 0
+
 const themes = ['light', 'gray', 'hard-gray', 'dark']
 const getNextTheme = (currentTheme: string) => {
   const prevIndex = themes.findIndex((t) => t === currentTheme)
@@ -49,8 +53,15 @@ export const useGlobalTheming = () => {
         document.body.classList.remove(...toRemove)
         document.body.classList.add(nextTheme)
         dispatch(globalThemeActions.setTheme(nextTheme))
-        Cookie.set('theme', nextTheme)
+        Cookie.set('theme', nextTheme, { expires: themeCookieExpiresDays })
       }
+    },
+    onReset: () => {
+      const toRemove = themes
+
+      Cookie.remove('theme')
+      document.body.classList.remove(...toRemove)
+      dispatch(globalThemeActions.resetTheme())
     },
   }
 }

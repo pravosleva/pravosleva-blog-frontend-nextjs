@@ -88,7 +88,10 @@ export const Toaster: React.FC = () => {
                         typeName={buttonParams.btnTypeName || 'blue'}
                         width="responsive"
                         size="xsmall"
-                        onClick={buttonParams.cb}
+                        onClick={() => {
+                          buttonParams.cb()
+                          handleRemove(id)
+                        }}
                       >
                         {label}
                       </Button>

@@ -1,18 +1,27 @@
 import React, { useCallback } from 'react'
 import { Modal } from '@/ui-kit'
-// import { FooterRow } from '@/ui-kit/molecules/Modal/FooterRow'
-// import { Button } from '@/ui-kit/atoms'
+import { FooterRow } from '@/ui-kit/molecules/Modal/FooterRow'
+import { Button } from '@/ui-kit/atoms'
 import Link from 'next/link'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { withTranslator } from '@/hocs/with-translator'
+import Cookie from 'js-cookie'
+import { logout } from '@/helpers/services/restService'
+import { useDispatch } from 'react-redux'
+import { showAsyncToast } from '@/actions'
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+import { userInfoActions } from '@/store/reducers/user-info'
+import { useGlobalTheming } from '@/hooks/use-global-theming'
+import { cookieOfferActions } from '@/store/reducers/cookie-offer'
 
 interface IProps {
   isOpened: boolean
   onHideModal: () => void
   isAuthenticated: boolean
   t: (text: string) => string
+  resetLang: () => void
 }
 
 const Wrapper = styled('div')`
@@ -48,9 +57,35 @@ const menuItems = ({ isCurrentPathCb, isAuthenticated, t }) => (
   </Wrapper>
 )
 
-export const MenuModal = withTranslator(({ isOpened, onHideModal, isAuthenticated, t }: IProps) => {
+export const MenuModal = withTranslator(({ isOpened, onHideModal, isAuthenticated, t, resetLang }: IProps) => {
   const router = useRouter()
   const isCurrentPathCb = useCallback((path) => isCurrentPath(router.pathname, path), [router.pathname])
+  const dispatch = useDispatch()
+  const handleLogoutCb = useCallback(async () => {
+    const result = await logout()
+      .then(() => {
+        router.push('/auth/login')
+      })
+      .catch((text) => {
+        dispatch(showAsyncToast({ text, delay: 20000, type: 'error' }))
+      })
+    return result
+  }, [])
+  const handleLogout = useDebouncedCallback(() => {
+    handleLogoutCb().then(() => {
+      dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
+    })
+  }, 500)
+  const { onReset: resetTheme } = useGlobalTheming()
+  const removeAllCookie = useCallback(() => {
+    Cookie.remove('lang')
+    resetLang()
+    resetTheme()
+    Cookie.remove('cookie-confirmed')
+    dispatch(cookieOfferActions.enable())
+    if (isAuthenticated) handleLogout()
+    onHideModal()
+  }, [])
 
   return (
     <>
@@ -61,13 +96,13 @@ export const MenuModal = withTranslator(({ isOpened, onHideModal, isAuthenticate
           // modalSubtitle="process.env"
           closeModal={onHideModal}
           renderBodyContent={() => menuItems({ isCurrentPathCb, isAuthenticated, t })}
-          // renderFooterContent={() => (
-          //   <FooterRow>
-          //     <Button typeName="blue" size="small" width="narrow" onClick={onHideModal}>
-          //       Закрыть
-          //     </Button>
-          //   </FooterRow>
-          // )}
+          renderFooterContent={() => (
+            <FooterRow>
+              <Button typeName="secondary" size="small" width="responsive" onClick={removeAllCookie}>
+                {t('REMOVE_ALL_COOKIE_AND_CLOSE')}
+              </Button>
+            </FooterRow>
+          )}
         />
       )}
     </>

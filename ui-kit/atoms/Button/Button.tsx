@@ -20,6 +20,16 @@ const types = {
       border: 1px solid ${themeColor('Select Blue')};
     }
   `,
+  secondaryWhite: css`
+    color: ${themeColor('White color')};
+    background-color: transparent;
+    border: 1px solid ${themeColor('White color')};
+    &:hover {
+      background-color: ${themeColor('White color')};
+      color: ${themeColor('Select Blue')};
+      border: 1px solid ${themeColor('White color')};
+    }
+  `,
   orange: css`
     background-color: ${themeColor('Accent Orange')};
     &:hover {
@@ -102,7 +112,7 @@ const getDisabledStyles = () => css`
     cursor: default;
   }
 `
-export type TType = 'blue' | 'secondary' | 'orange' | ''
+export type TType = 'blue' | 'secondary' | 'orange' | 'secondaryWhite' | ''
 export type TWidth = 'narrow' | 'medium' | 'wide' | 'responsive' | ''
 export type TSize = 'xsmall' | 'small' | 'medium' | 'large' | ''
 export type TAttached = 'right' | 'left' | ''

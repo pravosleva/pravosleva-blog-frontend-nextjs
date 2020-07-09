@@ -2,18 +2,23 @@ import React, { useCallback } from 'react'
 import Headroom from 'react-headroom'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { withMobileMenu } from './hocs/with-mobile-menu'
 import { HamburgerIcon, CrossCloseIcon } from './components'
-import { showAsyncToast } from '@/actions'
-import { logout } from '@/helpers/services/restService'
+// import { showAsyncToast } from '@/actions'
+// import { logout } from '@/helpers/services/restService'
 import { useRouter } from 'next/router'
-import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
+// import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { isCurrentPath } from '@/utils/routing/isCurrentPath'
 import { ThemeToggler } from '../../ThemeToggler'
 import { withTranslator } from '@/hocs/with-translator'
 import { LangLink } from '../components/LangLink'
-import { userInfoActions } from '@/store/reducers/user-info'
+// import { userInfoActions } from '@/store/reducers/user-info'
+import loadable from '@loadable/component'
+
+const Identicon = loadable(() => import(/* webpackChunkName: "identicon" */ 'react-hooks-identicons'), {
+  ssr: false,
+})
 
 // Could be used if !ssr
 export const MobileHeaderLoader = styled.div`
@@ -93,22 +98,23 @@ const MobileHeader = ({
   currentLang,
 }) => {
   const isAuthenticated = !!useSelector((state) => state.userInfo?.fromServer?.id)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
+  const userInfo = !!useSelector((state) => state.userInfo?.fromServer)
   const router = useRouter()
-  const handleLogoutCb = useCallback(async () => {
-    await logout()
-      .then(() => {
-        router.push('/auth/login')
-      })
-      .catch((msg) => {
-        dispatch(showAsyncToast({ text: msg, delay: 20000, type: 'error' }))
-      })
-  }, [dispatch, showAsyncToast])
-  const handleLogout = useDebouncedCallback(() => {
-    handleLogoutCb().then(() => {
-      dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
-    })
-  }, 500)
+  // const handleLogoutCb = useCallback(async () => {
+  //   await logout()
+  //     .then(() => {
+  //       router.push('/auth/login')
+  //     })
+  //     .catch((msg) => {
+  //       dispatch(showAsyncToast({ text: msg, delay: 20000, type: 'error' }))
+  //     })
+  // }, [dispatch, showAsyncToast])
+  // const handleLogout = useDebouncedCallback(() => {
+  //   handleLogoutCb().then(() => {
+  //     dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
+  //   })
+  // }, 500)
   const isCurrentPathCb = useCallback(isCurrentPath, [])
   const handleSetLang = useCallback(
     (value) => (e) => {
@@ -117,6 +123,9 @@ const MobileHeader = ({
     },
     []
   )
+  const redirectToProfile = useCallback(() => {
+    router.push('/profile')
+  }, [])
 
   return (
     <Headroom>
@@ -174,7 +183,7 @@ const MobileHeader = ({
                   fontFamily: 'Montserrat',
                 }}
                 className="fade-in-effect"
-                title="Login"
+                title={t('LOGIN')}
               >
                 <Link href="/auth/login">
                   <a
@@ -193,7 +202,7 @@ const MobileHeader = ({
                 </Link>
               </li>
             )}
-            {isAuthenticated && (
+            {/* isAuthenticated && (
               <li
                 style={{
                   display: 'flex',
@@ -211,6 +220,20 @@ const MobileHeader = ({
                   <i className="fas fa-sign-out-alt"></i>
                 </a>
               </li>
+            ) */}
+            {isAuthenticated && process.browser && (
+              <li style={{ marginLeft: '0px', marginBottom: '0px', minWidth: '40px' }} className="avatar-wrapper">
+                <div style={{ cursor: 'pointer' }} onClick={redirectToProfile} className="avatar-wrapper">
+                  <Identicon
+                    string={userInfo.email}
+                    size={21}
+                    bg="transparent"
+                    fg={isCurrentPathCb(router.pathname, '/profile') ? '#ff781e' : '#fff'}
+                    count={5}
+                    padding={1}
+                  />
+                </div>
+              </li>
             )}
             <li
               style={{
@@ -227,6 +250,13 @@ const MobileHeader = ({
           </ul>
         </Nav>
       </header>
+      <style jsx>{`
+        .avatar-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      `}</style>
     </Headroom>
   )
 }

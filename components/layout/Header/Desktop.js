@@ -121,6 +121,9 @@ const DesktopHeader = ({
     },
     []
   )
+  const redirectToProfile = useCallback(() => {
+    router.push('/profile')
+  }, [])
 
   return (
     <>
@@ -180,19 +183,26 @@ const DesktopHeader = ({
               )}
               {isAuthenticated && process.browser && (
                 <li style={{ marginLeft: '0px', marginRight: '20px', marginBottom: '0px' }} className="avatar-wrapper">
-                  <Identicon
-                    string={userInfo.email}
-                    size={30}
-                    bg="transparent"
-                    fg={isCurrentPathCb(router.pathname, '/profile') ? '#ff781e' : '#fff'}
-                    count={5}
-                    padding={1}
-                  />
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={redirectToProfile}
+                    className="avatar-wrapper"
+                    title={t('PROFILE')}
+                  >
+                    <Identicon
+                      string={userInfo.email}
+                      size={30}
+                      bg="transparent"
+                      fg={isCurrentPathCb(router.pathname, '/profile') ? '#ff781e' : '#fff'}
+                      count={5}
+                      padding={1}
+                    />
+                  </div>
                 </li>
               )}
               <li style={{ marginRight: '20px', marginBottom: '0px' }}>
                 <MenuFlexWrapper>
-                  <Button onClick={handleMenuOpen} typeName="orange" width="narrow" size="xsmall">
+                  <Button onClick={handleMenuOpen} typeName="secondaryWhite" width="narrow" size="xsmall">
                     {t('MENU')}
                   </Button>
                 </MenuFlexWrapper>

@@ -10,6 +10,7 @@ import { userInfo, initialState as userInfoInitialState } from './user-info'
 import { users, initialState as usersInitialState } from './users'
 import { toaster, initialState as toasterInitialState } from './toaster'
 import { globalTheme, initialState as globalThemeState } from './global-theme'
+import { cookieOffer, initialState as cookieOfferState } from './cookie-offer'
 
 const reducer = combineReducers({
   counter,
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   form: formReducer,
   toaster,
   globalTheme,
+  cookieOffer,
   // Others...
 })
 
@@ -32,6 +34,7 @@ export const rootInitialState = {
   form: null,
   toaster: toasterInitialState,
   globalTheme: globalThemeState,
+  cookieOffer: cookieOfferState,
   // Others...
 }
 

@@ -7,6 +7,8 @@ import { getApiUrl } from '@/utils/getApiUrl'
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback'
 import { withTranslator } from '@/hocs/with-translator'
 import { Loader } from '@/components/Loader'
+// import { useDispatch } from 'react-redux'
+// import { showAsyncToast } from '@/actions'
 
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
@@ -192,6 +194,23 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
   }, [])
   const memoizedPlaceholder = useMemo(() => getSearchTextTemplate(memoizedSearchBy), [currentLang, memoizedSearchBy])
   const memoizedSearchModeTogglerDescription = useMemo(() => t('CHANGE_SEARCH_MODE'), [currentLang, memoizedSearchBy])
+
+  // const dispatch = useDispatch()
+
+  // useEffect(() => {
+  //   dispatch(showAsyncToast({ type: 'info', text: 'Test', delay: 30000 }))
+  //   dispatch(showAsyncToast({ type: 'success', text: 'Test', delay: 30000 }))
+
+  //   dispatch(
+  //     showAsyncToast({
+  //       type: 'info',
+  //       text: 'Test',
+  //       delay: 30000,
+  //       // eslint-disable-next-line no-console
+  //       actions: [{ label: 'Test', buttonParams: { btnTypeName: 'secondaryWhite', cb: () => console.log('Test') } }],
+  //     })
+  //   )
+  // }, [])
 
   return (
     <>

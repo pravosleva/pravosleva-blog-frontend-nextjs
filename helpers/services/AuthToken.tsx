@@ -3,6 +3,10 @@ import jwtDecode from 'jwt-decode'
 import Cookie from 'js-cookie'
 import { COOKIES } from '@/helpers/services/loginService'
 
+const authCookieExpiresDays = process.env.REACT_APP_AUTH_COOKIE_EXPIRES_IN_DAYS
+  ? Number(process.env.REACT_APP_AUTH_COOKIE_EXPIRES_IN_DAYS)
+  : 1
+
 export type DecodedToken = {
   readonly email: string
   readonly exp: number
@@ -38,7 +42,7 @@ export class AuthToken {
   }
 
   static async storeToken(token: string) {
-    Cookie.set(COOKIES.authToken, token)
+    Cookie.set(COOKIES.authToken, token, { expires: authCookieExpiresDays })
     // await Router.push('/secret-page')
   }
 

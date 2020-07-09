@@ -19,6 +19,7 @@
   "SOMETHING_WRONG": "Что-то пошло не так",
   "UPDATED": "Обновлено",
   "CREATED": "Создано",
+  "REMOVE_ALL_COOKIE_AND_CLOSE": "Удалить все куки и закрыть",
   "SIMPLE": "Простое предложение",
   "HELLO": "Привет, {name}. Добро пожаловать в {where}!",
   "YOURE_WELCOME": "Добро пожаловать в {where}!",

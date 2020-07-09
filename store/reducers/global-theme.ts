@@ -8,7 +8,7 @@ export const { actions: globalThemeActions, reducer: globalTheme } = createSymbi
   initialState,
   {
     setTheme: (state, value) => ({ ...state, theme: value }),
-    reset: (_state, _payload) => ({ ...initialState }),
+    resetTheme: () => ({ ...initialState }),
   },
   'globalTheme'
 )

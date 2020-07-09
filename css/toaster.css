@@ -96,12 +96,13 @@
 }
 
 .toast-container__toast-item-root__show-started--info {
-  background-color: #2196f3;
+  /* background-color: #2196f3; */
+  background-color: rgb(1, 98, 200);
   color: #fff;
 }
 
 .toast-container__toast-item-root__show-started--success {
-  background-color: #4caf50;
+  background-color: #00ca88;
   color: #fff;
 }
 
@@ -111,7 +112,8 @@
 }
 
 .toast-container__toast-item-root__show-started--warning {
-  background-color: #ff9800;
+  /* background-color: #ff9800; */
+  background-color: #ff9900;
   color: #fff;
 }
 
@@ -126,12 +128,13 @@
 }
 
 .toast-container__toast-item-root__show-finished--info {
-  background-color: #2196f3;
+  /* background-color: #2196f3; */
+  background-color: rgb(1, 98, 200);
   color: #fff;
 }
 
 .toast-container__toast-item-root__show-finished--success {
-  background-color: #4caf50;
+  background-color: #00ca88;
   color: #fff;
 }
 
@@ -141,7 +144,8 @@
 }
 
 .toast-container__toast-item-root__show-finished--warning {
-  background-color: #ff9800;
+  /* background-color: #ff9800; */
+  background-color: #ff9900;
   color: #fff;
 }
 
@@ -156,12 +160,13 @@
 }
 
 .toast-container__toast-item-root__hide-started--info {
-  background-color: #2196f3;
+  /* background-color: #2196f3; */
+  background-color: rgb(1, 98, 200);
   color: #fff;
 }
 
 .toast-container__toast-item-root__hide-started--success {
-  background-color: #4caf50;
+  background-color: #00ca88;
   color: #fff;
 }
 
@@ -171,7 +176,8 @@
 }
 
 .toast-container__toast-item-root__hide-started--warning {
-  background-color: #ff9800;
+  /* background-color: #ff9800; */
+  background-color: #ff9900;
   color: #fff;
 }
 
@@ -186,12 +192,13 @@
 }
 
 .toast-container__toast-item-root__hide-finished--info {
-  background-color: #2196f3;
+  /* background-color: #2196f3; */
+  background-color: rgb(1, 98, 200);
   color: #fff;
 }
 
 .toast-container__toast-item-root__hide-finished--success {
-  background-color: #4caf50;
+  background-color: #00ca88;
   color: #fff;
 }
 
@@ -201,7 +208,8 @@
 }
 
 .toast-container__toast-item-root__hide-finished--warning {
-  background-color: #ff9800;
+  /* background-color: #ff9800; */
+  background-color: #ff9900;
   color: #fff;
 }
 

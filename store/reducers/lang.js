@@ -1,8 +1,5 @@
 import { createSymbiote } from 'redux-symbiote'
 import intl from 'react-intl-universal'
-// https://github.com/alibaba/react-intl-universal
-import cookie from 'js-cookie'
-
 import enUS from '@/public/static/locales/en-US.json'
 import ruRU from '@/public/static/locales/ru-RU.json'
 // Others...
@@ -20,21 +17,10 @@ const SUPPOER_LOCALES = [
   },
   // Others...
 ]
-const getDeafultLang = () => {
-  let langFromCookies
-
-  if (typeof window) langFromCookies = cookie.get('lang')
-
-  return langFromCookies || 'ru-RU'
-}
 const translateFnInit = (lang) => {
-  let langFromCookies
-
-  if (typeof window) langFromCookies = cookie.get('lang')
-
   intl
     .init({
-      currentLocale: lang ? lang : langFromCookies ? langFromCookies : 'ru-RU',
+      currentLocale: lang || 'ru-RU',
       locales: {
         'ru-RU': ruRU,
         'en-US': enUS,
@@ -53,21 +39,25 @@ const translateFnInit = (lang) => {
 translateFnInit() // First init
 
 export const initialState = {
-  current: getDeafultLang(),
+  current: 'ru-RU',
   suppoerLocales: SUPPOER_LOCALES,
 }
 
 export const { actions: langActions, reducer: lang } = createSymbiote(
   initialState,
   {
-    // fillDelta: (state, payload) => ({ ...state, ...payload }),
     set: (state, payload) => {
-      translateFnInit(payload) // Updated!
+      translateFnInit(payload)
 
       return {
         ...state,
         current: payload,
       }
+    },
+    reset: () => {
+      translateFnInit()
+
+      return { ...initialState }
     },
   },
   'lang'
