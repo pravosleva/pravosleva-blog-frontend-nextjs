@@ -136,7 +136,7 @@ export const withMobileMenu = (ComposedComponent) =>
             dispatch(showAsyncToast({ text, delay: 20000, type: 'error' }))
           })
         return result
-      }, [dispatch, showAsyncToast])
+      }, [])
       const handleLogout = useDebouncedCallback(() => {
         handleLogoutCb().then(() => {
           dispatch(userInfoActions.fillDelta({ fromServer: null, isLoadedSuccessfully: true }))
