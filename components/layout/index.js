@@ -17,6 +17,7 @@ import { ScrollTopBtn } from './ScrollTopBtn'
 import { useScroll } from '@/hooks/use-scroll'
 import { useGlobalTheming } from '@/hooks/use-global-theming'
 import { CookiePolicyOffer } from './CookiePolicyOffer'
+import { userInfoRegularHOC } from '@/helpers/services/hoc/userInfoRegularHOC'
 
 // 1. From each link in article to new browser tab:
 function linkInNewTab(e) {
@@ -134,4 +135,4 @@ const LayoutConnected = ({ children }) => {
   )
 }
 
-export const Layout = withSocketApi(LayoutConnected)
+export const Layout = userInfoRegularHOC(withSocketApi(LayoutConnected))
