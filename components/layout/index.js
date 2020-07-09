@@ -135,4 +135,4 @@ const LayoutConnected = ({ children }) => {
   )
 }
 
-export const Layout = userInfoRegularHOC(withSocketApi(LayoutConnected))
+export const Layout = withSocketApi(userInfoRegularHOC(LayoutConnected))
