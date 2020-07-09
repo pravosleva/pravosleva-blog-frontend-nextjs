@@ -60,7 +60,7 @@ _Local build then deploy and run `pm2 restart 1` remotely_
 
 _Send `./.next/*` files and run `pm2 restart 1` remotely_
 
-### `yarn deploy:prod:send-storybook`
+### `yarn deploy:prod:build-send-storybook`
 
 _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.html](http://pravosleva.ru/storybook/index.html). **Remote `./storybook` dir should be created manually!**_
 
@@ -68,7 +68,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
 
 ```json
 {
-  "prod:update-restart-all": {
+  "prod:build-send-restart-all": {
     "user": "<USER>",
     "host": "<HOST>",
     "port": "<PORT>",
@@ -78,7 +78,7 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
     "pre-deploy-remote": "pm2 stop all",
     "post-deploy": "pm2 delete all; pm2 resurrect --update-env"
   },
-  "prod:update-restart-front": {
+  "prod:build-send-restart-front": {
     "user": "<USER>",
     "host": "<HOST>",
     "port": "<PORT>",
@@ -87,7 +87,15 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
     "pre-deploy-local": "yarn local:cleanup; yarn build",
     "post-deploy": "pm2 restart 1 --update-env"
   },
-  "prod:update-storybook": {
+  "prod:send-restart-front": {
+    "user": "root",
+    "host": "pravosleva.ru",
+    "port": "22",
+    "files": "./.next/*",
+    "path": "/home/pravosleva/pravosleva-blog/frontend/.next",
+    "post-deploy": "pm2 restart 1 --update-env"
+  },
+  "prod:build-send-storybook": {
     "user": "<USER>",
     "host": "<HOST>",
     "port": "<PORT>",
