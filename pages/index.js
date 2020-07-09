@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import axios from 'axios'
 import { Layout } from '@/components/layout'
 import useDebounce from '@/hooks/use-debounce'
@@ -62,7 +62,11 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
   const handleChangeText = useCallback((e) => {
     setQueryText(e.target.value)
   }, [])
-  const handleClearText = useCallback(() => setQueryText(''), [])
+  const searchInputRef = useRef(null)
+  const handleClearText = useCallback(() => {
+    setQueryText('')
+    if (!!searchInputRef.current) searchInputRef.current.focus()
+  }, [])
   const [searchBy, setSearchBy] = useState('body')
   const [start, setStart] = useState(0)
   const getNextSearchTarget = useCallback(({ targets = ['body', 'title', 'tag'], current = 'title' }) => {
@@ -200,7 +204,6 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
   // useEffect(() => {
   //   dispatch(showAsyncToast({ type: 'info', text: 'Test', delay: 30000 }))
   //   dispatch(showAsyncToast({ type: 'success', text: 'Test', delay: 30000 }))
-
   //   dispatch(
   //     showAsyncToast({
   //       type: 'info',
@@ -227,6 +230,7 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
                 {getIconByCritery(searchBy)}
               </span>
               <input
+                ref={searchInputRef}
                 id="searchText"
                 type="text"
                 value={queryText}

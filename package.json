@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "local:cleanup": "bash local-cleanup.sh",
-    "deploy:prod:update-restart-all": "deploy-app -d prod:update-restart-all",
-    "deploy:prod:update-restart-front": "deploy-app -d prod:update-restart-front",
-    "deploy:prod:update-storybook": "deploy-app -d prod:update-storybook",
+    "deploy:prod:build-send-restart-all": "deploy-app -d prod:build-send-restart-all",
+    "deploy:prod:build-send-restart-front": "deploy-app -d prod:build-send-restart-front",
+    "deploy:prod:send-restart-front": "deploy-app -d prod:send-restart-front",
+    "deploy:prod:send-storybook": "deploy-app -d prod:send-storybook",
     "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start -p 9000",

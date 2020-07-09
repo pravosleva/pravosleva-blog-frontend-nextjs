@@ -224,6 +224,7 @@ body.hard-gray #searchPanel > input#searchText {
 body.hard-gray #searchPanel > input#searchText {
   color: #fff;
   caret-color: #fff;
+  transition: all 0.3s ease;
 }
 body.hard-gray #searchPanel > input#searchText::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -242,7 +243,7 @@ body.hard-gray #searchPanel > input#searchText:-moz-placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 body.hard-gray #searchPanel > input#searchText:focus {
-  border: 2px solid #ff9000;
+  border: 2px dashed rgba(255, 255, 255, 0.5);
 }
 /* SEARCHING TOOL 1 */
 body.hard-gray #searchPanel > span#clearSearchText {
@@ -291,7 +292,7 @@ body.dark #searchPanel > input#searchText {
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
 body.dark #searchPanel > input#searchText:focus {
-  border: 2px solid #fff;
+  border: 2px dashed rgba(255, 255, 255, 0.5);
 }
 /* SEARCHING TOOL 1 */
 body.dark #searchPanel > span#clearSearchText {
