@@ -48,15 +48,19 @@ RECAPTCHAV3_VERIFY_URL=http://pravosleva.ru/express-helper/recaptcha-v3/verify
 
 ## Deploy
 
-### `yarn deploy:prod:update-restart-all`
+### `yarn deploy:prod:build-send-restart-all`
 
-_Local build then deploy and restart all current pm2 process_
+_Local build then deploy and restart all current pm2 processes remotely_
 
-### `yarn deploy:prod:update-restart-front`
+### `yarn deploy:prod:build-send-restart-front`
 
-_Local build then deploy and restart `pm2 restart 1`_
+_Local build then deploy and run `pm2 restart 1` remotely_
 
-### `yarn deploy:prod:update-storybook`
+### `yarn deploy:prod:send-restart-front`
+
+_Send `./.next/*` files and run `pm2 restart 1` remotely_
+
+### `yarn deploy:prod:send-storybook`
 
 _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.html](http://pravosleva.ru/storybook/index.html). **Remote `./storybook` dir should be created manually!**_
 
