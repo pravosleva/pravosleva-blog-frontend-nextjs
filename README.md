@@ -88,9 +88,9 @@ _Local build new storybook then deploy [http://pravosleva.ru/storybook/index.htm
     "post-deploy": "pm2 restart 1 --update-env"
   },
   "prod:send-restart-front": {
-    "user": "root",
-    "host": "pravosleva.ru",
-    "port": "22",
+    "user": "<USER>",
+    "host": "<HOST>",
+    "port": "<PORT>",
     "files": "./.next/*",
     "path": "/home/pravosleva/pravosleva-blog/frontend/.next",
     "post-deploy": "pm2 restart 1 --update-env"
