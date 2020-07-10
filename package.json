@@ -7,7 +7,7 @@
     "deploy:prod:build-send-restart-all": "deploy-app -d prod:build-send-restart-all",
     "deploy:prod:build-send-restart-front": "deploy-app -d prod:build-send-restart-front",
     "deploy:prod:send-restart-front": "deploy-app -d prod:send-restart-front",
-    "deploy:prod:build-send-storybook": "deploy-app -d prod:send-storybook",
+    "deploy:prod:build-send-storybook": "deploy-app -d prod:build-send-storybook",
     "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start -p 9000",
