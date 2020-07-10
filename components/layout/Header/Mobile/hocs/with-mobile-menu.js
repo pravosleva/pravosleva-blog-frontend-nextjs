@@ -47,7 +47,7 @@ const Sidebar = styled.div`
       padding: 10px 10px 10px 20px;
       list-style-type: none;
     }
-    > ul > li > a {
+    > ul > li > * {
       color: #fff;
       text-decoration: none;
       text-transform: uppercase;
@@ -165,7 +165,7 @@ export const withMobileMenu = (ComposedComponent) =>
             <ul className="bold">
               <li>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9em', fontWeight: '500' }}>
-                  <span>ONLINE</span>
+                  <span>{t('ONLINE')}</span>
                   <i className="fas fa-globe" style={{ marginLeft: '15px', marginRight: '15px' }}></i>
                   {usersConnected?.length}
                 </span>

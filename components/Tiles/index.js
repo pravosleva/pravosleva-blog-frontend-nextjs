@@ -6,6 +6,7 @@ import { getBgSrc } from '@/utils/getApiUrl'
 import ReactMarkdown from 'react-markdown' // <ReactMarkdown source={article.brief} />
 // import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
 // import { useDeviceWidth } from '@/hooks/use-device-width'
+import { withTranslator } from '@/hocs/with-translator'
 
 const Grid = ({
   isFirstRender,
@@ -16,6 +17,7 @@ const Grid = ({
   handleStartForNextPage,
   handleStartForPrevPage,
   isLoading,
+  t,
 }) => {
   // const { width: deviceWidth } = useDeviceWidth()
   const renderArticles = useCallback(
@@ -50,7 +52,8 @@ const Grid = ({
             >
               <Link href="/article/[slug]" as={`/article/${slug}`}>
                 <a className="special-link inactive-without-hover white unselectable">
-                  READ MORE<i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
+                  {t('READ_MORE')}
+                  <i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
                 </a>
               </Link>
               <small className="inactive">{getFormatedDate2(new Date(createdAt))}</small>
@@ -120,15 +123,21 @@ function areEqual(prevProps, nextProps) {
     currentStart: prevProps.currentStart,
     isLoading: prevProps.isLoading,
     isFirstRender: prevProps.isFirstRender,
+    currentLang: prevProps.currentLang,
   })
   const test2 = new Map({
     articles: nextProps.articles,
     currentStart: nextProps.currentStart,
     isLoading: nextProps.isLoading,
     isFirstRender: nextProps.isFirstRender,
+    currentLang: nextProps.currentLang,
   })
 
-  return test1.equals(test2) || prevProps.isFirstRender === nextProps.isFirstRender
+  return (
+    test1.equals(test2) ||
+    prevProps.isFirstRender === nextProps.isFirstRender ||
+    prevProps.currentLang === nextProps.currentLang
+  )
 }
 
-export const Tiles = memo(Grid, areEqual)
+export const Tiles = memo(withTranslator(Grid), areEqual)

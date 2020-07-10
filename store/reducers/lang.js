@@ -20,7 +20,7 @@ const SUPPOER_LOCALES = [
 const translateFnInit = (lang) => {
   intl
     .init({
-      currentLocale: lang || 'ru-RU',
+      currentLocale: lang || 'en-US',
       locales: {
         'ru-RU': ruRU,
         'en-US': enUS,
@@ -39,7 +39,7 @@ const translateFnInit = (lang) => {
 translateFnInit() // First init
 
 export const initialState = {
-  current: 'ru-RU',
+  current: 'en-US',
   suppoerLocales: SUPPOER_LOCALES,
 }
 

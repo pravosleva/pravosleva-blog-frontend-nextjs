@@ -26,7 +26,7 @@ const types = {
     border: 1px solid ${themeColor('White color')};
     &:hover {
       background-color: ${themeColor('White color')};
-      color: ${themeColor('Select Blue')};
+      color: ${themeColor('Primary Dark Blue')};
       border: 1px solid ${themeColor('White color')};
     }
   `,

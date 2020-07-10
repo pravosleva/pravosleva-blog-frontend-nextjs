@@ -146,7 +146,8 @@ const DesktopHeader = ({
               <li style={{ margin: '0 auto 0 0' }} className="muted">
                 {usersConnected.length > 0 && (
                   <span title={getIPs(usersConnected)}>
-                    <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>Online: {usersConnected.length}
+                    <i className="fas fa-globe" style={{ marginRight: '15px' }}></i>
+                    {t('ONLINE')}: {usersConnected.length}
                   </span>
                 )}
               </li>
