@@ -7,7 +7,6 @@
       {
         "languages": ["javascript", "css", "html", "json", "bash"],
         "plugins": ["line-numbers", "show-language"],
-        "theme": "okaidia",
         "css": true
       }
     ]

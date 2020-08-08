@@ -77,6 +77,7 @@ class MyDocument extends Document {
           {/*
           <link href="/static/prismjs/themes/prism-okaidia.min.css" rel="stylesheet" />
           */}
+          <link href="/static/prismjs/themes/prism-material-theme.min.css" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet" />
           <link
             rel="stylesheet"
