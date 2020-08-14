@@ -8,6 +8,9 @@ body.light footer {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
 }
+body.light .tiles-grid-item-in-article {
+  background-color: rgba(0, 64, 130, 0.75);
+}
 
 /* GRAY */
 
@@ -37,6 +40,9 @@ body.gray .article-wrapper {
 }
 body.gray .tiles-grid-item-in-article {
   background-color: rgba(0, 0, 0, 0.35);
+  /* background-color: rgba(0, 64, 130, 0.75); */
+  /* Prism material theme #0C1D24 */
+  /* background-color: rgba(12, 29, 36, 0.65); */
 }
 
 /* HARD-GRAY */
@@ -80,6 +86,8 @@ body.hard-gray .tiles-grid-item-in-article {
   /* background-color: rgba(90, 99, 108, 0.75); */
   /* background-color: rgba(1, 98, 200, 0.75); */
   background-color: rgba(0, 0, 0, 0.75);
+  /* Prism material theme #0C1D24 */
+  /* background-color: rgba(12, 29, 36, 0.85); */
 }
 body.hard-gray .tiles-grid-item {
   background-color: rgba(0, 0, 0, 0.65);
@@ -138,6 +146,10 @@ body.dark .tiles-grid-item-in-article {
   /* background-color: rgba(90, 99, 108, 0.75); */
   /* background-color: rgba(1, 98, 200, 0.75); */
   background-color: rgba(0, 0, 0, 0.85);
+  /* Prism material theme #263238 */
+  /* background-color: rgba(38, 50, 56, 0.85); */
+  /* Prism material theme #0C1D24 */
+  /* background-color: rgba(12, 29, 36, 0.85); */
 }
 body.dark button.rippled-btn:hover {
   opacity: 1;

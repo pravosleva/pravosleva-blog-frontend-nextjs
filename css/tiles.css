@@ -288,7 +288,7 @@
   font-style: italic;
 }
 .tiles-grid-item-in-article {
-  background-color: rgba(0, 64, 130, 0.75);
+  /* background-color: rgba(0, 64, 130, 0.75); */
   background-blend-mode: overlay, normal;
 
   /* backgroundImage: `url(${bgSrc})`, */
