@@ -257,3 +257,32 @@ _Unnecessary, but could be interested:_
   }
 }
 ```
+
+## Local font from Google fonts
+
+Download font from [Google fonts](https://fonts.google.com/specimen/Montserrat?query=montserrat&subset=cyrillic&preview.text=Almost+before+we+knew+it,+we+had+left+the+ground.+%D1%84%D1%8B%D0%B2&preview.text_type=custom) and unzip to _`public/static/fonts/Montserrat`_
+
+_Then import to `css/layout.css` like this:_
+
+```css
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/Montserrat/Montserrat-Regular.eot');
+  src: local('Montserrat Regular'), local('Montserrat-Regular'),
+    url('/static/fonts/Montserrat/Montserrat-Regular.eot?#iefix') format('embedded-opentype'), url('/static/fonts/Montserrat/Montserrat-Regular.woff2')
+      format('woff2'), url('/static/fonts/Montserrat/Montserrat-Regular.woff') format('woff'), url('/static/fonts/Montserrat/Montserrat-Regular.ttf')
+      format('truetype'), url('/static/fonts/Montserrat/Montserrat-Regular.svg#Montserrat') format('svg');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/static/fonts/Montserrat/Montserrat-Regular.eot');
+  src: local('Montserrat Regular'), local('Montserrat-Regular'),
+    url('/static/fonts/Montserrat/Montserrat-Medium.eot?#iefix') format('embedded-opentype'), url('/static/fonts/Montserrat/Montserrat-Medium.woff2')
+      format('woff2'), url('/static/fonts/Montserrat/Montserrat-Medium.woff') format('woff'), url('/static/fonts/Montserrat/Montserrat-Medium.ttf')
+      format('truetype'), url('/static/fonts/Montserrat/Montserrat-Medium.svg#Montserrat') format('svg');
+}
+```

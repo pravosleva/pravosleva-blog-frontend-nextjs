@@ -33,6 +33,6 @@
       "jsx": true
     }
   },
-  "exclude": ["node_modules", "**/*.js", "**/*.jsx"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "**/*.js", "**/*.jsx"]
 }
