@@ -260,6 +260,8 @@ _Unnecessary, but could be interested:_
 
 ## Local font from Google fonts
 
+### Way 1
+
 Download font from [Google fonts](https://fonts.google.com/specimen/Montserrat?query=montserrat&subset=cyrillic&preview.text=Almost+before+we+knew+it,+we+had+left+the+ground.+%D1%84%D1%8B%D0%B2&preview.text_type=custom) and unzip to _`public/static/fonts/Montserrat`_
 
 _Then import to `css/layout.css` like this:_
@@ -284,5 +286,32 @@ _Then import to `css/layout.css` like this:_
     url('/static/fonts/Montserrat/Montserrat-Medium.eot?#iefix') format('embedded-opentype'), url('/static/fonts/Montserrat/Montserrat-Medium.woff2')
       format('woff2'), url('/static/fonts/Montserrat/Montserrat-Medium.woff') format('woff'), url('/static/fonts/Montserrat/Montserrat-Medium.ttf')
       format('truetype'), url('/static/fonts/Montserrat/Montserrat-Medium.svg#Montserrat') format('svg');
+}
+```
+
+### [Way 2](https://www.pandoge.com/shrifty/shrift-montserrat-ttf-eot-woff)
+
+Download font from [https://www.pandoge.com/engine/download.php?id=151](https://www.pandoge.com/engine/download.php?id=151) and unzip to _`public/static/fonts/Montserrat`_ with subfolders.
+
+_Then import to `css/layout.css` like this:_
+
+```css
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.eot');
+  src: local('Montserrat Regular'), local('Montserrat-Regular'),
+    url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.eot?#iefix') format('embedded-opentype'), url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.woff')
+      format('woff'), url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.eot');
+  src: local('Montserrat Regular'), local('Montserrat-Medium'),
+    url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.eot?#iefix') format('embedded-opentype'), url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.woff')
+      format('woff'), url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.ttf') format('truetype');
 }
 ```

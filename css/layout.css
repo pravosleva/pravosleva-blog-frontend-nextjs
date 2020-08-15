@@ -2,25 +2,21 @@
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/Montserrat/Montserrat-Regular.eot');
+  src: url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.eot');
   src: local('Montserrat Regular'), local('Montserrat-Regular'),
-    url('/static/fonts/Montserrat/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
-    url('/static/fonts/Montserrat/Montserrat-Regular.woff2') format('woff2'),
-    url('/static/fonts/Montserrat/Montserrat-Regular.woff') format('woff'),
-    url('/static/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype'),
-    url('/static/fonts/Montserrat/Montserrat-Regular.svg#Montserrat') format('svg');
+    url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.woff') format('woff'),
+    url('/static/fonts/Montserrat/Montserrat-Regular/Montserrat-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
-  src: url('/static/fonts/Montserrat/Montserrat-Regular.eot');
-  src: local('Montserrat Regular'), local('Montserrat-Regular'),
-    url('/static/fonts/Montserrat/Montserrat-Medium.eot?#iefix') format('embedded-opentype'),
-    url('/static/fonts/Montserrat/Montserrat-Medium.woff2') format('woff2'),
-    url('/static/fonts/Montserrat/Montserrat-Medium.woff') format('woff'),
-    url('/static/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype'),
-    url('/static/fonts/Montserrat/Montserrat-Medium.svg#Montserrat') format('svg');
+  src: url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.eot');
+  src: local('Montserrat Regular'), local('Montserrat-Medium'),
+    url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.woff') format('woff'),
+    url('/static/fonts/Montserrat/Montserrat-Medium/Montserrat-Medium.ttf') format('truetype');
 }
 
 html {
