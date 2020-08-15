@@ -468,15 +468,16 @@ pre {
   word-wrap: normal;
   padding: 1.45rem;
 }
+/*
 @media (min-width: 768px) {
   pre {
-    /*
     min-height: 70px;
     resize: vertical;
     overflow: auto;
-    */
   }
 }
+*/
+
 table {
   margin-left: 0;
   margin-right: 0;
