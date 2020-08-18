@@ -11,6 +11,10 @@ const Wrapper = styled('div')`
   & > div:not(:last-child) {
     margin-bottom: 20px;
   }
+  @media(min-width: 768px) {
+    transition: 1s;
+    margin-bottom: 40px;
+  }
   @media(max-width: 767px) {
     margin-bottom: 30px;
   }
