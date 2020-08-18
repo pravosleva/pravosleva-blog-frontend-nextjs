@@ -13,6 +13,7 @@ import { convertToPlainText } from '@/utils/markdown/convertToPlainText'
 import { withTranslator } from '@/hocs/with-translator'
 import Img from '@lxsmnsyc/react-image'
 import { Loader } from '@/components/Loader'
+import { HVACEquipment } from '@/components/special/HVACEquipment/index'
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 // const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
@@ -155,11 +156,15 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                 </small>
               </div>
             </div>
-
             <div className="article-body fade-in-effect">
               {!!article.body ? <ReactMarkdown source={article.body} /> : 'No body'}
             </div>
-            {article.gallery && article.gallery.length > 0 ? (
+            {article.slug === 'tipy-oborudovaniya-hvac' && (
+              <div className="article-body">
+                <HVACEquipment />
+              </div>
+            )}
+            {!!article.gallery && article.gallery.length > 0 ? (
               <div className="galleries-wrapper">
                 {article.gallery
                   .map(({ name, description, images = [], id }) => ({
@@ -171,7 +176,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                       caption: `${article.title}: ${description}.`,
                     })),
                   }))
-                  .map(({ id, name, description, images }, i) => (
+                  .map(({ id, name, description, images, slug }, i) => (
                     <div
                       key={id}
                       style={{
