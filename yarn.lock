@@ -4321,6 +4321,11 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
+clsx@^1.0.4:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+
 coa@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/coa/-/coa-2.0.2.tgz#43f6c21151b4ef2bf57187db0d73de229e3e7ec3"
@@ -8131,6 +8136,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -10481,6 +10491,19 @@ react-hotkeys@2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
+react-image-gallery@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-image-gallery/-/react-image-gallery-1.0.8.tgz#a628d2500b9a0a97854b02f21588f3d14febcda2"
+  integrity sha512-kxS+fUCdq8HerN9JvWnzzg8YdPouwbSgVzXxCzxI7ZcAcvDCr/XKxGjqSQ5Ue8DeUEglsAcNJDOdoLygyNgOwA==
+  dependencies:
+    clsx "^1.0.4"
+    lodash.debounce "^4.0.8"
+    lodash.isequal "^4.5.0"
+    lodash.throttle "^4.1.1"
+    prop-types "^15.5.8"
+    react-swipeable "^5.2.0"
+    resize-observer-polyfill "^1.5.0"
+
 react-image-lightbox@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-5.1.1.tgz#872d1a4336b5a6410ea7909b767cf59014081004"
@@ -10646,6 +10669,13 @@ react-spinners@^0.8.0:
   integrity sha512-fuYNjH0megp5FLuUqQXWM9mPgBXUjvYD6IkMOiwNGOOlI2UdOP1ZC3vejUAa3Y/q4qWJ6yx8rjfMjIBgEji+9A==
   dependencies:
     "@emotion/core" "^10.0.15"
+
+react-swipeable@^5.2.0:
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-5.5.1.tgz#48ae6182deaf62f21d4b87469b60281dbd7c4a76"
+  integrity sha512-EQObuU3Qg3JdX3WxOn5reZvOSCpU4fwpUAs+NlXSN3y+qtsO2r8VGkVnOQzmByt3BSYj9EWYdUOUfi7vaMdZZw==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-syntax-highlighter@^11.0.2:
   version "11.0.2"
@@ -12795,6 +12825,11 @@ use-sidecar@^1.0.1:
   dependencies:
     detect-node "^2.0.4"
     tslib "^1.9.3"
+
+use-state-with-callback@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/use-state-with-callback/-/use-state-with-callback-2.0.3.tgz#3be56ca52b6afcfe364e0579749dfe588c47c01f"
+  integrity sha512-bJXNAtJZW0xz16GIW54aDbYxRkZa2c8RdoKGQnJqE7GmRdVkZkKQBTR/9vH6T5tZX/7yCIhywE09NyeTQ9EJJQ==
 
 use-subscription@1.4.1:
   version "1.4.1"

@@ -10,6 +10,7 @@ import withReduxStore from '@/hocs/with-redux-store'
 import '@/css/layout.css'
 import '@/css/link-as-rippled-btn.css'
 import '@/css/rippled-btn.css'
+import 'react-image-gallery/styles/css/image-gallery.css';
 import { Toaster } from '@/components/Toaster'
 import { ThemeProvider } from 'styled-components'
 import { Theme } from '@/ui-kit'

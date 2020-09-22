@@ -4,6 +4,7 @@ import { EquipmentGroup } from './components/EquipmentGroup'
 // import { EquipmentSubgroup } from './components/EquipmentSubgroup'
 import { Card } from './components/Card/index'
 import { withTranslator } from '@/hocs/with-translator'
+import { data } from './data'
 
 const Wrapper = styled('div')`
   display: flex;
@@ -142,6 +143,7 @@ export const HVACEquipment = withTranslator(({ t }) => {
             brands={t('HVAC_1.1_BRANDS')}
             params={t('HVAC_1.1_PARAMS')}
             t={t}
+            data={data['HVAC_1.1']}
           />
           <Card
             ref={unitRef12}

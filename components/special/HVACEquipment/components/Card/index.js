@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { PhotosBtnWrapper } from './PhotosBtnWrapper'
 
 export const GridItem = styled('div')`
   transition: 0.5s;
@@ -11,8 +12,8 @@ export const GridItem = styled('div')`
     padding: 10px;
 
     border-radius: 0px;
-    transform: translateX(-20px);
-    width: calc(100% + 40px);
+    /* transform: translateX(-20px); */
+    /* width: calc(100% + 40px); */
   }
   box-shadow: 0 5px 10px 0px rgba(7, 7, 7, 0.2);
   & > .card-description blockquote {
@@ -21,9 +22,12 @@ export const GridItem = styled('div')`
     opacity: 0.5;
     border-left: 2px solid gray;
   }
+
+  display: flex;
+  flex-direction: column;
 `
 
-export const Card = React.forwardRef(({ description, title, brands, params, t }, ref) => {
+export const Card = React.forwardRef(({ description, title, brands, params, t, data }, ref) => {
   let brandlist
   try {
     brandlist = JSON.parse(brands)
@@ -88,6 +92,7 @@ export const Card = React.forwardRef(({ description, title, brands, params, t },
           </ul>
         )}
       </div>
+      {data?.photos && <PhotosBtnWrapper title={title} photos={data?.photos} />}
     </GridItem>
   )
 })
