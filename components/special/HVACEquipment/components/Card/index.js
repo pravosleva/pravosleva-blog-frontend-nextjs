@@ -11,7 +11,7 @@ export const GridItem = styled('div')`
   @media (max-width: 767px) {
     padding: 10px;
 
-    border-radius: 0px;
+    border-radius: 8px;
     /* transform: translateX(-20px); */
     /* width: calc(100% + 40px); */
   }
@@ -92,7 +92,7 @@ export const Card = React.forwardRef(({ description, title, brands, params, t, d
           </ul>
         )}
       </div>
-      {data?.photos && <PhotosBtnWrapper title={title} photos={data?.photos} />}
+      {data?.photos && <PhotosBtnWrapper description={description} title={title} photos={data?.photos} />}
     </GridItem>
   )
 })

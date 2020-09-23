@@ -96,6 +96,7 @@ interface IProps {
   targetActionLabel: string
   onClickTargetAction: () => void
   photos: string[]
+  description?: string
 }
 
 const Wrapper = styled('div')`
@@ -108,23 +109,44 @@ interface IArrProps {
   left?: boolean
 }
 const Arr = styled('div')<IArrProps>`
-  cursor: pointer;
-
   ${({ right }) => right && css`
     @media(max-width: 767px) {
       padding-left: 10px;
+    }
+    @media(min-width: 768px) {
+      padding-left: 15px;
     }
   `}
   ${({ left }) => left && css`
     @media(max-width: 767px) {
       padding-right: 10px;
     }
+    @media(min-width: 768px) {
+      padding-right: 15px;
+    }
   `}
   
-  @media(min-width: 768px) {
+  /* @media(min-width: 768px) {
     padding: 0;
-  }
+  } */
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const Circle = styled('div')`
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background-color: lightgray;
+  &:hover {
+    background-color: gray;
+  }
+  border-radius: 50%;
+  & > i {
+    color: #fff;
+  }
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -155,7 +177,7 @@ const Body = ({ photos }) => {
 
   return (
     <Wrapper>
-      <Arr left onClick={activeGalleryIndexDec}><i className="fas fa-arrow-left" /></Arr>
+      <Arr left><Circle onClick={activeGalleryIndexDec}><i className="fas fa-arrow-left" /></Circle></Arr>
       {/* JSON.stringify(photos) */}
       <BodySection>
         <ImageGallery
@@ -167,12 +189,12 @@ const Body = ({ photos }) => {
           showNav={false}
         />
       </BodySection>
-      <Arr right onClick={activeGalleryIndexInc}><i className="fas fa-arrow-right" /></Arr>
+      <Arr right><Circle onClick={activeGalleryIndexInc}><i className="fas fa-arrow-right" /></Circle></Arr>
     </Wrapper>
   )
 }
 
-export const Modal = ({ isOpened, title, onHideModal, onClickTargetAction, targetActionLabel, photos }: IProps) => {
+export const Modal = ({ isOpened, title, onHideModal, onClickTargetAction, targetActionLabel, photos, description }: IProps) => {
   return (
     <>
       {isOpened && (
@@ -181,7 +203,18 @@ export const Modal = ({ isOpened, title, onHideModal, onClickTargetAction, targe
           modalTitle={title}
           // modalSubtitle="process.env"
           closeModal={onHideModal}
-          renderBodyContent={() => <Body photos={photos} />}
+          renderBodyContent={() => (
+            <div>
+              <Body photos={photos} />
+              {
+                description && (
+                  <div style={{ marginTop: '30px' }}>
+                    {description}
+                  </div>
+                )
+              }
+            </div>
+          )}
           renderFooterContent={() => (
             <FooterRow>
               <Button typeName="secondary" size="small" width="medium" onClick={onClickTargetAction}>

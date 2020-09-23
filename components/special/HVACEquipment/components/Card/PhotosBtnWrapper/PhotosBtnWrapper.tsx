@@ -19,9 +19,10 @@ interface IProps {
   photos: string[]
   title: string
   t: (str: string) => string
+  description?: string
 }
 
-export const PhotosBtnWrapper = withTranslator(({ t, photos, title }: IProps) => {
+export const PhotosBtnWrapper = withTranslator(({ t, photos, title, description }: IProps) => {
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false)
   const { onBlockScrollBody } = useUnscrolledBody(false)
   const handleOpenModal = () => {
@@ -46,6 +47,7 @@ export const PhotosBtnWrapper = withTranslator(({ t, photos, title }: IProps) =>
             targetActionLabel={t('CLOSE')}
             onClickTargetAction={handleCloseModal}
             photos={photos}
+            description={description}
           />
         </Suspense>
       )}

@@ -160,6 +160,7 @@ export const HVACEquipment = withTranslator(({ t }) => {
             brands={t('HVAC_1.3_BRANDS')}
             params={t('HVAC_1.3_PARAMS')}
             t={t}
+            data={data['HVAC_1.3']}
           />
           <Card
             ref={unitRef14}
@@ -178,6 +179,7 @@ export const HVACEquipment = withTranslator(({ t }) => {
             brands={t('HVAC_2.1_BRANDS')}
             params={t('HVAC_2.1_PARAMS')}
             t={t}
+            data={data['HVAC_2.1']}
           />
           <Card
             ref={unitRef22}
@@ -220,6 +222,7 @@ export const HVACEquipment = withTranslator(({ t }) => {
             brands={t('HVAC_3.2_BRANDS')}
             params={t('HVAC_3.2_PARAMS')}
             t={t}
+            data={data['HVAC_3.2']}
           />
         </EquipmentGroup>
         <EquipmentGroup name={t('HVAC_4')} ref={unitRef4} deep={1}>
