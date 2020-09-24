@@ -14,6 +14,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import { Toaster } from '@/components/Toaster'
 import { ThemeProvider } from 'styled-components'
 import { Theme } from '@/ui-kit'
+import { AnimatePresence } from 'framer-motion'
 
 const gaTrackingId = process.env.GA_TRACKING_ID || 'UA-xxxxxxxxx-x'
 
@@ -37,7 +38,7 @@ class MyApp extends App<IProps> {
     const { Component, pageProps, reduxStore } = this.props
 
     return (
-      <>
+      <AnimatePresence exitBeforeEnter>
         <Head>
           <title>Pravosleva</title>
         </Head>
@@ -47,7 +48,7 @@ class MyApp extends App<IProps> {
             <Component {...pageProps} />
           </Provider>
         </ThemeProvider>
-      </>
+      </AnimatePresence>
     )
   }
 }

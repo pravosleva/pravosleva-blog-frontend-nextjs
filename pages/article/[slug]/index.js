@@ -14,6 +14,11 @@ import { withTranslator } from '@/hocs/with-translator'
 import Img from '@lxsmnsyc/react-image'
 import { Loader } from '@/components/Loader'
 import { HVACEquipment } from '@/components/special/HVACEquipment/index'
+import { motion } from 'framer-motion'
+
+// animate: defines animation
+// initial: defines initial state of animation or starting point
+// exit: defines animation when component exits
 
 const Lightbox = loadable(() => import(/* webpackChunkName: "react-image-lightbox" */ 'react-image-lightbox'))
 // const Gallery = loadable(() => import(/* webpackChunkName: "react-photo-gallery" */ 'react-photo-gallery'), {
@@ -141,24 +146,24 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
               </ul>
             </div>
 
-            <div className="article-wrapper">
-              <div className="fade-in-effect tiles-grid-item-in-article white article-wrapper__big-image-as-container">
-                <h1 className="article-page-title">
-                  {!!article.title ? <ReactMarkdown source={article.title} /> : 'No title'}
-                </h1>
-                {article?.brief && (
-                  <div className="fade-in-effect article-wrapper__big-image-as-container__brief">
-                    <ReactMarkdown source={article.brief} />
-                  </div>
-                )}
-                <small className="inactive article-wrapper__big-image-as-container__date">
-                  {getFormatedDate2(new Date(article.createdAt))}
-                </small>
+            <motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <div className="article-wrapper">
+                <div className="tiles-grid-item-in-article white article-wrapper__big-image-as-container">
+                  <h1 className="article-page-title">
+                    {!!article.title ? <ReactMarkdown source={article.title} /> : 'No title'}
+                  </h1>
+                  {article?.brief && (
+                    <div className="article-wrapper__big-image-as-container__brief">
+                      <ReactMarkdown source={article.brief} />
+                    </div>
+                  )}
+                  <small className="inactive article-wrapper__big-image-as-container__date">
+                    {getFormatedDate2(new Date(article.createdAt))}
+                  </small>
+                </div>
               </div>
-            </div>
-            <div className="article-body fade-in-effect">
-              {!!article.body ? <ReactMarkdown source={article.body} /> : 'No body'}
-            </div>
+            </motion.div>
+            <div className="article-body">{!!article.body ? <ReactMarkdown source={article.body} /> : 'No body'}</div>
             {article.slug === 'tipy-oborudovaniya-hvac' && (
               <div className="article-body">
                 <HVACEquipment />

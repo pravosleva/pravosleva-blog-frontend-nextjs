@@ -9,6 +9,23 @@ import { loadReCaptcha } from 'react-recaptcha-v3'
 import { post } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
 import { withTranslator } from '@/hocs/with-translator'
+import { motion } from 'framer-motion'
+
+const easing = [0.6, -0.05, 0.01, 0.99]
+const fadeInUp = {
+  initial: {
+    y: 60,
+    opacity: 0,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: easing,
+    }
+  }
+}
 
 const RECAPTCHAV3_CLIENT_KEY = process.env.RECAPTCHAV3_CLIENT_KEY
 const RECAPTCHAV3_VERIFY_URL = process.env.RECAPTCHAV3_VERIFY_URL
@@ -143,31 +160,37 @@ const Feedback = ({ t }) => {
 
   return (
     <Layout>
-      <Container className="box">
-        {!wasSent && (
-          <form onSubmit={showRecaptcha}>
-            <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
-            <div className="inputBox">
-              <input name="companyName" placeholder="invisible" {...bindCompanyName} required />
-              <label>{t('COMPANY_NAME')}</label>
-            </div>
-            <div className="inputBox">
-              <input name="contactName" placeholder="invisible" {...bindContactName} required />
-              <label>{t('YOUR_NAME')}</label>
-            </div>
-            <div className="inputBox">
-              <textarea name="comment" placeholder="invisible" {...bindComment} required />
-              <label>{t('COMMENT')}</label>
-            </div>
-            <div className="special-link-wrapper fade-in-effect unselectable">
-              <button className="rippled-btn" type="submit">
-                {t('SUBMIT')}
-              </button>
-              {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
-            </div>
-          </form>
-        )}
-      </Container>
+      <motion.div exit={{ opacity: 0 }} initial='initial' animate='animate'>
+        <Container className="box">
+          {!wasSent && (
+            <motion.div variants={fadeInUp}>
+
+            
+            <form onSubmit={showRecaptcha}>
+              <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
+              <div className="inputBox">
+                <input name="companyName" placeholder="invisible" {...bindCompanyName} required />
+                <label>{t('COMPANY_NAME')}</label>
+              </div>
+              <div className="inputBox">
+                <input name="contactName" placeholder="invisible" {...bindContactName} required />
+                <label>{t('YOUR_NAME')}</label>
+              </div>
+              <div className="inputBox">
+                <textarea name="comment" placeholder="invisible" {...bindComment} required />
+                <label>{t('COMMENT')}</label>
+              </div>
+              <div className="special-link-wrapper fade-in-effect unselectable">
+                <button className="rippled-btn" type="submit">
+                  {t('SUBMIT')}
+                </button>
+                {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
+              </div>
+            </form>
+            </motion.div>
+          )}
+        </Container>
+      </motion.div>
     </Layout>
   )
 }
