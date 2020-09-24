@@ -15,6 +15,8 @@ import Img from '@lxsmnsyc/react-image'
 import { Loader } from '@/components/Loader'
 import { HVACEquipment } from '@/components/special/HVACEquipment/index'
 import { motion } from 'framer-motion'
+import NextNProgress from 'nextjs-progressbar'
+// <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
 
 // animate: defines animation
 // initial: defines initial state of animation or starting point
@@ -109,6 +111,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
 
   return (
     <>
+      <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
       <Head>
         <title>{`Pravosleva${article?.title ? ` | ${convertToPlainText(article?.title)}` : 'No title'}`}</title>
         {!!article.brief && <meta name="description" content={convertToPlainText(article.brief)} />}

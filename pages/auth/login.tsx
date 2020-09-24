@@ -7,6 +7,8 @@ import { showAsyncToast } from '@/actions'
 import { getErrorString } from '@/utils/redux-form/errors'
 import { postLogin } from '@/helpers/services/restService'
 import { Layout } from '@/components/layout'
+import NextNProgress from 'nextjs-progressbar'
+// <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} />
 
 // V1: TODO: Разобраться с динамическим импортом от Next.js
 // import dynamic from 'next/dynamic'
@@ -63,6 +65,7 @@ const Login: React.FC<{}> = () => {
 
   return (
     <Layout>
+      <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
       <LoginFormPage onSubmit={handleSubmit} submitting={false} pristine={false} />
     </Layout>
   )

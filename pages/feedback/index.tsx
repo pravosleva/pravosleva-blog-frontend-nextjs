@@ -10,6 +10,8 @@ import { post } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
 import { withTranslator } from '@/hocs/with-translator'
 import { motion } from 'framer-motion'
+import NextNProgress from 'nextjs-progressbar'
+// <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} />
 
 const easing = [0.6, -0.05, 0.01, 0.99]
 const fadeInUp = {
@@ -160,12 +162,11 @@ const Feedback = ({ t }) => {
 
   return (
     <Layout>
+      <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
       <motion.div exit={{ opacity: 0 }} initial='initial' animate='animate'>
         <Container className="box">
           {!wasSent && (
             <motion.div variants={fadeInUp}>
-
-            
             <form onSubmit={showRecaptcha}>
               <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
               <div className="inputBox">

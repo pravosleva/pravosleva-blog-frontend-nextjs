@@ -9,6 +9,8 @@ import { withTranslator } from '@/hocs/with-translator'
 import { Loader } from '@/components/Loader'
 // import { useDispatch } from 'react-redux'
 // import { showAsyncToast } from '@/actions'
+import NextNProgress from 'nextjs-progressbar'
+// <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
 
 const Tiles = loadable(() =>
   import(/* webpackChunkName: "Tiles" */ '@/components/Tiles').then(({ Tiles }) => ({
@@ -218,6 +220,7 @@ const IndexPage = withTranslator(({ initialArtiles, initialArtilesCounter, t, cu
   return (
     <>
       <Layout>
+        <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
         <div className="homepage-wrapper">
           <div className="searchPanel-wrapper">
             <div id="searchPanel">

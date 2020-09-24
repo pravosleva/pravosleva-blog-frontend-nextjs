@@ -4,6 +4,8 @@ import styled, { StyledComponent } from 'styled-components'
 import Link from 'next/link'
 import { NextPage, NextPageContext } from 'next'
 import { withTranslator } from '@/hocs/with-translator'
+import NextNProgress from 'nextjs-progressbar'
+// <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} />
 
 const Container: StyledComponent<'div', any, {}, never> = styled('div')`
   @media (min-width: 768px) {
@@ -42,6 +44,7 @@ const Sorry: NextPage<IProps> = withTranslator(({ msg, t }) => {
   }, [])
   return (
     <Layout>
+      <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
       <Container className="box">
         <h2 className="error">{t('SORRY')}</h2>
         <p>
