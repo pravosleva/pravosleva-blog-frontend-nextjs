@@ -41,6 +41,10 @@ class MyApp extends App<IProps> {
       <AnimatePresence exitBeforeEnter>
         <Head>
           <title>Pravosleva</title>
+          <meta charSet="utf-8" />
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="theme-color" content="#0162c8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         </Head>
         <ThemeProvider theme={Theme}>
           <Provider store={reduxStore}>

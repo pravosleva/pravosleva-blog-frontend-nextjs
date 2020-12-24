@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "local:cleanup": "bash local-cleanup.sh",
+    "envs-init": "bash bin/envs-init.sh nextjs",
+    "local:cleanup": "bash bin/local-cleanup.sh nextjs",
     "deploy:prod:build-send-restart-all": "deploy-app -d prod:build-send-restart-all",
     "deploy:prod:build-send-restart-front": "deploy-app -d prod:build-send-restart-front",
     "deploy:prod:send-restart-front": "deploy-app -d prod:send-restart-front",
