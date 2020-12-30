@@ -7,5 +7,5 @@ export const CodeRendererSynthwave84 = ({ language, value }: any) => {
 }
 
 export const CodeRendererMaterialDark = ({ language, value }: any) => {
-  return <SyntaxHighlighter showLineNumbers={true} style={materialDark} language={language} children={value} />
+  return <SyntaxHighlighter showLineNumbers={false} style={materialDark} language={language} children={value} />
 }
