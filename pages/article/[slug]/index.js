@@ -17,6 +17,7 @@ import { HVACEquipment } from '@/components/special/HVACEquipment/index'
 import { motion } from 'framer-motion'
 import NextNProgress from 'nextjs-progressbar'
 // <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
+import { baseRenderers } from '@/react-markdown-renderers'
 
 // animate: defines animation
 // initial: defines initial state of animation or starting point
@@ -166,7 +167,13 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                 </div>
               </div>
             </motion.div>
-            <div className="article-body">{!!article.body ? <ReactMarkdown source={article.body} /> : 'No body'}</div>
+            <div className="article-body">
+              {!!article.body ? (
+                <ReactMarkdown className="description-markdown" renderers={baseRenderers} source={article.body} />
+              ) : (
+                'No body'
+              )}
+            </div>
             {article.slug === 'tipy-oborudovaniya-hvac' && (
               <div className="article-body">
                 <HVACEquipment />

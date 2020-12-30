@@ -353,7 +353,7 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
     .then((res) => res.data)
     .catch((err) => err)
 
-  console.log(result)
+  // console.log(result)
 
   if (Number.isInteger(result)) {
     return Promise.resolve(result)
@@ -363,16 +363,22 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
 }
 
 IndexPage.getInitialProps = async (_ctx) => {
-  const articles = await fetchArticles({
+  let articles = []
+  await fetchArticles({
     queryText: '',
     targetField: 'body',
     start: 0,
+  }).then((res) => {
+    articles = res
   })
-  const articlesCounter = await fetchArticlesCounter({ queryText: '', targetField: 'body' })
+  let articlesCounter = 0
+  await fetchArticlesCounter({ queryText: '', targetField: 'body' }).then((res) => {
+    articlesCounter = res
+  })
 
   return {
-    initialArtilesCounter: articlesCounter || 0,
-    initialArtiles: articles || [],
+    initialArtilesCounter: articlesCounter,
+    initialArtiles: articles,
     // initialArtilesCounter: 0,
     // initialArtiles: [],
   }
