@@ -20,11 +20,18 @@ const ReactYoutubeContainer = styled('div')`
   @media(max-width: 767px) {
     margin-bottom: 25px;
   }
+  @media(min-width: 768px) {
+    margin-bottom: 40px;
+  }
 
-  & > .react-youtube {
+  & .react-youtube {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  & frame {
     width: 100%;
     height: 100%;
   }
