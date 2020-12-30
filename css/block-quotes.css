@@ -89,11 +89,10 @@ blockquote {
 
 .description-markdown .otro-blockquote {
   /* font-size: 1.4em; */
-  font-size: 1em;
+  font-size: 0.9em;
   width: 100%;
   border-radius: 4px;
   margin: 20px auto;
-  font-family: Open Sans;
   font-style: italic;
   color: #555555;
   /* padding: 1.2em 30px 1.2em 75px; */
@@ -101,7 +100,7 @@ blockquote {
   border-left: 8px solid #78c0a8;
   line-height: 1.6;
   position: relative;
-  background: #ededed;
+  background: transparent;
 }
 .description-markdown .otro-blockquote::before {
   font-family: Arial;
