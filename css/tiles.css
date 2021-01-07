@@ -286,7 +286,7 @@
 }
 @media(min-width: 768px) {
   .tiles-grid-item__brief {
-    width: calc(100% - 100px);
+    width: calc(100% - 30px);
   }
 }
 @media(max-width: 767px) {
