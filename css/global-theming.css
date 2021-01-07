@@ -20,6 +20,17 @@ body.light .active-card {
   box-shadow: 0 5px 10px 0px rgba(7, 7, 7, 0.3);
 }
 
+body.light .description-markdown .otro-blockquote {
+  color: #555555;
+  border-left: 8px solid #78c0a8;
+}
+body.light .description-markdown .otro-blockquote::before {
+  color: #78c0a8;
+}
+body.light .description-markdown .otro-blockquote span {
+  color: #333333;
+}
+
 /* GRAY */
 
 body.gray {
@@ -32,12 +43,12 @@ body.gray select,
 body.gray textarea {
   color: #000;
 }
-body.gray div.article-body > blockquote {
+/* body.gray div.article-body > blockquote {
   padding: 0 1em;
   color: #6a737d;
   border-left: 0.25em solid #a0a0a0;
   margin-left: 0;
-}
+} */
 body.gray footer {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
@@ -62,10 +73,21 @@ body.gray .active-card {
   border: 2px solid #683434 !important;
 }
 
+body.gray .description-markdown .otro-blockquote {
+  color: inherit;
+  border-left: 8px solid #683434;
+}
+body.gray .description-markdown .otro-blockquote::before {
+  color: #683434;
+}
+body.gray .description-markdown .otro-blockquote span {
+  color: #333333;
+}
+
 /* HARD-GRAY */
 
 body.hard-gray .article-body a,
-body.hard-gray .galleries-wrapper a:hover {
+body.hard-gray .galleries-wrapper a {
   color: #8EBFF1;
 }
 body.hard-gray .article-body a:hover,
@@ -137,6 +159,17 @@ body.hard-gray .active-card {
   border: 2px solid #39e5ac !important;
 }
 
+body.hard-gray .description-markdown .otro-blockquote {
+  color: inherit;
+  border-left: 8px solid #fff;
+}
+body.hard-gray .description-markdown .otro-blockquote::before {
+  color: #fff;
+}
+body.hard-gray .description-markdown .otro-blockquote span {
+  color: #fff;
+}
+
 /* DARK */
 
 body.dark .article-body a,
@@ -190,4 +223,15 @@ body.dark .card {
 }
 body.dark .active-card {
   border: 2px solid #ff781e !important;
+}
+
+body.dark .description-markdown .otro-blockquote {
+  color: inherit;
+  border-left: 8px solid #39e5ac;
+}
+body.dark .description-markdown .otro-blockquote::before {
+  color: #39e5ac;
+}
+body.dark .description-markdown .otro-blockquote span {
+  color: #fff;
 }
