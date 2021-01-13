@@ -9,7 +9,7 @@ import { loadReCaptcha } from 'react-recaptcha-v3'
 import { post } from '@/helpers/services/restService'
 import { showAsyncToast } from '@/actions'
 import { withTranslator } from '@/hocs/with-translator'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import NextNProgress from 'nextjs-progressbar'
 // <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} />
 
@@ -161,38 +161,40 @@ const Feedback = ({ t }) => {
   }, [])
 
   return (
-    <Layout>
-      <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
-      <motion.div exit={{ opacity: 0 }} initial='initial' animate='animate' key="/feedback">
-        <Container className="box">
-          {!wasSent && (
-            <motion.div variants={fadeInUp}>
-            <form onSubmit={showRecaptcha}>
-              <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
-              <div className="inputBox">
-                <input name="companyName" placeholder="invisible" {...bindCompanyName} required />
-                <label>{t('COMPANY_NAME')}</label>
-              </div>
-              <div className="inputBox">
-                <input name="contactName" placeholder="invisible" {...bindContactName} required />
-                <label>{t('YOUR_NAME')}</label>
-              </div>
-              <div className="inputBox">
-                <textarea name="comment" placeholder="invisible" {...bindComment} required />
-                <label>{t('COMMENT')}</label>
-              </div>
-              <div className="special-link-wrapper fade-in-effect unselectable">
-                <button className="rippled-btn" type="submit">
-                  {t('SUBMIT')}
-                </button>
-                {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
-              </div>
-            </form>
-            </motion.div>
-          )}
-        </Container>
-      </motion.div>
-    </Layout>
+    <AnimatePresence exitBeforeEnter>
+      <Layout>
+        <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
+        <motion.div exit={{ opacity: 0 }} initial='initial' animate='animate' key="/feedback">
+          <Container className="box">
+            {!wasSent && (
+              <motion.div variants={fadeInUp}>
+              <form onSubmit={showRecaptcha}>
+                <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
+                <div className="inputBox">
+                  <input name="companyName" placeholder="invisible" {...bindCompanyName} required />
+                  <label>{t('COMPANY_NAME')}</label>
+                </div>
+                <div className="inputBox">
+                  <input name="contactName" placeholder="invisible" {...bindContactName} required />
+                  <label>{t('YOUR_NAME')}</label>
+                </div>
+                <div className="inputBox">
+                  <textarea name="comment" placeholder="invisible" {...bindComment} required />
+                  <label>{t('COMMENT')}</label>
+                </div>
+                <div className="special-link-wrapper fade-in-effect unselectable">
+                  <button className="rippled-btn" type="submit">
+                    {t('SUBMIT')}
+                  </button>
+                  {isRecaptchaShowed && <Recaptcha onToken={onResolved} action="feedback" />}
+                </div>
+              </form>
+              </motion.div>
+            )}
+          </Container>
+        </motion.div>
+      </Layout>
+    </AnimatePresence>
   )
 }
 

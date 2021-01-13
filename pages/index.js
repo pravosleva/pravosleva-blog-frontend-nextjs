@@ -351,14 +351,12 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
   const result = await api
     .get(`/articles/count?${query}`)
     .then((res) => res.data)
-    .catch((err) => err)
-
-  // console.log(result)
+    .catch((err) => 0)
 
   if (Number.isInteger(result)) {
     return Promise.resolve(result)
   } else {
-    return Promise.reject('Ответ не является целым числом', typeof result, JSON.stringify(result))
+    return Promise.reject('Ответ не является целым числом')
   }
 }
 
@@ -368,9 +366,14 @@ IndexPage.getInitialProps = async (_ctx) => {
     queryText: '',
     targetField: 'body',
     start: 0,
-  }).then((res) => {
-    articles = res
   })
+    .then((res) => {
+      articles = res
+    })
+    .catch((err) => {
+      console.log(err)
+      articles = []
+    })
   let articlesCounter = 0
   await fetchArticlesCounter({ queryText: '', targetField: 'body' }).then((res) => {
     articlesCounter = res

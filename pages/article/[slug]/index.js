@@ -14,7 +14,7 @@ import { withTranslator } from '@/hocs/with-translator'
 import Img from '@lxsmnsyc/react-image'
 import { Loader } from '@/components/Loader'
 import { HVACEquipment } from '@/components/special/HVACEquipment/index'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import NextNProgress from 'nextjs-progressbar'
 // <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
 import { baseRenderers } from '@/react-markdown-renderers'
@@ -111,7 +111,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
   }, [])
 
   return (
-    <>
+    <AnimatePresence exitBeforeEnter>
       <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
       <Head>
         <title>{`Pravosleva${article?.title ? ` | ${convertToPlainText(article?.title)}` : 'No title'}`}</title>
@@ -200,7 +200,13 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                       onClick={() => setCurrentPackIndex(i)}
                     >
                       {name && <h2>{name}</h2>}
-                      {description && <ReactMarkdown className="description-markdown" renderers={baseRenderers} source={description} />}
+                      {description && (
+                        <ReactMarkdown
+                          className="description-markdown"
+                          renderers={baseRenderers}
+                          source={description}
+                        />
+                      )}
                       {/* WAY 1: */}
                       {/*
                       <Gallery
@@ -299,7 +305,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
           }
         `}</style>
       </Layout>
-    </>
+    </AnimatePresence>
   )
 })
 
