@@ -253,7 +253,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
             </div>
           </>
         )}
-        <ShareSection bgSrc={bgSrc} />
+        <ShareSection bgSrc={bgSrc} slug={article.slug} title={article.title} />
         <div className="special-link-wrapper fade-in-effect unselectable">
           <Link href="/" as="/">
             <a className="link-as-rippled-btn">

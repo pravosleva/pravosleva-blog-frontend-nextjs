@@ -888,7 +888,7 @@ div.article-body > blockquote {
     padding-bottom: 10px;
   }
   .universal-container > main > .article-body {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   }
 }
 @media (max-width: 767px) {
