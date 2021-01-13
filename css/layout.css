@@ -900,6 +900,7 @@ div.article-body > blockquote {
   }
   .universal-container > main > .article-body {
     padding: 0 20px 0 20px;
+    margin-bottom: 60px;
   }
   .universal-container > main > .special-link-wrapper {
     width: 100%;

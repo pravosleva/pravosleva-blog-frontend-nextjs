@@ -18,6 +18,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import NextNProgress from 'nextjs-progressbar'
 // <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
 import { baseRenderers } from '@/react-markdown-renderers'
+import { ShareSection } from '@/components/ShareSection'
 
 // animate: defines animation
 // initial: defines initial state of animation or starting point
@@ -252,6 +253,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
             </div>
           </>
         )}
+        <ShareSection bgSrc={bgSrc} />
         <div className="special-link-wrapper fade-in-effect unselectable">
           <Link href="/" as="/">
             <a className="link-as-rippled-btn">
