@@ -200,7 +200,7 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                       onClick={() => setCurrentPackIndex(i)}
                     >
                       {name && <h2>{name}</h2>}
-                      {description && <ReactMarkdown source={description} />}
+                      {description && <ReactMarkdown className="description-markdown" renderers={baseRenderers} source={description} />}
                       {/* WAY 1: */}
                       {/*
                       <Gallery

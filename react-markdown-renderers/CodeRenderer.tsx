@@ -1,3 +1,4 @@
+import React from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 // @ts-ignore
 import { synthwave84, materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'

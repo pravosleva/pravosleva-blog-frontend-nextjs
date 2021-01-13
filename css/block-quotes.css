@@ -85,38 +85,34 @@ blockquote {
   margin-bottom: 30px;
 }
 
-/* NEW 2020.12 */
+/* NEW 2020.12: See global-theming.css */
 
-.description-markdown .otro-blockquote {
+body .description-markdown .otro-blockquote {
   /* font-size: 1.4em; */
   font-size: 0.9em;
   width: 100%;
   border-radius: 4px;
-  margin: 20px auto;
+  margin: 30px auto;
   font-style: italic;
-  /* color: #555555; */
   /* padding: 1.2em 30px 1.2em 75px; */
   padding: 1.2em 30px 1.2em 50px;
-  border-left: 8px solid #78c0a8;
   line-height: 1.6;
   position: relative;
   background: transparent;
 }
-.description-markdown .otro-blockquote::before {
+body .description-markdown .otro-blockquote::before {
   font-family: Arial;
   content: '\201C';
-  color: #78c0a8;
   font-size: 4em;
   position: absolute;
   left: 10px;
   top: -10px;
 }
-/* .description-markdown .otro-blockquote::after {
+/* body .description-markdown .otro-blockquote::after {
   content: '';
 } */
-.description-markdown .otro-blockquote span {
+body .description-markdown .otro-blockquote span {
   display: block;
-  /* color: #333333; */
   font-style: normal;
   font-weight: bold;
   margin-top: 1em;
