@@ -163,7 +163,7 @@ const Feedback = ({ t }) => {
   return (
     <Layout>
       <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} options={{ showSpinner: false }} />
-      <motion.div exit={{ opacity: 0 }} initial='initial' animate='animate'>
+      <motion.div exit={{ opacity: 0 }} initial='initial' animate='animate' key="/feedback">
         <Container className="box">
           {!wasSent && (
             <motion.div variants={fadeInUp}>
