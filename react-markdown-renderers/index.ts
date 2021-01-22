@@ -1,7 +1,8 @@
 import { BlockquoteRenderer } from './BlockquoteRenderer'
 import {
   // CodeRendererSynthwave84,
-  CodeRendererMaterialDark,
+  // CodeRendererMaterialDark,
+  CodeRendererMaterialOceanic,
 } from './CodeRenderer'
 import { HeadingRenderer } from './HeadingRenderer'
 import { ImageRenderer } from './ImageRenderer'
@@ -16,7 +17,7 @@ export * from './LinkRenderer'
 
 export const baseRenderers = {
   blockquote: BlockquoteRenderer,
-  code: CodeRendererMaterialDark,
+  code: CodeRendererMaterialOceanic,
   heading: HeadingRenderer,
   html: HtmlRenderer,
   image: ImageRenderer,
