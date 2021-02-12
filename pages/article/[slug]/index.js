@@ -47,7 +47,7 @@ const ImageContainer = ({ src, onItemClick }) => {
     <div ref={containerRef} className="custom-gallery-wrapper_item">
       <Img
         onClick={onItemClick}
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
         src={src}
         fallback={<Loader isForImage />}
         containerRef={containerRef}

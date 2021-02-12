@@ -371,7 +371,7 @@ IndexPage.getInitialProps = async (_ctx) => {
       articles = res
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err)
       articles = []
     })
   let articlesCounter = 0
