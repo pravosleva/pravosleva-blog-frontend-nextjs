@@ -6,7 +6,7 @@ const ExternalWrapper = styled('div')`
   width: 100%;
   margin: 0 auto;
   @media(min-width: 768px) {
-    max-width: 400px;
+    max-width: 500px;
   }
   margin-bottom: 20px;
 `
