@@ -284,6 +284,11 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
             position: absolute;
             z-index: -1;
           }
+          @media(min-width: 768px) {
+            .article-wrapper, .article-wrapper::after {
+              border-radius: 10px;
+            }
+          }
           .article-wrapper__big-image-as-container {
             border-radius: 0;
             width: 100%;
@@ -293,6 +298,11 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+          }
+          @media(min-width: 768px) {
+            .article-wrapper__big-image-as-container {
+              border-radius: 10px;
+            }
           }
           .article-wrapper__big-image-as-container > * {
             margin: 0;

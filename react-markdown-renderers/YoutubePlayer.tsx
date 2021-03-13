@@ -16,7 +16,7 @@ const ReactYoutubeContainer = styled('div')`
   height: 0;
   overflow: hidden;
   background-color: #000;
-  border-radius: 4px;
+  border-radius: 10px;
   @media(max-width: 767px) {
     margin-bottom: 25px;
   }

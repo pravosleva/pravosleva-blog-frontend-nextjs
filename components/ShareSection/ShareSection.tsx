@@ -31,6 +31,11 @@ interface IWrapperProps {
 const Wrapper = styled('div')<IWrapperProps>`
   @media(min-width: 768px) {
     margin-bottom: 35px;
+
+    border-radius: 10px;
+    & .article-wrapper, & .article-wrapper:after {
+      border-radius: 10px;
+    }
   }
   @media(max-width: 767px) {
     margin-bottom: 30px;
@@ -60,14 +65,13 @@ const Wrapper = styled('div')<IWrapperProps>`
       // opacity: 0.8;
     }
     & > .article-wrapper__big-image-as-container {
-      border-radius: 0;
       width: 100%;
       min-height: 250px;
       margin: 10px 0 50px 0;
 
       display: flex;
       flex-direction: column;
-      
+
       @media(min-width: 768px) {
         justify-content: space-between;
       }
@@ -85,7 +89,7 @@ interface IProps {
 }
 
 export const ShareSection = ({ bgSrc, slug, title }: IProps) => {
-  console.log(bgSrc)
+  // console.log(bgSrc)
   return (
     <Wrapper bgSrc={bgSrc}>
       <div className='article-wrapper white tiles-grid-item-in-article'>
@@ -94,7 +98,6 @@ export const ShareSection = ({ bgSrc, slug, title }: IProps) => {
             <FacebookIcon
               bgStyle={{
                 boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)',
-                border: '1px solid red',
               }}
               size={32}
               round
