@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import YouTubeVideo from 'react-youtube'
 // import { useStyles } from './styles'
 import styled from 'styled-components'

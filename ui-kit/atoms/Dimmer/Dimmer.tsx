@@ -16,6 +16,7 @@ export const Dimmer = styled('div')<{
   overflow: auto;
   overflow-y: scroll;
   overflow-x: auto;
-  background: ${themeColor('Transparent Gray-blue')};
+  // background: ${themeColor('Transparent Gray-blue')};
+  background: ${themeColor('Transparent Black-hard')};
   backdrop-filter: blur(4px);
 `

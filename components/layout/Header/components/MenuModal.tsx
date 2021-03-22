@@ -98,7 +98,7 @@ export const MenuModal = withTranslator(({ isOpened, onHideModal, isAuthenticate
           renderBodyContent={() => menuItems({ isCurrentPathCb, isAuthenticated, t })}
           renderFooterContent={() => (
             <FooterRow>
-              <Button typeName="secondary" size="small" width="responsive" onClick={removeAllCookie}>
+              <Button typeName="orange" size="small" width="responsive" onClick={removeAllCookie}>
                 {t('REMOVE_ALL_COOKIE_AND_CLOSE')}
               </Button>
             </FooterRow>

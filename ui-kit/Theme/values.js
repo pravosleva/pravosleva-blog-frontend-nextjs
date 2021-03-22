@@ -54,6 +54,7 @@ const mainStyleReference = {
     // primary: '#003366',
     secondary: '#ff781e',
     'Transparent Gray-blue': 'rgba(173, 176, 181, 0.55)',
+    'Transparent Black-hard': 'rgba(0, 0, 0, 0.7)',
     'Accent Orange Hover Transparent 15%': 'rgba(255, 120, 30, 0.15)',
     'Success Transparent 15%': 'rgba(50, 170, 55, 0.15)',
     'Light blue Transparent 15%': 'rgba(148, 163, 179, 0.15)',
