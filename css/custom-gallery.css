@@ -28,12 +28,19 @@
 } */
 @media (min-width: 768px) {
   .custom-gallery-wrapper {
+<<<<<<< Updated upstream
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+=======
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+>>>>>>> Stashed changes
     grid-auto-rows: 270px;
     grid-auto-flow: dense;
   }
   .custom-gallery-wrapper_item:nth-of-type(1) {
     grid-column: span 2;
+  }
+  .custom-gallery-wrapper_item:last-child > img {
+    max-width: 270px;
   }
 
   .custom-gallery-wrapper_item > img:hover {
