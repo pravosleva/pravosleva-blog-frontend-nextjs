@@ -28,11 +28,7 @@
 } */
 @media (min-width: 768px) {
   .custom-gallery-wrapper {
-<<<<<<< Updated upstream
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-=======
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
->>>>>>> Stashed changes
     grid-auto-rows: 270px;
     grid-auto-flow: dense;
   }
