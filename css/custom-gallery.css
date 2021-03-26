@@ -35,8 +35,8 @@
   .custom-gallery-wrapper_item:nth-of-type(1) {
     grid-column: span 2;
   }
-  .custom-gallery-wrapper_item:last-child > img {
-    max-width: 270px;
+  .custom-gallery-wrapper_item:last-child.custom-gallery-wrapper_item:first-child > img {
+    max-width: calc(33.33% - 10px);
   }
 
   .custom-gallery-wrapper_item > img:hover {
