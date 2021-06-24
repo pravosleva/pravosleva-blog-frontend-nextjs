@@ -1,17 +1,28 @@
 import React from 'react'
 import axios from 'axios'
 import { getApiUrl } from '@/utils/getApiUrl'
+import { CertVerifiedPage } from '@/components/covid-trash'
 
 // TODO: перенести в hoc по аналогии с privateRouteHOC?
 // import { privateRouteHOC } from '@/helpers/services/hoc/privateRouteHOC'
 
 const api = axios.create({ baseURL: getApiUrl() })
+const isDev = process.env.NODE_ENV === 'development'
 
-const VerifyPage = (props) => {
-  return <div>
-    <div>In progress: VerifyPage (special for gosuslugi)</div>
-    <pre style={{ border: '1px solid red' }}>{JSON.stringify(props, null, 2)}</pre>
-  </div>
+const VerifyPage = ({ userData, errorMsg }) => {
+  return <>
+    {isDev && !!errorMsg && (
+      <pre style={{ border: '1px solid red' }}>{JSON.stringify(userData, null, 2)}</pre>
+    )}
+    {!!errorMsg && <div>{errorMsg}</div>}
+    {
+      !errorMsg && (
+        <CertVerifiedPage
+          userData={userData}
+        />
+      )
+    }
+  </>
 }
 
 VerifyPage.getInitialProps = async (ctx) => {
