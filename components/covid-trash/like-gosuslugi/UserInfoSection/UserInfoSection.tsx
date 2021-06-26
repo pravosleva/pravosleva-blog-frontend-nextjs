@@ -5,6 +5,26 @@ import styled from 'styled-components'
 const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  & > h6 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    font-family: Lato,Arial,sans-serif,-apple-system;
+    color: #0b1f33;
+    margin-bottom: 0;
+  }
+  & > .small-text {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: Lato,Arial,sans-serif,-apple-system;
+    color: #0b1f33;
+    margin-top: 4px;
+    & > .gray {
+      color: #66727f;
+    }
+  }
 `
 
 const getCensoredFullName = (fullName: string): string => {
@@ -50,10 +70,9 @@ const getModifiedPassportSN = (passportSN: number): string => {
 export const UserInfoSection = ({ userData }: { userData: TUserData }) => {
   return (
     <Wrapper>
-      <div>UserInfoSection</div>
-      <div><b>{getCensoredFullName(userData.fullName)}</b></div>
-      <div>Паспорт: {getModifiedPassportSN(userData.passportSN)}</div>
-      <div>Дата рождения: {getModifiedDate(userData.dateOfBirth)}</div>
+      <h6>{getCensoredFullName(userData.fullName)}</h6>
+      <div className='small-text'>Паспорт: <span className='gray'>{getModifiedPassportSN(userData.passportSN)}</span></div>
+      <div className='small-text'>Дата рождения: <span className='gray'>{getModifiedDate(userData.dateOfBirth)}</span></div>
     </Wrapper>
   )
 }

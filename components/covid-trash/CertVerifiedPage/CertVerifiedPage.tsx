@@ -38,10 +38,11 @@ body {
 const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
 
-  & > div:not(:last-child) {
-    margin-bottom: 30px;
-  }
+  // & > div:not(:last-child) { margin-bottom: 30px; }
 `
 
 export const CertVerifiedPage = ({ userData }: TProps) => {
