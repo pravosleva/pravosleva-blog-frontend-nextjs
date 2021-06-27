@@ -47,6 +47,9 @@ body {
 }
 `;
 
+const ExternalWrapper = styled('div')`
+  padding: 0 17px;
+`
 const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
@@ -63,13 +66,14 @@ export const CertVerifiedPage = ({ userData }: TProps) => {
       <Head>
         <style type="text/css" dangerouslySetInnerHTML={{ __html: GosuslugiFonts }} />
       </Head>
-      <Wrapper>
-        <SiteHeaderSection />
-        <GreenCardSection />
-        <UserInfoSection userData={userData} />
-        <CloseBtnSection />
-      </Wrapper>
-      {/* <div style={{ border: '1px solid red' }}>{passportSN}, {fullName}, {dateOfBirth}</div> */}
+      <ExternalWrapper>
+        <Wrapper>
+          <SiteHeaderSection />
+          <GreenCardSection />
+          <UserInfoSection userData={userData} />
+          <CloseBtnSection />
+        </Wrapper>
+      </ExternalWrapper>
     </>
   )
 }
