@@ -12,9 +12,11 @@ const getSlugifyOrNot = (original: string, currentLang: string): string => {
     let tmp = ''
     const splitedBySpaces = result.split(' ')
 
-    if (splitedBySpaces.length === 3) {
-      tmp = `${splitedBySpaces[1]} ${splitedBySpaces[0]}`
-    }
+    // NOTE: Correct (v1)
+    // if (splitedBySpaces.length === 3) { tmp = `${splitedBySpaces[1]} ${splitedBySpaces[0]}` }
+
+    // NOTE: Incorrect - like sosuslugi.ru (v2)
+    if (splitedBySpaces.length === 3) { tmp = `${splitedBySpaces[0]} ${splitedBySpaces[1]}` }
 
     result = slugify(tmp).replace(/-/g, ' ')
   }
