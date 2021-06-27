@@ -20,6 +20,18 @@ const GosuslugiFonts = `
   font-weight: 300;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('/static/fonts/Lato/Lato-Bold.woff') format('woff'), url('/static/fonts/Lato/Lato-Bold.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('/static/fonts/Lato/Lato-Regular.woff') format('woff'), url('/static/fonts/Lato/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 * {
   font-family: 'Helvetica Neue', helvetica, arial, sans-serif !important;
   font-size: 100%;

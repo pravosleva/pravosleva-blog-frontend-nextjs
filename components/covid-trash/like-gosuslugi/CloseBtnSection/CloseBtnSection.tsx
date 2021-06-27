@@ -12,6 +12,7 @@ const Link = styled('a')`
     color: #0d4cd3;
   }
   text-decoration: none;
+  font-family: Lato,Arial,sans-serif,-apple-system !important;
 
   border-radius: 8px;
   cursor: pointer;

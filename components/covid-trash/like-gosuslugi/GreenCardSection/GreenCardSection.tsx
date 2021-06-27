@@ -15,9 +15,9 @@ const Wrapper = styled('div')`
 const H4 = styled('h4')`
   font-size: 18px;
   line-height: 24px;
-  font-weight: 600;
+  font-weight: 400;
   color: #fff;
-  font-family: Lato-Bold,Arial,sans-serif;
+  font-family: Lato-Bold,Arial,sans-serif !important;
 `
 const Activated = styled('div')`
   font-size: 14px;
@@ -34,6 +34,8 @@ const Activated = styled('div')`
     border-radius: 16px;
     vertical-align: baseline;
     color: #0b1f33;
+    font-family: Lato-Bold,Arial,sans-serif,-apple-system !important;
+    font-weight: 400;
   }
 `
 

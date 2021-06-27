@@ -11,14 +11,17 @@ const Wrapper = styled('div')`
     font-size: 16px;
     line-height: 24px;
     font-weight: 600;
-    font-family: Lato,Arial,sans-serif,-apple-system;
+    // font-family: Lato,Arial,sans-serif,-apple-system;
+    font-family: Lato-Bold,Arial,sans-serif,-apple-system !important;
+    font-weight: 400;
     color: #0b1f33;
     margin-bottom: 0;
   }
   & > .small-text {
     font-size: 14px;
     line-height: 20px;
-    font-family: Lato,Arial,sans-serif,-apple-system;
+    // font-family: Lato,Arial,sans-serif,-apple-system;
+    font-family: Lato,Arial,sans-serif,-apple-system !important;
     color: #0b1f33;
     margin-top: 4px;
     & > .gray {
