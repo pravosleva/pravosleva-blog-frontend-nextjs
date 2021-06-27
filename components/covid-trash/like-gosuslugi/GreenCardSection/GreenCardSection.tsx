@@ -14,7 +14,7 @@ const Wrapper = styled('div')`
   margin-bottom: 24px;
 `
 const H4 = styled('h4')`
-  font-size: 20px;
+  font-size: 18px;
   line-height: 24px;
   font-weight: 400;
   color: #fff;

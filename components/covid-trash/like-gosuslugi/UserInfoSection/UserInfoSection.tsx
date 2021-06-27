@@ -5,7 +5,22 @@ import { withTranslator } from '@/hocs/with-translator'
 import { getRandomInteger } from '@/utils/getRandomInteger'
 import slugify from 'slugify'
 
-const getSlugifyOrNot = (original: string, currentLang: string): string => currentLang === 'ru-RU' ? original : slugify(original).replace(/-/g, ' ')
+const getSlugifyOrNot = (original: string, currentLang: string): string => {
+  let result = original
+
+  if (currentLang !== 'ru-RU') {
+    let tmp = ''
+    const splitedBySpaces = result.split(' ')
+
+    if (splitedBySpaces.length === 3) {
+      tmp = `${splitedBySpaces[1]} ${splitedBySpaces[0]}`
+    }
+
+    result = slugify(tmp).replace(/-/g, ' ')
+  }
+
+  return result
+}
 
 const Wrapper = styled('div')`
   display: flex;
