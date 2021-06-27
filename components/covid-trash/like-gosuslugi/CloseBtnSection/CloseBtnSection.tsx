@@ -1,8 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { withTranslator } from '@/hocs/with-translator'
 
 const Wrapper = styled('div')`
   margin-top: 24px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;;
 `
 const Link = styled('a')`
   background-color: #fff;
@@ -24,13 +29,22 @@ const Link = styled('a')`
   padding: 12px 24px;
   text-align: center;
   white-space: nowrap;
-  width: 100%;
+
+  @media (min-width: 768px) {
+    width: auto;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+  
 `
 
-export const CloseBtnSection = () => {
+export const CloseBtnSectionConnected = ({ t }) => {
   return (
     <Wrapper>
-      <Link href='https://www.gosuslugi.ru/'>Закрыть</Link>
+      <Link href='https://www.gosuslugi.ru/'>{t('CLOSE')}</Link>
     </Wrapper>
   )
 }
+
+export const CloseBtnSection = withTranslator(CloseBtnSectionConnected)

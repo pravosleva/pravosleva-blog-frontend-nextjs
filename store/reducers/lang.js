@@ -7,13 +7,17 @@ import ruRU from '@/public/static/locales/ru-RU.json'
 const SUPPOER_LOCALES = [
   {
     label: 'RU',
+    guLabel: 'RUS',
     name: 'Русский',
     value: 'ru-RU',
+    svgSrc: '/static/img/covid-trash/gosuslugi-lang-rus.svg',
   },
   {
     label: 'EN',
+    guLabel: 'ENG',
     name: 'English',
     value: 'en-US',
+    svgSrc: '/static/img/covid-trash/gosuslugi-lang-eng.svg',
   },
   // Others...
 ]

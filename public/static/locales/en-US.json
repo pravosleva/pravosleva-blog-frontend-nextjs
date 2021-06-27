@@ -99,5 +99,11 @@
   "READ_MORE_HERE": "Read more here",
   "I_AGREE": "I agree",
   "GO_BACK_TO_THE_HOMEPAGE": "Go back to the homepage",
-  "YOUR_NAME": "Your name"
+  "YOUR_NAME": "Your name",
+
+  "COVID-TRASH_GREEN-CARD-TEXT": "Certificate of COVID-19 Vaccination",
+  "COVID-TRASH_TARGET-TEXT": "Valid",
+  "COVID-TRASH_PASSPORT": "Рassport (ID number)",
+  "COVID-TRASH_INTL-PASSPORT-ID": "International passport (ID number)",
+  "COVID-TRASH_DATE-OF-BIRTH": "Date of birth"
 }

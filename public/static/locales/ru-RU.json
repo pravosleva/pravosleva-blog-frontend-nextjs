@@ -99,5 +99,11 @@
   "READ_MORE_HERE": "Здесь про куки",
   "I_AGREE": "Ясно понятно",
   "GO_BACK_TO_THE_HOMEPAGE": "Вернуться на главную",
-  "YOUR_NAME": "Ваше имя"
+  "YOUR_NAME": "Ваше имя",
+
+  "COVID-TRASH_GREEN-CARD-TEXT": "Сертификат профилактической прививки от COVID-19",
+  "COVID-TRASH_TARGET-TEXT": "Действителен",
+  "COVID-TRASH_PASSPORT": "Паспорт",
+  "COVID-TRASH_INTL-PASSPORT-ID": "",
+  "COVID-TRASH_DATE-OF-BIRTH": "Дата рождения"
 }

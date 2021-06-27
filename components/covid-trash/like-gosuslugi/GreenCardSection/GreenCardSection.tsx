@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { withTranslator } from '@/hocs/with-translator'
 
 const Wrapper = styled('div')`
   box-sizing: border-box;
@@ -39,13 +40,20 @@ const Activated = styled('div')`
   }
 `
 
-export const GreenCardSection = () => {
+export const GreenCardSectionConnected = ({
+  t,
+  // setLang,
+  // suppoerLocales,
+  // currentLang, // SAMPLE: 'en-US'
+}) => {
   return (
     <Wrapper>
-      <H4>Сертификат профилактической прививки от COVID-19</H4>
+      <H4>{t('COVID-TRASH_GREEN-CARD-TEXT')}</H4>
       <Activated>
-        <span className='target-text'>Действителен</span>
+        <span className='target-text'>{t('COVID-TRASH_TARGET-TEXT')}</span>
       </Activated>
     </Wrapper>
   )
 }
+
+export const GreenCardSection = withTranslator(GreenCardSectionConnected)

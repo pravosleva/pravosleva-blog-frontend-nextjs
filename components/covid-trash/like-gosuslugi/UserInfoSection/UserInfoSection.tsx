@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { TUserData } from '@/components/covid-trash/like-gosuslugi/UserInfoSection/interfaces'
 import styled from 'styled-components'
+import { withTranslator } from '@/hocs/with-translator'
+import { getRandomInteger } from '@/utils/getRandomInteger'
 
 const Wrapper = styled('div')`
   display: flex;
@@ -48,17 +50,17 @@ const getModifiedDate = (dateOfBirth: string): string => {
 
   return splitedByDash.join('.')
 }
-const getModifiedPassportSN = (passportSN: number): string => {
+const getModifiedPassportSN = (passportSN: number, startsIndexes: number[], spaceIndex: number = 4): string => {
   const asString = String(passportSN)
   const asArr = asString.split('')
   let result = ''
 
   asArr.forEach((s, i) => {
     switch (true) {
-      case i === 4:
+      case i === spaceIndex:
         result += ' *'
         break;
-      case i === 2 || i === 3 || i === 5 || i === 6:
+      case startsIndexes.includes(i):
         result += '*'
         break;
       default:
@@ -70,12 +72,20 @@ const getModifiedPassportSN = (passportSN: number): string => {
   return result
 }
 
-export const UserInfoSection = ({ userData }: { userData: TUserData }) => {
+export const UserInfoSectionConnected = ({ userData,
+  t,
+  currentLang,
+}: { userData: TUserData } & any) => {
+  const randomIntId = useMemo(() => getModifiedPassportSN(getRandomInteger(100000000, 999999999), [1, 3, 4, 5], 2), [])
+
   return (
     <Wrapper>
       <h6>{getCensoredFullName(userData.fullName)}</h6>
-      <div className='small-text'>Паспорт: <span className='gray'>{getModifiedPassportSN(userData.passportSN)}</span></div>
-      <div className='small-text'>Дата рождения: <span className='gray'>{getModifiedDate(userData.dateOfBirth)}</span></div>
+      <div className='small-text'>{t('COVID-TRASH_PASSPORT')}: <span className='gray'>{getModifiedPassportSN(userData.passportSN, [2, 3, 5, 6])}</span></div>
+      {currentLang !== 'ru-RU' && <div className='small-text'>{t('COVID-TRASH_INTL-PASSPORT-ID')}: <span className='gray'>{randomIntId}</span></div>}
+      <div className='small-text'>{t('COVID-TRASH_DATE-OF-BIRTH')}: <span className='gray'>{getModifiedDate(userData.dateOfBirth)}</span></div>
     </Wrapper>
   )
 }
+
+export const UserInfoSection = withTranslator(UserInfoSectionConnected)
