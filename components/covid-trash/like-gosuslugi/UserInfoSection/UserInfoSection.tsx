@@ -3,6 +3,9 @@ import { TUserData } from '@/components/covid-trash/like-gosuslugi/UserInfoSecti
 import styled from 'styled-components'
 import { withTranslator } from '@/hocs/with-translator'
 import { getRandomInteger } from '@/utils/getRandomInteger'
+import slugify from 'slugify'
+
+const getSlugifyOrNot = (original: string, currentLang: string): string => currentLang === 'ru-RU' ? original : slugify(original).replace(/-/g, ' ')
 
 const Wrapper = styled('div')`
   display: flex;
@@ -76,13 +79,14 @@ export const UserInfoSectionConnected = ({ userData,
   t,
   currentLang,
 }: { userData: TUserData } & any) => {
-  const randomIntId = useMemo(() => getModifiedPassportSN(getRandomInteger(100000000, 999999999), [1, 3, 4, 5], 2), [])
+  const randomIntPassportId = useMemo(() => getModifiedPassportSN(getRandomInteger(100000000, 999999999), [1, 3, 4, 5], 2), [])
+  const modifiedFullName = useMemo(() => getCensoredFullName(getSlugifyOrNot(userData.fullName, currentLang)), [userData.fullName, currentLang])
 
   return (
     <Wrapper>
-      <h6>{getCensoredFullName(userData.fullName)}</h6>
+      <h6>{modifiedFullName}</h6>
       <div className='small-text'>{t('COVID-TRASH_PASSPORT')}: <span className='gray'>{getModifiedPassportSN(userData.passportSN, [2, 3, 5, 6])}</span></div>
-      {currentLang !== 'ru-RU' && <div className='small-text'>{t('COVID-TRASH_INTL-PASSPORT-ID')}: <span className='gray'>{randomIntId}</span></div>}
+      {currentLang !== 'ru-RU' && <div className='small-text'>{t('COVID-TRASH_INTL-PASSPORT-ID')}: <span className='gray'>{randomIntPassportId}</span></div>}
       <div className='small-text'>{t('COVID-TRASH_DATE-OF-BIRTH')}: <span className='gray'>{getModifiedDate(userData.dateOfBirth)}</span></div>
     </Wrapper>
   )
