@@ -1,7 +1,13 @@
 // 21 апр, чт
-export const getFormatedDate = (inputDate) => {
-  const monthNames = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
-  const dayNames = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+export const getFormatedDate = (inputDate, lang = 'ru-RU') => {
+  let monthNames = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
+  if (lang !== 'ru-RU') {
+    monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+  }
+  let dayNames = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+  if (lang !== 'ru-RU') {
+    dayNames = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su']
+  }
   const date = inputDate.getDate() < 10 ? `0${inputDate.getDate()}` : inputDate.getDate()
   const monthIndex = inputDate.getMonth()
   const dayIndex = inputDate.getDay()
@@ -10,8 +16,11 @@ export const getFormatedDate = (inputDate) => {
 }
 
 // 21 апр, 2020
-export const getFormatedDate2 = (inputDate) => {
-  const monthNames = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
+export const getFormatedDate2 = (inputDate, lang = 'ru-RU') => {
+  let monthNames = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
+  if (lang !== 'ru-RU') {
+    monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+  }
   const date = inputDate.getDate() < 10 ? `0${inputDate.getDate()}` : inputDate.getDate()
   const monthIndex = inputDate.getMonth()
 

@@ -13,6 +13,7 @@ const Grid = ({
   articles,
   articlesCounter,
   currentStart,
+  currentLang,
   currentLimit = 5,
   handleStartForNextPage,
   handleStartForPrevPage,
@@ -24,6 +25,7 @@ const Grid = ({
     (articles) => {
       return articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, _i) => {
         const bgSrc = getBgSrc(briefBackground?.url, true)
+        const date = getFormatedDate2(new Date(createdAt), currentLang)
 
         return (
           <div
@@ -56,13 +58,13 @@ const Grid = ({
                   <i style={{ marginLeft: '10px' }} className="fas fa-arrow-right"></i>
                 </a>
               </Link>
-              <small className="inactive">{getFormatedDate2(new Date(createdAt))}</small>
+              <small className="inactive">{date}</small>
             </span>
           </div>
         )
       })
     },
-    [] // deviceWidth
+    [currentLang] // deviceWidth
   )
 
   return (
