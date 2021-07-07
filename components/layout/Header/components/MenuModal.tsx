@@ -43,7 +43,7 @@ const menuItems = ({ isCurrentPathCb, isAuthenticated, t }) => (
     )}
     {!isCurrentPathCb('/feedback') && (
       <Link href="/feedback" as="/feedback">
-        <a>reCAPTCHA v3 test</a>
+        <a>{t('FEEDBACK')} & reCAPTCHA v3</a>
       </Link>
     )}
     {isAuthenticated && !isCurrentPathCb('/profile') && (

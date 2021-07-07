@@ -31,7 +31,7 @@ const fadeInUp = {
 
 const RECAPTCHAV3_CLIENT_KEY = process.env.RECAPTCHAV3_CLIENT_KEY
 const RECAPTCHAV3_VERIFY_URL = process.env.RECAPTCHAV3_VERIFY_URL
-const recaptchaScoreLimit = 0.95
+const recaptchaScoreLimit = 0.9
 
 const Container: StyledComponent<'div', any, {}, never> = styled('div')`
   @media (min-width: 768px) {
@@ -63,9 +63,9 @@ const Feedback = ({ t }) => {
           captcha: token,
         })
       )
-
+      
       if (verifyResult.isOk) {
-        if (verifyResult?.response.original?.score > recaptchaScoreLimit) {
+        if (verifyResult?.response.original?.score >= recaptchaScoreLimit) {
           const createNewEntryResult = await post(
             '/entries',
             new URLSearchParams({
@@ -171,16 +171,16 @@ const Feedback = ({ t }) => {
               <form onSubmit={showRecaptcha}>
                 <h2 className="gradient-animate-effect">{t('FEEDBACK')}</h2>
                 <div className="inputBox">
-                  <input name="companyName" placeholder="invisible" {...bindCompanyName} required />
-                  <label>{t('COMPANY_NAME')}</label>
+                  <input maxLength={50} name="companyName" placeholder="invisible" {...bindCompanyName} required />
+                  <label>{t('COMPANY_NAME')} / {50 - companyName.length} left</label>
                 </div>
                 <div className="inputBox">
-                  <input name="contactName" placeholder="invisible" {...bindContactName} required />
-                  <label>{t('YOUR_NAME')}</label>
+                  <input disabled={companyName.length === 0} maxLength={50} name="contactName" placeholder="invisible" {...bindContactName} required />
+                  <label>{t('YOUR_NAME')} / {50 - contactName.length} left</label>
                 </div>
                 <div className="inputBox">
-                  <textarea name="comment" placeholder="invisible" {...bindComment} required />
-                  <label>{t('COMMENT')}</label>
+                  <textarea disabled={companyName.length === 0 || contactName.length === 0} maxLength={3000} name="comment" placeholder="invisible" {...bindComment} required />
+                  <label>{t('COMMENT')} / {3000 - comment.length} left</label>
                 </div>
                 <div className="special-link-wrapper fade-in-effect unselectable">
                   <button className="rippled-btn" type="submit">

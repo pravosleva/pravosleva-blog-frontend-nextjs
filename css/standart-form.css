@@ -15,7 +15,7 @@
   }
 }
 .box h2 {
-  margin: 0 0 20px 0;
+  margin: 0 0 40px 0;
   padding: 0;
   color: #0162c8;
   text-align: left;
@@ -82,8 +82,8 @@
   position: relative;
 }
 .box .inputBox input {
-  padding: 10px 0;
-  margin-bottom: 20px;
+  padding: 8px 0;
+  margin-bottom: 35px;
 }
 .box .inputBox input,
 .box .inputBox textarea {
@@ -100,9 +100,10 @@
   color: transparent;
 }
 .box .inputBox textarea {
-  padding: 10px 0;
-  height: 80px;
-  margin-bottom: 20px;
+  padding: 8px 0;
+  min-height: 150px;
+  margin-bottom: 35px;
+  resize: vertical;
 }
 
 .box button {
@@ -154,7 +155,7 @@
 .box .inputBox input:valid ~ label,
 .box .inputBox textarea:valid ~ label,
 .box .inputBox input:not(:placeholder-shown) ~ label {
-  top: -12px;
+  top: -18px;
   left: 0;
   color: #0162c8;
   font-size: 12px;
