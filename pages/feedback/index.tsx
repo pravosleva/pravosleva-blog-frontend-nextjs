@@ -12,6 +12,9 @@ import { withTranslator } from '@/hocs/with-translator'
 import { AnimatePresence, motion } from 'framer-motion'
 import NextNProgress from 'nextjs-progressbar'
 // <NextNProgress color="#FFF" startPosition={0.3} stopDelayMs={200} height={2} />
+import { metrics } from '@/constants'
+
+const isProd = process.env.NODE_ENV === 'production'
 
 const easing = [0.6, -0.05, 0.01, 0.99]
 const fadeInUp = {
@@ -66,6 +69,19 @@ const Feedback = ({ t }) => {
       
       if (verifyResult.isOk) {
         if (verifyResult?.response.original?.score >= recaptchaScoreLimit) {
+          if (typeof window !== 'undefined' && isProd) {
+            // @ts-ignore
+            ym(
+              metrics.yaCounter,
+              'reachGoal',
+              'send_feedback',
+              undefined,
+              () => {
+                // eslint-disable-next-line no-console
+                console.log('ym: [send_feedback] done')
+              }
+            )
+          }
           const createNewEntryResult = await post(
             '/entries',
             new URLSearchParams({
