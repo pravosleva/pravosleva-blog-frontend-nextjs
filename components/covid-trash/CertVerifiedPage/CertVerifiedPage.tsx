@@ -14,12 +14,14 @@ type TProps = {
 }
 
 const GosuslugiFonts = `
-// @font-face {
-//   font-family: 'Helvetica Neue';
-//   src: url('/static/fonts/HelveticaNeue/HelveticaNeueCyr-Roman.woff') format('woff'), url('/static/fonts/HelveticaNeue/HelveticaNeueCyr-Roman.ttf') format('truetype');
-//   font-weight: 300;
-//   font-style: normal;
-// }
+/*
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('/static/fonts/HelveticaNeue/HelveticaNeueCyr-Roman.woff') format('woff'), url('/static/fonts/HelveticaNeue/HelveticaNeueCyr-Roman.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+*/
 @font-face {
   font-family: 'Lato-Bold';
   src: url('/static/fonts/Lato/Lato-Bold.woff') format('woff'), url('/static/fonts/Lato/Lato-Bold.ttf') format('truetype');

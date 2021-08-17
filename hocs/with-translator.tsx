@@ -4,6 +4,7 @@ import Cookie from 'js-cookie'
 import intl from 'react-intl-universal'
 import { langActions } from '@/store/reducers/lang'
 import { IRootState } from '@/store/reducers/IRootState'
+// import { getDeafultLangFromCookieOrNavigator } from '@/utils/multilingual/getDeafultLangFromCookieOrNavigator'
 
 const langCookieExpiresDays = process.env.REACT_APP_LANG_COOKIE_EXPIRES_IN_DAYS
   ? Number(process.env.REACT_APP_LANG_COOKIE_EXPIRES_IN_DAYS)
@@ -18,6 +19,7 @@ export const withTranslator = (WrappedComponent: any) => {
     useEffect(() => {
       if (process.browser) {
         const fromCookie = Cookie.get('lang')
+        // const fromCookieOfNavigator = getDeafultLangFromCookieOrNavigator(suppoerLocales)
 
         if (!!fromCookie) dispatch(langActions.set(fromCookie))
       }
