@@ -44,12 +44,12 @@ export const getImageUrl = (url: string, getFromProd?: boolean) => {
 
   if (isDev && isLocalNGINXEnabled) return `${process.env.REACT_APP_API_ENDPOINT}${url}`
 
-  return getFromProd ? `http://80.87.194.181/api${url}` : `${process.env.REACT_APP_API_ENDPOINT}${url}`
+  return getFromProd ? `http://pravosleva.ru/api${url}` : `${process.env.REACT_APP_API_ENDPOINT}${url}`
 }
 export const getBgSrc = (url: string, getFromProd?: boolean) => {
   if (!url) return '/static/img/text-1.jpeg'
 
   if (isDev && isLocalNGINXEnabled) return `${process.env.REACT_APP_API_ENDPOINT}${url}`
 
-  return getFromProd ? `http://80.87.194.181/api${url}` : `${process.env.REACT_APP_API_ENDPOINT}${url}`
+  return getFromProd ? `http://pravosleva.ru/api${url}` : `${process.env.REACT_APP_API_ENDPOINT}${url}`
 }

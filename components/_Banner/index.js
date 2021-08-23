@@ -9,7 +9,7 @@ const BgElement = Element.BgElement
 
 // const baseURL = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:1337';
 const dev = process.env.NODE_ENV === 'development'
-const baseURL = dev ? 'http://localhost:1337' : 'http://www.pravosleva.ru/api' // 'http://80.87.194.181/api';
+const baseURL = dev ? 'http://localhost:1337' : 'http://pravosleva.ru/api' // 'http://80.87.194.181/api';
 
 const Banner = ({ articles }) => (
   <div className="fade-in-effect">
@@ -24,7 +24,7 @@ const Banner = ({ articles }) => (
         const bgSrc =
           briefBackground && briefBackground.url
             ? dev
-              ? `http://80.87.194.181/api${briefBackground.url}`
+              ? `http://pravosleva.ru/api${briefBackground.url}`
               : `${baseURL}${briefBackground.url}`
             : '/text-1.jpeg'
         return (
