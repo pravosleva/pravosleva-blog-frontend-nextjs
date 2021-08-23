@@ -12,7 +12,7 @@
     "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start -p 9000",
-    "start:pm2": "pm2 start yarn --name front-9000-prod -- start",
+    "start:pm2": "pm2 start yarn --name next-9000-prod -- start",
     "analyze": "BUNDLE_ANALYZE=both next build",
     "analyze:server": "BUNDLE_ANALYZE=server next build",
     "analyze:browser": "BUNDLE_ANALYZE=browser next build",
