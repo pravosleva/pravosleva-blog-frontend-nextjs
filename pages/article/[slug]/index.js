@@ -77,6 +77,8 @@ const Gallery = ({ images, onItemClick }, i) => {
 }
 
 const Article = withTranslator(({ t, initArticleData: article }) => {
+  // const { metadata: { shareImage } } = article
+
   // const router = useRouter()
   // const { id } = router.query
   // GALLERY:
@@ -182,6 +184,8 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
               </div>
             )}
             {!!article.gallery && article.gallery.length > 0 ? (
+              <>
+                {/*
               <div className="galleries-wrapper">
                 {article.gallery
                   .map(({ name, description, images = [], id }) => ({
@@ -209,20 +213,6 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                           source={description}
                         />
                       )}
-                      {/* WAY 1: */}
-                      {/*
-                      <Gallery
-                        photos={images.map(({ src }) => ({
-                          src,
-                          width: 16,
-                          height: 9,
-                        }))}
-                        onClick={openLightbox}
-                        direction="column"
-                        columns={columns}
-                      />
-                      */}
-                      {/* WAY 2: */}
                       <Gallery images={images} key={typeof window} onItemClick={openLightbox} />
                       {viewerIsOpen && currentPackIndex === i && images[currentImageIndex] ? (
                         <Lightbox
@@ -244,6 +234,9 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
                     </div>
                   ))}
               </div>
+              */}
+                <b>Sorry, under development</b>
+              </>
             ) : null}
           </>
         ) : (
@@ -294,8 +287,9 @@ const Article = withTranslator(({ t, initArticleData: article }) => {
             flex-direction: column;
             justify-content: space-between;
           }
-          @media(min-width: 768px) {
-            .article-wrapper, .article-wrapper::after {
+          @media (min-width: 768px) {
+            .article-wrapper,
+            .article-wrapper::after {
               border-radius: 10px;
             }
             .article-wrapper__big-image-as-container {
@@ -329,7 +323,7 @@ Article.getInitialProps = async (ctx) => {
     if (!slug) return null
 
     const result = await api
-      .get(`/articles?slug=${slug}`)
+      .get(`/pages?slug=${slug}`)
       .then((res) => res.data)
       .catch((err) => err)
 
@@ -339,7 +333,24 @@ Article.getInitialProps = async (ctx) => {
 
   const res = await fetchArticle(slug)
 
-  return { initArticleData: res }
+  let customData
+  if (res.contentSections) {
+    const firstRichTextSection = res.contentSections.find((section) => section.__component === 'sections.rich-text')
+
+    if (!!firstRichTextSection)
+      customData = {
+        ...firstRichTextSection,
+        brief: res.metadata.metaDescription,
+        briefBackground: {
+          url: getBgSrc(res.metadata.shareImage.url, true),
+        },
+        title: res.metadata.metaTitle,
+        body: firstRichTextSection.content,
+        createdAt: res.createdAt,
+      }
+  }
+
+  return { initArticleData: customData }
 }
 
 export default Article

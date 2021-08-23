@@ -54,7 +54,7 @@ export default VerifyPage
 
 /* NOTE: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
 
-SAMPLE:
+SAMPLE 2020:
 
 {
   "userData": {

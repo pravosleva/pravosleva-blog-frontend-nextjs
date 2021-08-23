@@ -316,7 +316,7 @@ async function _getQueryString({ queryText, targetField, options }) {
     }
   }
 
-  queryString += '&_sort=createdAt:DESC&isPublished_eq=true'
+  queryString += '&_sort=createdAt:DESC&status=published'
 
   return queryString.slice(1)
 }
@@ -330,7 +330,7 @@ async function fetchArticles({ queryText, targetField, start }) {
   if (!query) return Promise.resolve([]) // Special for tag-not-found
 
   const result = await api
-    .get(`/articles?${query}`)
+    .get(`/pages?${query}`)
     .then((res) => res.data)
     .catch((err) => err)
 
@@ -349,7 +349,7 @@ async function fetchArticlesCounter({ queryText, targetField, start }) {
   if (!query) return Promise.resolve(0)
 
   const result = await api
-    .get(`/articles/count?${query}`)
+    .get(`/pages/count?${query}`)
     .then((res) => res.data)
     .catch((err) => 0)
 
@@ -375,9 +375,15 @@ IndexPage.getInitialProps = async (_ctx) => {
       articles = []
     })
   let articlesCounter = 0
-  await fetchArticlesCounter({ queryText: '', targetField: 'body' }).then((res) => {
-    articlesCounter = res
-  })
+  await fetchArticlesCounter({ queryText: '', targetField: 'body' })
+    .then((res) => {
+      articlesCounter = Number(res)
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log(err)
+      return 0
+    })
 
   return {
     initialArtilesCounter: articlesCounter,

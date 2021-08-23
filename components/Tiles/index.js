@@ -23,7 +23,7 @@ const Grid = ({
   // const { width: deviceWidth } = useDeviceWidth()
   const renderArticles = useCallback(
     (articles) => {
-      return articles.map(({ id, briefBackground, title, brief = 'No brief', createdAt, slug }, _i) => {
+      return articles.map(({ id, metadata, briefBackground, createdAt, slug }, _i) => {
         const bgSrc = getBgSrc(briefBackground?.url, true)
         const date = getFormatedDate2(new Date(createdAt), currentLang)
 
@@ -38,10 +38,10 @@ const Grid = ({
             }}
           >
             <span className="tiles-grid-item__title">
-              <ReactMarkdown source={title} />
+              <ReactMarkdown source={metadata.metaTitle} />
             </span>
             <div className="tiles-grid-item__brief" style={{ textAlign: 'center' }}>
-              <ReactMarkdown source={brief} />
+              <ReactMarkdown source={metadata.metaDescription} />
             </div>
             <span
               style={{
